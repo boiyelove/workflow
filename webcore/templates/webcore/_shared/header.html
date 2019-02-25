@@ -1,0 +1,24 @@
+
+{% if header %}
+<section id='header'>
+	<div class='row'>
+		<div class='jumbotron'>
+    <div class='container'>
+        <div class='col-md-7'>    
+        <h1>{{header}}</h1>
+    {% if not request.user.is_authenticated %}
+        <h3 class='text-left'>Enter your email address below</h3>
+        <form class='form-inline' method='post' action='{% url 'teamflow:get-invited' %}'>
+        {% csrf_token %}
+          <input type='text' class='form-control' placeholder='email' name='email'><button type='submit' class='btn btn-default'>Send invitation</button>
+          </form>
+        </div>
+    {% endif %}
+
+    {% block header %}
+    {% endblock %}
+    </div>
+		</div>
+	</div>
+</section>
+{% endif %}

@@ -1,0 +1,10 @@
+
+<h3>{{form_title}}</h3>
+
+<form {% if form.is_multipart %} enctype="multipart/form-data" {% endif %} method="POST" action="."> 
+
+{% csrf_token %}
+
+	{{form.as_p}}
+<input type="submit" value="Submit">
+</form>

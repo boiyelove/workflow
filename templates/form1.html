@@ -1,0 +1,21 @@
+
+<h3>{{form_title}}</h3>
+
+<br/>
+<form {% if form.is_multipart %} enctype="multipart/form-data" {% endif %} method="{{ form_method }}" action="{{ form_action }}"> 
+
+{% csrf_token %}
+
+	{{form.as_p}}
+
+	<br/>
+<p>
+<ul class="list-inline"><li><a class="btn btn-danger" href='{{ form_cancel.url }}'>{{ form_cancel }}</a></li><li><input type="submit" class="btn btn-lg btn-success" value="{{ form_value }}"></li></p>
+
+
+<ul class='list-inline'>
+{% for link in form_links %}
+<li><a href='{{link.url}}'>{{link}}</a></li>
+{% endfor %}
+</ul>
+</form>

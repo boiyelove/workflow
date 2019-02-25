@@ -1,0 +1,193 @@
+
+$color1: #2196F3;
+$color2: #104773;
+$color3: #186FB3;
+$danger: #F5403A;
+$success: #A2A60E;
+$primary: #1A77C0;
+$default: #F4A55E;
+
+
+body{
+	font-family: 'Roboto', sans-serif;
+	word-spacing: 3px;
+}
+h1, h2, h3, h4, h5, h6{
+	font-family: 'Lato', sans-serif;
+	font-spacing: 2%;
+}
+.navbar, .navbar-nav, .dropdown-menu {
+    background-color: $color2 !important;
+    border-color: $color2 !important;
+    color: #fff !important;
+    margin-bottom: 0px;
+   li:hover, li.active, li:focus{
+    color: $color1 !important;
+    background-color: $color1 !important;
+	}
+    a{
+    	color: #fff !important;
+    }
+    a:hover, a:active, a:focus{
+	    color: #fff !important;
+	    background-color: $color1 !important;
+	}
+	.navbar-toggle{
+	color: $color1 !important;
+	}
+
+}
+
+nav, .copyright{
+	padding-top: 10px;
+	padding-bottom: 10px;
+}
+
+
+
+
+.box-link{
+	display: block;
+	border: 1px solid $color1;
+
+	margin: 5%;
+	padding: 5%;
+	text-decoration: none;
+	text-align: center;
+	font-weight: 300;
+	font-size: 2em;
+	vertical-align: center;
+	color: $color1;
+	&:hover, &:active, &:focus{
+		text-decoration: none;
+		background-color: $color1;
+		color: $color1;
+
+	}
+}
+.box-link-md{
+	display: block;
+	border: 1px solid $color1;
+
+	margin: 5%;
+	padding: 5%;
+	text-decoration: none;
+	text-align: center;
+	font-weight: 300;
+	font-size: 2em;
+	vertical-align: center;
+	color: $color1;
+	&:hover, &:active, &:focus{
+		text-decoration: none;
+		background-color: $color1;
+		color: $color1;
+
+	}
+}
+a{
+	color: $color1;
+	&:hover{color: $color1;}
+}
+.box-link-o{
+	display: block;
+	border: 1px solid $color1;
+	background-color: $color1;
+	color: $color1;
+	margin: 5%;
+	padding: 5%;
+	text-decoration: none;
+	text-align: center;
+	font-weight: 300;
+	font-size: 2em;
+	cursor: default;
+	&:hover, &:active, &:focus{
+		text-decoration: none;
+		background-color: $color1;
+		color: $color1;
+	}
+}
+
+@mixin topbotpad($number){
+	padding-top: $number;
+	padding-bottom: $number;
+}
+@mixin topbotmarg($number){
+	margin-top: $number;
+	margin-bottom: $number;
+}
+
+@mixin marglr($number){
+	margin-left: $number;
+	margin-right: $number;
+}
+@mixin margtb($number){
+	margin-top: $number;
+	margin-bottom: $number;
+}
+@mixin padlr($number){
+	padding-top: $number !important;
+	padding-bottom: $number !important;
+}
+@mixin pad($number){
+	padding: $number $number $number $number !important;
+}
+.padtb10{
+	@include topbotpad(10px);
+}
+.pad10{
+	@include pad(10%);
+}
+.team-box{
+ @include pad(50px);
+ background-color: $color3;
+ color: #fff;
+ text-align:center;
+ margin-bottom: 5px;
+}
+.team-caption{
+	text-align:left;
+}
+.team-item{
+	@include margtb(10px);
+}
+section{
+	display: block;
+}
+// .fa{
+// 	color: #fff;
+// }
+
+.fa-smallicons{
+	margin: 5px;
+	padding: 5px;
+	display: inline-block;
+
+}
+
+.fa-plus{
+	color: $success;
+}
+.fa-close{
+	color: $danger;
+}
+.fa-eye{
+	color: $color2;
+}
+.team-member-item{
+	@include pad(20px);
+	@include margtb(10px);
+}
+
+@mixin mkwidth($number){
+	width: $number;
+}
+
+.makewidth80{
+	@include mkwidth(80%);
+}
+
+// @for $i from 1 through 100 {
+// 	.makewidth#{$i}{
+// 	@include mkwidth(#{$i});
+// 	}
+// }

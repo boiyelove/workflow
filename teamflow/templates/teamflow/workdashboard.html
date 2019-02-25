@@ -1,0 +1,37 @@
+{% extends 'webcore/_shared/base.html' %}
+
+{% block content %}
+<div class="row">
+    <div class="container">
+      <div class="col-md-4">
+      <h3>Project List
+            <a href="#" data-toggle="tooltip" data-placement="left" title="Remove Member From Team"><i class="fa fa-plus fa-smallicons"></i></a>
+            <a href="#" data-toggle="tooltip" data-placement="left" title="Remove Member From Team"><i class="fa fa-smallicons fa-close"></i></a>
+      </h3>
+        {% for i in  project_list %}
+        {{ i }}
+        {% endfor %}
+      </div>
+       <div class="col-md-4">
+       <h3>Task List</h3>
+        {% for i in  task_list %}
+        {{ i }}
+        {% endfor %}
+      </div>
+      <div class="col-md-4">
+      <h3>Team List</h3>
+        {% for i in  team_list %}
+        {{ i }}
+        {% endfor %}
+      </div>
+    {% comment %}
+     <div class="col-md-4">
+     <h3>Invite List</h3>
+        {% for i in  invite_list %}
+        {{ i }}
+        {% endfor %}
+      </div>
+    {% endcomment %}
+    </div>
+</div>
+{% endblock %}

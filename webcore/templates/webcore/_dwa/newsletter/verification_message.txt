@@ -1,0 +1,15 @@
+Hello {{user}}
+
+You recently requested a service on {{website}}.
+
+Click here to verify your email 
+
+Alternatively, you can copy the link below into your browser
+
+ {{verification_key}}
+
+Regards
+
+{{website}} Team
+
+
