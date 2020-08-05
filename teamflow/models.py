@@ -12,7 +12,7 @@ class Team(TimestampedModel):
 	icon = models.ImageField(upload_to='teams')
 	description = models.CharField(max_length=160)
 	is_public = models.BooleanField(default = False)
-	teamAuthor = models.ForeignKey(settings.AUTH_USER_MODEL, related_name="teamcreator")
+	teamAuthor = models.ForeignKey(settings.AUTH_USER_MODEL, related_name="teamcreator", on_delete=models.CASCADE)
 
 
 	def __str__(self):
@@ -34,8 +34,8 @@ class Team(TimestampedModel):
 
 
 class TeamMember(TimestampedModel):
-	user = models.ForeignKey(settings.AUTH_USER_MODEL)
-	team = models.ForeignKey('Team')
+	user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+	team = models.ForeignKey('Team', on_delete=models.CASCADE)
 	handle = models.CharField(max_length=60, null=True)
 	is_manager = models.BooleanField(default = False)
 	designation = models.CharField(max_length = 60, null=True)
@@ -51,9 +51,9 @@ class TeamMember(TimestampedModel):
 class TeamInvite(TimestampedModel):
 	slug = models.SlugField(unique=True)
 	email = models.EmailField()
-	team = models.ForeignKey(Team)
-	accepted = models.NullBooleanField(default=False)
-	user = models.ForeignKey(settings.AUTH_USER_MODEL, null=True)
+	team = models.ForeignKey(Team, on_delete=models.CASCADE)
+	accepted = models.BooleanField(default=False, null=True)
+	user = models.ForeignKey(settings.AUTH_USER_MODEL, null=True, on_delete=models.SET_NULL)
 
 	class Meta:
 		unique_together = ('email', 'team')
@@ -99,13 +99,13 @@ class EmailVerification(TimestampedModel):
 
 class Room(TimestampedModel):
 	label = models.SlugField()
-	team = models.ForeignKey(Team)
+	team = models.ForeignKey(Team, on_delete=models.CASCADE)
 
 	class Meta:
 		unique_together = ('label', 'team')
 
 
 class Message(TimestampedModel):
-	room = models.ForeignKey(Room)
+	room = models.ForeignKey(Room, on_delete=models.CASCADE)
 	text = models.TextField()
-	sender = models.ForeignKey(settings.AUTH_USER_MODEL)
+	sender = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)

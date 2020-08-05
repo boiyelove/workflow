@@ -99,7 +99,7 @@ class Tag(ABC_AuthorDraft):
 
 
 class Category(ABC_AuthorDraft):
-	parent = models.ForeignKey('self', null=True, blank=True, related_name = "parent_category")
+	parent = models.ForeignKey('self', null=True, blank=True, related_name = "parent_category", on_delete=models.CASCADE)
 	description = models.CharField(max_length = 60, null=True, blank = True)
 	author = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete = models.SET(get_sentinel_user), default=1, related_name="category_creator")
 
@@ -184,7 +184,7 @@ class EmailMarketingSignUp(TimestampedModel):
 class EmailCampaignCategory(ABC_TitleSlug):
 	title = models.CharField(max_length = 100)
 	active = models.BooleanField(default = True)
-	parent = models.ForeignKey('self', null=True, blank=True)
+	parent = models.ForeignKey('self', null=True, blank=True, on_delete=models.CASCADE)
 
 	def __str__(self):
 		return self.title
@@ -192,7 +192,7 @@ class EmailCampaignCategory(ABC_TitleSlug):
 
 #Web Profile App
 class WebProfile(models.Model):
-    user = models.OneToOneField(settings.AUTH_USER_MODEL, related_name='webcore_profile')
+    user = models.OneToOneField(settings.AUTH_USER_MODEL, related_name='webcore_profile', on_delete=models.CASCADE)
     photo = models.ImageField(upload_to='webcore/profile_photo', null=True)
  
     def __str__(self):
@@ -209,7 +209,7 @@ class Banner(ABC_TitleSlug):
 class VisitedUrl(TimestampedModel):
 	url = models.URLField()
 	views = models.PositiveIntegerField(default = 0)
-	user = models.ForeignKey(settings.AUTH_USER_MODEL, null=True)
+	user = models.ForeignKey(settings.AUTH_USER_MODEL, null=True, on_delete=models.CASCADE)
 
 	def __str__(self):
 		return '%s' % self.url

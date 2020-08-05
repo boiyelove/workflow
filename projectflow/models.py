@@ -22,5 +22,5 @@ class Project(JobModel):
 
 
 class Task(JobModel):
-	project = models.ForeignKey(Project)
+	project = models.ForeignKey(Project, on_delete=models.CASCADE)
 	team_member = models.ManyToManyField(TeamMember)

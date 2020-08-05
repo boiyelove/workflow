@@ -25,17 +25,17 @@ from .models import (Tag,
 
 #Custom Error Pages
 	#templates at _cep/
-def handler400(request):
+def handler400(request, exception):
 	template = 'webcore/_cep/400.html'
 	context = {}
 	return render(request, template, context)
 
-def handler403(request):
+def handler403(request, exception):
 	template = 'webcore/_cep/403.html'
 	context = {}
 	return render(request, template, context)
 
-def handler404(request):
+def handler404(request, exception):
 	template = 'webcore/_cep/404.html'
 	context = {}
 	return render(request, template, context)

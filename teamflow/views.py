@@ -120,7 +120,7 @@ class JoinTeam(View):
 	# 		slug = models.SlugField(unique=True)
 	# email = models.EmailField()
 	# team = models.ForeignKey(Team)
-	# accepted = models.NullBooleanField(default=False)
+	# accepted = models.BooleanField(null=True,default=False)
 	# user = models.ForeignKey(settings.AUTH_USER_MODEL, null=True)
 
 # class chat_room(request, label):

@@ -43,7 +43,7 @@ class UserProfile(TimestampedModel):
 	headshot = models.ImageField(upload_to = user_directory_path)
 	bio = models.TextField(max_length = 320, null=True)
 	verified = models.BooleanField(default = False)
-	referral = models.ForeignKey(User, null=True, editable=False, related_name='parent')
+	referral = models.ForeignKey(User, null=True, editable=False, related_name='parent', on_delete=models.CASCADE)
 	programs = models.ManyToManyField(RevenupaPrograms, related_name='programs_entered')
 	lastpasswordreset = models.DateTimeField(null=True)
 
@@ -102,7 +102,7 @@ class DonateMethod(TimestampedModel):
 	bank_sort_code = models.CharField(max_length = 10, null=True, blank=True)
 	account_no = models.IntegerField()
 	account_name = models.CharField(max_length =60)
-	user = models.ForeignKey(User)
+	user = models.ForeignKey(User, on_delete=models.CASCADE)
 	is_default = models.BooleanField(default = False)
 
 
