@@ -1,24 +1,24 @@
 # workflow 
-	## ProjectFLow
+
+## ProjectFLow
 	- Has Multiple teams
 	- Belongs to Company
 	- Has multiple Tasks
 
-	## Board
+## Board
 	- Has multiple Tasks
 
-	## Task
+## Task
 	- Has Project
 	- Has multiple subtasks
 	- Belongs to Board
 
 
-	## TeamFlow
+## TeamFlow
 	-  Belongs to multiple Projects
 
 
-	## Company
+## Company
 	- Has multiple Users
 
 
-	
