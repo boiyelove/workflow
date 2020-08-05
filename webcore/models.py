@@ -209,7 +209,7 @@ class Banner(ABC_TitleSlug):
 class VisitedUrl(TimestampedModel):
 	url = models.URLField()
 	views = models.PositiveIntegerField(default = 0)
-	user = models.ForeignKey(settings.AUTH_USER_MODEL, null=True, on_delete=models.CASCADE)
+	user = models.ForeignKey(settings.AUTH_USER_MODEL, null=True, on_delete=models.SET(get_sentinel_user))
 
 	def __str__(self):
 		return '%s' % self.url

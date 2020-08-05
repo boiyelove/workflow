@@ -62,7 +62,7 @@ class WebcoreTemplateView(TemplateView):
 class HomePageView(TemplateView):
 
 	def get_template_names(self, *args, **kwargs):
-		if self.request.user.is_authenticated():
+		if self.request.user.is_authenticated:
 			self.template_name = 'teamflow/workdashboard.html'
 		else:
 			self.template_name = "webcore/_dwp/wpc_home.html"
@@ -70,7 +70,7 @@ class HomePageView(TemplateView):
 
 	def get_context_data(self, *args, **kwargs):
 		context = super(HomePageView, self).get_context_data(*args, **kwargs)
-		if self.request.user.is_authenticated():
+		if self.request.user.is_authenticated:
 			context.update({
 			"project_list": Project.objects.all(),
 			"task_list": Task.objects.all(),
@@ -107,8 +107,6 @@ class ContactUsPageView(CreateView):
 		"form_value": "Send this Message",
 		})
 		return context
-
-
 
 
 class PageView(TemplateView):
