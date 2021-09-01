@@ -1,10 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:workflow/pages/task_list.dart';
-
-import 'pages/signin.dart';
-import 'pages/signup.dart';
+import 'package:workflow/screens/signin.dart';
+import 'package:workflow/screens/signup.dart';
+import 'package:workflow/screens/task_list.dart';
 
 void main() {
   runApp(MyApp());
