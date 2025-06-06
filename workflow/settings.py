@@ -33,8 +33,19 @@ CELERY_TASK_SERIALIZER = 'json'
 CELERY_RESULT_SERIALIZER = 'json'
 CELERY_TIMEZONE = 'Africa/Nairobi'
 
+# Default primary key field type
+DEFAULT_AUTO_FIELD = 'django.db.models.AutoField'
+
 if DEBUG:
-    from .local import *
+    try:
+        from .local import *
+    except ImportError:
+        DATABASES = {
+            'default': {
+                'ENGINE': 'django.db.backends.sqlite3',
+                'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+            }
+        }
 else:
     from .production import *
 
@@ -49,6 +60,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     # 'channels',
+    'crispy_forms',
     'webcore.apps.WebcoreConfig',
     'teamflow.apps.TeamflowConfig',
     'projectflow.apps.ProjectflowConfig',
@@ -86,9 +98,7 @@ TEMPLATES = [
     },
 ]
 
-
-
-
+CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
 WSGI_APPLICATION = 'workflow.wsgi.application'
 
@@ -123,3 +133,10 @@ USE_I18N = True
 USE_L10N = True
 
 USE_TZ = True
+
+# Static files (CSS, JavaScript, Images)
+STATIC_URL = '/static/'
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, 'pstatic'),
+]
+STATIC_ROOT = os.path.join(BASE_DIR, 'static')
