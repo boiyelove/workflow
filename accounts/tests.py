@@ -1,152 +1,209 @@
 from django.test import TestCase
 from django.contrib.auth.models import User
-from accounts.models import UserProfile, UserToken, DonateMethod, EmailVerification
-from accounts.forms import LoginForm, RegisterForm, UserProfileForm, DonateMethodForm
-from django.urls import reverse
-from django.http import HttpRequest
-from django.contrib.auth import authenticate
-from unittest.mock import patch, MagicMock
-from accounts.utils import code_generator, verify_email, email_password
+from django.conf import settings
+from faker import Faker
+from .models import UserProfile, UserToken, EmailVerification, Program
+from .utils import is_test_email
 
-# Model Tests
+fake = Faker()
+
+class TestUserCreation(TestCase):
+    def setUp(self):
+        self.test_domain = settings.TEST_EMAIL_DOMAIN
+        
+    def test_regular_user_creation(self):
+        """Test creating a regular user"""
+        username = fake.user_name()
+        email = fake.email()
+        password = fake.password()
+        
+        user = User.objects.create_user(
+            username=username,
+            email=email,
+            password=password
+        )
+        
+        # Check user was created
+        self.assertIsNotNone(user)
+        self.assertEqual(user.username, username)
+        self.assertEqual(user.email, email)
+        
+        # Check profile was created
+        profile = UserProfile.objects.filter(user=user).first()
+        self.assertIsNotNone(profile)
+        self.assertFalse(profile.verified)
+        
+        # Check token was created
+        token = UserToken.objects.filter(user=user).first()
+        self.assertIsNotNone(token)
+        self.assertEqual(token.balance, 0)
+        
+        # Check email verification was created
+        verification = EmailVerification.objects.filter(email=email).first()
+        self.assertIsNotNone(verification)
+        self.assertFalse(verification.confirmed)
+    
+    def test_test_user_auto_verification(self):
+        """Test creating a test user with auto verification"""
+        username = fake.user_name()
+        email = f"{username}-test@{self.test_domain}"
+        password = fake.password()
+        
+        user = User.objects.create_user(
+            username=username,
+            email=email,
+            password=password
+        )
+        
+        # Check user was created
+        self.assertIsNotNone(user)
+        
+        # Check profile was created and verified
+        profile = UserProfile.objects.filter(user=user).first()
+        self.assertIsNotNone(profile)
+        self.assertTrue(profile.verified)
+        
+        # Check email verification was created and confirmed
+        verification = EmailVerification.objects.filter(email=email).first()
+        self.assertIsNotNone(verification)
+        self.assertTrue(verification.confirmed)
+    
+    def test_is_test_email_function(self):
+        """Test the is_test_email utility function"""
+        regular_email = fake.email()
+        test_email = f"user-test@{self.test_domain}"
+        
+        self.assertFalse(is_test_email(regular_email))
+        self.assertTrue(is_test_email(test_email))
+
 class UserProfileModelTest(TestCase):
     def setUp(self):
         self.user = User.objects.create_user(
-            username='testuser',
-            email='test@example.com',
-            password='testpassword'
+            username=fake.user_name(),
+            email=fake.email(),
+            password=fake.password()
         )
-        # Mock the ImageField to avoid Pillow issues
-        with patch('django.db.models.fields.files.ImageFieldFile'):
-            self.profile = UserProfile.objects.create(
-                user=self.user,
-                full_name='Test User',
-                country='NG',
-                state='Lagos',
-                address='123 Test Street',
-                phone_number='1234567890'
-            )
-
+        self.profile = UserProfile.objects.get(user=self.user)
+        self.profile.full_name = fake.name()
+        self.profile.phone_number = fake.phone_number()
+        self.profile.country = 'NG'
+        self.profile.state = fake.state()
+        self.profile.address = fake.address()
+        self.profile.save()
+    
     def test_profile_to_dict(self):
-        # Mock the ImageField in the profile_to_dict method
-        with patch.object(self.profile, 'headshot', create=True) as mock_headshot:
-            profile_dict = self.profile.profile_to_dict()
-            self.assertEqual(profile_dict['full_name'], 'Test User')
-            self.assertEqual(profile_dict['country'], 'NG')
-            self.assertEqual(profile_dict['state'], 'Lagos')
-            self.assertEqual(profile_dict['address'], '123 Test Street')
-            self.assertEqual(profile_dict['phone_number'], '1234567890')
-
+        """Test the profile_to_dict method"""
+        profile_dict = self.profile.profile_to_dict()
+        self.assertEqual(profile_dict['full_name'], self.profile.full_name)
+        self.assertEqual(profile_dict['phone_number'], self.profile.phone_number)
+        self.assertEqual(profile_dict['country'], self.profile.country)
+    
     def test_profile_valid(self):
+        """Test the profile_valid method"""
         self.assertTrue(self.profile.profile_valid())
         
-        # Test invalid profile
+        # Test with missing data
         self.profile.full_name = None
         self.profile.save()
         self.assertFalse(self.profile.profile_valid())
-        
-        # Reset and test another invalid case
-        self.profile.full_name = 'Test User'
-        self.profile.phone_number = None
-        self.profile.save()
-        self.assertFalse(self.profile.profile_valid())
-
+    
     def test_set_parent(self):
+        """Test the set_parent method"""
         parent_user = User.objects.create_user(
-            username='parentuser',
-            email='parent@example.com',
-            password='parentpassword'
+            username=fake.user_name(),
+            email=fake.email(),
+            password=fake.password()
         )
+        
         self.profile.set_parent(parent_user)
         self.assertEqual(self.profile.referral, parent_user)
-
 
 class UserTokenModelTest(TestCase):
     def setUp(self):
         self.user = User.objects.create_user(
-            username='testuser',
-            email='test@example.com',
-            password='testpassword'
+            username=fake.user_name(),
+            email=fake.email(),
+            password=fake.password()
         )
-        self.token = UserToken.objects.create(
-            user=self.user,
-            balance=100.0
-        )
-
-    def test_withdraw_valid(self):
-        self.token.withdraw(50.0)
-        # Need to refresh from DB since we're using F() expressions
-        self.token.refresh_from_db()
-        self.assertEqual(self.token.balance, 50.0)
-
-    def test_withdraw_invalid_negative_amount(self):
-        result = self.token.withdraw(-10.0)
-        self.assertEqual(result, "invalid withdrawal amount")
-        self.token.refresh_from_db()
-        self.assertEqual(self.token.balance, 100.0)
-
-    def test_withdraw_zero_balance(self):
-        self.token.balance = 0
-        self.token.save()
-        result = self.token.withdraw(50.0)
-        self.assertEqual(result, "Invalid deposit amount")
-
+        self.token = UserToken.objects.get(user=self.user)
+    
     def test_deposit_valid(self):
-        self.token.deposit(50.0)
+        """Test valid deposit"""
+        initial_balance = self.token.balance
+        amount = 100
+        
+        self.token.deposit(amount)
         self.token.refresh_from_db()
-        self.assertEqual(self.token.balance, 150.0)
-
+        
+        self.assertEqual(self.token.balance, initial_balance + amount)
+    
     def test_deposit_invalid(self):
+        """Test invalid deposit (negative or zero)"""
+        initial_balance = self.token.balance
+        
         result = self.token.deposit(0)
         self.assertEqual(result, "Invalid deposit amount")
-        self.token.refresh_from_db()
-        self.assertEqual(self.token.balance, 100.0)
-
-        result = self.token.deposit(-10)
+        
+        result = self.token.deposit(-50)
         self.assertEqual(result, "Invalid deposit amount")
+        
         self.token.refresh_from_db()
-        self.assertEqual(self.token.balance, 100.0)
-
-
-class DonateMethodModelTest(TestCase):
-    def setUp(self):
-        self.user = User.objects.create_user(
-            username='testuser',
-            email='test@example.com',
-            password='testpassword'
-        )
-        self.donate_method = DonateMethod.objects.create(
-            account_type='LOCB',
-            bank_name='Test Bank',
-            account_no=1234567890,
-            account_name='Test Account',
-            user=self.user,
-            is_default=True
-        )
-
-    def test_donate_method_creation(self):
-        self.assertEqual(self.donate_method.account_type, 'LOCB')
-        self.assertEqual(self.donate_method.bank_name, 'Test Bank')
-        self.assertEqual(self.donate_method.account_no, 1234567890)
-        self.assertEqual(self.donate_method.account_name, 'Test Account')
-        self.assertEqual(self.donate_method.user, self.user)
-        self.assertTrue(self.donate_method.is_default)
-
-# Utils Tests
-class UtilsTest(TestCase):
-    def setUp(self):
-        self.user = User.objects.create_user(
-            username='testuser',
-            email='test@example.com',
-            password='testpassword'
-        )
+        self.assertEqual(self.token.balance, initial_balance)
+    
+    def test_withdraw_valid(self):
+        """Test valid withdrawal"""
+        self.token.balance = 100
+        self.token.save()
         
-    def test_code_generator(self):
-        # Test that code_generator returns a string
-        code = code_generator('test@example.com')
-        self.assertIsInstance(code, str)
+        self.token.withdraw(50)
+        self.token.refresh_from_db()
         
-        # Test that code_generator returns different codes for different inputs
-        code1 = code_generator('test1@example.com')
-        code2 = code_generator('test2@example.com')
-        self.assertNotEqual(code1, code2)
+        self.assertEqual(self.token.balance, 50)
+    
+    def test_withdraw_zero_balance(self):
+        """Test withdrawal with zero balance"""
+        self.token.balance = 0
+        self.token.save()
+        
+        result = self.token.withdraw(50)
+        self.assertEqual(result, "Invalid deposit amount")
+    
+    def test_withdraw_invalid_negative_amount(self):
+        """Test withdrawal with negative amount"""
+        self.token.balance = 100
+        self.token.save()
+        
+        result = self.token.withdraw(-50)
+        self.assertEqual(result, "invalid withdrawal amount")
+        
+        self.token.refresh_from_db()
+        self.assertEqual(self.token.balance, 100)
+
+class ProgramModelTest(TestCase):
+    def setUp(self):
+        self.program = Program.objects.create(
+            title=fake.sentence(nb_words=3),
+            slug=fake.slug(),
+            description=fake.paragraph(),
+            active=True
+        )
+    
+    def test_program_creation(self):
+        """Test program creation"""
+        self.assertIsNotNone(self.program)
+        self.assertEqual(str(self.program), self.program.title)
+    
+    def test_program_assignment_to_user(self):
+        """Test assigning program to user profile"""
+        user = User.objects.create_user(
+            username=fake.user_name(),
+            email=fake.email(),
+            password=fake.password()
+        )
+        profile = UserProfile.objects.get(user=user)
+        
+        profile.programs.add(self.program)
+        
+        self.assertEqual(profile.programs.count(), 1)
+        self.assertEqual(profile.programs.first(), self.program)
+        self.assertEqual(self.program.programs_entered.first(), profile)

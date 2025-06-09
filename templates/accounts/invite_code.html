@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+
+{% block title %}Enter Invite Code{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-md-6 offset-md-3">
+            <div class="card">
+                <div class="card-header bg-primary text-white">
+                    <h3>Enter Invite Code</h3>
+                </div>
+                <div class="card-body">
+                    <p class="lead">To register for an account, you need an invitation code.</p>
+                    
+                    <form method="post">
+                        {% csrf_token %}
+                        {{ form|crispy }}
+                        <div class="form-group mt-3">
+                            <button type="submit" class="btn btn-primary">Verify Invite Code</button>
+                        </div>
+                    </form>
+                    <hr>
+                    <p>Already have an account? <a href="{% url 'accounts:login' %}">Login</a></p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

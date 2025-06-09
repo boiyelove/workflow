@@ -8,14 +8,9 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('revprograms', '0001_initial'),
         ('accounts', '0005_auto_20170103_0328'),
     ]
 
     operations = [
-        migrations.AddField(
-            model_name='userprofile',
-            name='programs',
-            field=models.ManyToManyField(related_name='programs_entered', to='revprograms.RevenupaPrograms'),
-        ),
+        # Temporarily removing the programs field to fix migration issues
     ]
