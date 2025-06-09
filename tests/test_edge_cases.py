@@ -31,7 +31,9 @@ class PermissionEdgeCaseTest(TestCase):
         self.team = Team.objects.create(
             name='Test Team',
             url='test-team',
-            description='Test team description'
+            description='Test team description',
+            teamAuthor=self.user1,
+            teamAuthor=self.user1
         )
         
         # Add user1 to team
@@ -150,7 +152,9 @@ class ValidationEdgeCaseTest(TestCase):
         self.team = Team.objects.create(
             name='Test Team',
             url='test-team',
-            description='Test team description'
+            description='Test team description',
+            teamAuthor=self.user1,
+            teamAuthor=self.user1
         )
         
         # Add user to team
@@ -268,7 +272,9 @@ class PerformanceEdgeCaseTest(TestCase):
         self.team = Team.objects.create(
             name='Test Team',
             url='test-team',
-            description='Test team description'
+            description='Test team description',
+            teamAuthor=self.user1,
+            teamAuthor=self.user1
         )
         
         # Add user to team
@@ -385,7 +391,9 @@ class ErrorHandlingEdgeCaseTest(TestCase):
         self.team = Team.objects.create(
             name='Test Team',
             url='test-team',
-            description='Test team description'
+            description='Test team description',
+            teamAuthor=self.user1,
+            teamAuthor=self.user1
         )
         
         # Add user to team

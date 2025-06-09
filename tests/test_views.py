@@ -25,7 +25,9 @@ class ProjectViewTest(TestCase):
         self.team = Team.objects.create(
             name='Test Team',
             url='test-team',
-            description='Test team description'
+            description='Test team description',
+            teamAuthor=self.user1,
+            teamAuthor=self.user1
         )
         
         # Add user to team
@@ -205,7 +207,9 @@ class TeamViewTest(TestCase):
         self.team = Team.objects.create(
             name='Test Team',
             url='test-team',
-            description='Test team description'
+            description='Test team description',
+            teamAuthor=self.user1,
+            teamAuthor=self.user1
         )
         
         # Add users to team

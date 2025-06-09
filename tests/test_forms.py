@@ -24,7 +24,9 @@ class ProjectFormTest(TestCase):
         self.team = Team.objects.create(
             name='Test Team',
             url='test-team',
-            description='Test team description'
+            description='Test team description',
+            teamAuthor=self.user,
+            teamAuthor=self.user
         )
         
         self.workspace = Workspace.objects.create(
@@ -118,7 +120,9 @@ class TaskFormTest(TestCase):
         self.team = Team.objects.create(
             name='Test Team',
             url='test-team',
-            description='Test team description'
+            description='Test team description',
+            teamAuthor=self.user,
+            teamAuthor=self.user
         )
     
     def test_task_form_valid_data(self):
@@ -218,7 +222,8 @@ class TeamFormTest(TestCase):
         Team.objects.create(
             name='Existing Team',
             url='existing-team',
-            description='Existing team description'
+            description='Existing team description',
+            teamAuthor=self.user
         )
         
         # Try to create another team with the same URL
