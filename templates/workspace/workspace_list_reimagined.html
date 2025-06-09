@@ -1,0 +1,147 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Workspaces{% endblock %}
+{% block page_title %}Workspaces{% endblock %}
+
+{% block breadcrumb_items %}
+<li class="breadcrumb-item active" aria-current="page">Workspaces</li>
+{% endblock %}
+
+{% block page_actions %}
+<a href="{% url 'workspace:create' %}" class="btn btn-success">
+    <i class="material-icons">add</i> Create Workspace
+</a>
+{% endblock %}
+
+{% block content %}
+<div class="card">
+    <div class="card-header card-header-large bg-white">
+        <div class="row align-items-center">
+            <div class="col">
+                <h4 class="card-header__title">All Workspaces</h4>
+                <div class="card-subtitle text-muted">Manage your workspaces and their projects</div>
+            </div>
+            <div class="col-auto">
+                <div class="search-form search-form--light">
+                    <input type="text" class="form-control search" placeholder="Search workspaces" id="search-workspaces">
+                    <button class="btn" type="button"><i class="material-icons">search</i></button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="card-body p-0">
+        <div class="table-responsive border-bottom" data-toggle="lists" data-lists-values='["js-lists-values-name"]'>
+            <table class="table mb-0 thead-border-top-0">
+                <thead>
+                    <tr>
+                        <th>Workspace</th>
+                        <th>Members</th>
+                        <th>Projects</th>
+                        <th>Created</th>
+                        <th style="width: 120px;">Actions</th>
+                    </tr>
+                </thead>
+                <tbody class="list" id="companies">
+                    {% for workspace in workspaces %}
+                    <tr>
+                        <td>
+                            <div class="d-flex align-items-center">
+                                <div class="avatar avatar-sm mr-3">
+                                    <span class="avatar-title rounded-circle bg-primary text-white">
+                                        {{ workspace.name|first }}
+                                    </span>
+                                </div>
+                                <div class="d-flex flex-column">
+                                    <a href="{% url 'workspace:detail' workspace.id %}" class="text-body js-lists-values-name">
+                                        <strong>{{ workspace.name }}</strong>
+                                    </a>
+                                    <small class="text-muted">{{ workspace.description|truncatechars:50 }}</small>
+                                </div>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="d-flex align-items-center">
+                                <div class="avatar-group mr-3">
+                                    {% for workspace_user in workspace.workspaceuser_set.all|slice:":3" %}
+                                    <div class="avatar avatar-xs" data-toggle="tooltip" data-placement="top" title="{{ workspace_user.user.username }}">
+                                        <span class="avatar-title rounded-circle">{{ workspace_user.user.username|first }}</span>
+                                    </div>
+                                    {% endfor %}
+                                    {% if workspace.workspaceuser_set.count > 3 %}
+                                    <div class="avatar avatar-xs">
+                                        <span class="avatar-title rounded-circle">+{{ workspace.workspaceuser_set.count|add:"-3" }}</span>
+                                    </div>
+                                    {% endif %}
+                                </div>
+                                <a href="{% url 'invites:send' 'workspace' workspace.id %}" class="text-muted"><i class="material-icons icon-16pt">add</i></a>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="badge badge-soft-primary">{{ workspace.projects.count }} projects</div>
+                        </td>
+                        <td>
+                            <small class="text-muted">{{ workspace.created_at|date:"M d, Y" }}</small>
+                        </td>
+                        <td>
+                            <div class="dropdown">
+                                <a href="#" class="dropdown-toggle text-muted" data-toggle="dropdown" data-caret="false">
+                                    <i class="material-icons">more_vert</i>
+                                </a>
+                                <div class="dropdown-menu dropdown-menu-right">
+                                    <a href="{% url 'workspace:detail' workspace.id %}" class="dropdown-item">View</a>
+                                    <a href="{% url 'workspace:update' workspace.id %}" class="dropdown-item">Edit</a>
+                                    <a href="{% url 'invites:send' 'workspace' workspace.id %}" class="dropdown-item">Invite Members</a>
+                                    <div class="dropdown-divider"></div>
+                                    <a href="{% url 'workspace:delete' workspace.id %}" class="dropdown-item text-danger">Delete</a>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <td colspan="5" class="text-center">
+                            <div class="empty-state">
+                                <div class="empty-state__content">
+                                    <div class="empty-state__icon">
+                                        <i class="material-icons">business</i>
+                                    </div>
+                                    <p class="empty-state__description">No workspaces found. Create your first workspace to get started!</p>
+                                    <a href="{% url 'workspace:create' %}" class="btn btn-primary">Create Workspace</a>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script src="{% static 'vendor/list.min.js' %}"></script>
+{% endblock %}
+
+{% block inline_js %}
+<script>
+    $(document).ready(function() {
+        // Initialize List.js
+        var options = {
+            valueNames: ['js-lists-values-name']
+        };
+        var companiesList = new List('companies', options);
+        
+        // Workspace search
+        var searchInput = document.getElementById('search-workspaces');
+        searchInput.addEventListener('keyup', function() {
+            companiesList.search(this.value);
+        });
+        
+        // Initialize tooltips
+        $('[data-toggle="tooltip"]').tooltip();
+    });
+</script>
+{% endblock %}

@@ -1,0 +1,288 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Dashboard - Workflow{% endblock %}
+{% block page_title %}Dashboard{% endblock %}
+
+{% block breadcrumb_items %}
+<li class="breadcrumb-item active" aria-current="page">Dashboard</li>
+{% endblock %}
+
+{% block content %}
+<div class="row card-group-row">
+    <div class="col-lg-4 col-md-6 card-group-row__col">
+        <div class="card card-group-row__card card-body card-body-x-lg flex-row align-items-center">
+            <div class="flex">
+                <div class="card-header__title text-muted mb-2">Projects</div>
+                <div class="text-amount">{{ projects_count }}</div>
+                <div class="text-stats text-success">{{ active_projects_count }} Active</div>
+            </div>
+            <div class="avatar">
+                <span class="bg-primary avatar-title rounded-circle text-center text-white">
+                    <i class="material-icons">assignment</i>
+                </span>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-4 col-md-6 card-group-row__col">
+        <div class="card card-group-row__card card-body card-body-x-lg flex-row align-items-center">
+            <div class="flex">
+                <div class="card-header__title text-muted mb-2">Tasks</div>
+                <div class="text-amount">{{ tasks_count }}</div>
+                <div class="text-stats text-success">{{ completed_tasks_count }} Completed</div>
+            </div>
+            <div class="avatar">
+                <span class="bg-warning avatar-title rounded-circle text-center text-white">
+                    <i class="material-icons">check_circle</i>
+                </span>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-4 col-md-12 card-group-row__col">
+        <div class="card card-group-row__card card-body card-body-x-lg flex-row align-items-center">
+            <div class="flex">
+                <div class="card-header__title text-muted mb-2">Teams</div>
+                <div class="text-amount">{{ teams_count }}</div>
+                <div class="text-stats text-success">{{ team_members_count }} Members</div>
+            </div>
+            <div class="avatar">
+                <span class="bg-success avatar-title rounded-circle text-center text-white">
+                    <i class="material-icons">group</i>
+                </span>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-lg-8">
+        <div class="card">
+            <div class="card-header card-header-large bg-white d-flex align-items-center">
+                <h4 class="card-header__title flex m-0">Recent Projects</h4>
+                <div data-toggle="flatpickr" data-flatpickr-wrap="true" data-flatpickr-static="true" data-flatpickr-mode="range" data-flatpickr-alt-format="d/m/Y" data-flatpickr-date-format="d/m/Y">
+                    <a href="javascript:void(0)" class="link-date" data-toggle>13/03/2018 to 20/03/2018</a>
+                    <input class="flatpickr-hidden-input" type="hidden" value="13/03/2018 to 20/03/2018" data-input>
+                </div>
+            </div>
+            <div class="card-body py-0">
+                <div class="table-responsive">
+                    <table class="table table-nowrap mb-0">
+                        <thead class="thead-light">
+                            <tr>
+                                <th>Project</th>
+                                <th>Status</th>
+                                <th>Tasks</th>
+                                <th>Progress</th>
+                                <th class="text-right">Due Date</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for project in recent_projects %}
+                            <tr>
+                                <td>
+                                    <div class="d-flex align-items-center">
+                                        <div class="avatar avatar-sm mr-3">
+                                            <span class="avatar-title rounded-circle bg-soft-primary text-primary">{{ project.name|first }}</span>
+                                        </div>
+                                        <div>
+                                            <a href="{% url 'projectflow:project-detail' project.slug %}" class="text-body">
+                                                <strong>{{ project.name }}</strong>
+                                            </a>
+                                            <div class="text-muted">{{ project.description|truncatechars:50 }}</div>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td>
+                                    <span class="badge badge-{% if project.status == 'Todo' %}secondary{% elif project.status == 'Doing' %}primary{% else %}success{% endif %}">
+                                        {{ project.status }}
+                                    </span>
+                                </td>
+                                <td>{{ project.tasks.count }}</td>
+                                <td>
+                                    <div class="d-flex align-items-center">
+                                        <div class="progress" style="width: 100px;">
+                                            <div class="progress-bar bg-success" role="progressbar" style="width: {{ project.get_completion_percentage }}%;" aria-valuenow="{{ project.get_completion_percentage }}" aria-valuemin="0" aria-valuemax="100"></div>
+                                        </div>
+                                        <div class="ml-2">{{ project.get_completion_percentage }}%</div>
+                                    </div>
+                                </td>
+                                <td class="text-right">
+                                    {% if project.due_date %}
+                                        <span class="{% if project.is_overdue %}text-danger{% endif %}">
+                                            {{ project.due_date|date:"M d, Y" }}
+                                        </span>
+                                    {% else %}
+                                        <span class="text-muted">Not set</span>
+                                    {% endif %}
+                                </td>
+                            </tr>
+                            {% empty %}
+                            <tr>
+                                <td colspan="5" class="text-center">No projects found</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="card-footer text-center">
+                <a href="{% url 'projectflow:project-list' %}" class="text-muted">View All Projects</a>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-4">
+        <div class="card">
+            <div class="card-header card-header-large bg-white">
+                <h4 class="card-header__title">Your Tasks</h4>
+            </div>
+            <div class="card-body py-0">
+                <ul class="list-group list-group-flush mb-0" style="max-height: 360px; overflow-y: auto;">
+                    {% for task in user_tasks %}
+                    <li class="list-group-item px-0">
+                        <div class="d-flex align-items-center">
+                            <div class="mr-3">
+                                <div class="avatar avatar-sm">
+                                    <span class="avatar-title rounded-circle bg-soft-{% if task.status == 'Todo' %}secondary{% elif task.status == 'Doing' %}primary{% else %}success{% endif %} text-{% if task.status == 'Todo' %}secondary{% elif task.status == 'Doing' %}primary{% else %}success{% endif %}">
+                                        <i class="material-icons icon-16pt">{% if task.status == 'Done' %}check{% else %}schedule{% endif %}</i>
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="flex">
+                                <a href="{% url 'projectflow:task-detail' task.id %}" class="text-body">
+                                    <strong>{{ task.name }}</strong>
+                                </a>
+                                <div class="d-flex align-items-center">
+                                    <small class="text-muted mr-2">
+                                        <a href="{% url 'projectflow:project-detail' task.project.slug %}" class="text-muted">{{ task.project.name }}</a>
+                                    </small>
+                                    {% if task.due_date %}
+                                    <small class="text-muted">
+                                        Due {{ task.due_date|date:"M d" }}
+                                    </small>
+                                    {% endif %}
+                                </div>
+                            </div>
+                            <div class="dropdown ml-3">
+                                <a href="#" class="dropdown-toggle text-muted" data-toggle="dropdown" data-caret="false">
+                                    <i class="material-icons">more_vert</i>
+                                </a>
+                                <div class="dropdown-menu dropdown-menu-right">
+                                    <a href="{% url 'projectflow:task-detail' task.id %}" class="dropdown-item">View</a>
+                                    <a href="{% url 'projectflow:task-update' task.id %}" class="dropdown-item">Edit</a>
+                                    <div class="dropdown-divider"></div>
+                                    <form method="post" action="{% url 'projectflow:task-update-status' task.id %}">
+                                        {% csrf_token %}
+                                        <button type="submit" name="status" value="Done" class="dropdown-item">Mark as Complete</button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                    {% empty %}
+                    <li class="list-group-item px-0">
+                        <div class="text-center text-muted">No tasks assigned to you</div>
+                    </li>
+                    {% endfor %}
+                </ul>
+            </div>
+            <div class="card-footer text-center">
+                <a href="{% url 'projectflow:task-list' %}" class="text-muted">View All Tasks</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-lg-6">
+        <div class="card">
+            <div class="card-header card-header-large bg-white">
+                <h4 class="card-header__title">Upcoming Milestones</h4>
+            </div>
+            <div class="card-body py-0">
+                <ul class="list-group list-group-flush mb-0">
+                    {% for milestone in upcoming_milestones %}
+                    <li class="list-group-item px-0">
+                        <div class="d-flex align-items-center">
+                            <div class="mr-3">
+                                <div class="avatar avatar-sm">
+                                    <span class="avatar-title rounded-circle bg-soft-info text-info">
+                                        <i class="material-icons icon-16pt">flag</i>
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="flex">
+                                <a href="{% url 'projectflow:task-detail' milestone.id %}" class="text-body">
+                                    <strong>{{ milestone.name }}</strong>
+                                </a>
+                                <div class="d-flex align-items-center">
+                                    <small class="text-muted mr-2">
+                                        <a href="{% url 'projectflow:project-detail' milestone.project.slug %}" class="text-muted">{{ milestone.project.name }}</a>
+                                    </small>
+                                    {% if milestone.due_date %}
+                                    <small class="{% if milestone.is_overdue %}text-danger{% else %}text-muted{% endif %}">
+                                        Due {{ milestone.due_date|date:"M d, Y" }}
+                                    </small>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                    {% empty %}
+                    <li class="list-group-item px-0">
+                        <div class="text-center text-muted">No upcoming milestones</div>
+                    </li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-6">
+        <div class="card">
+            <div class="card-header card-header-large bg-white">
+                <h4 class="card-header__title">Your Teams</h4>
+            </div>
+            <div class="card-body py-0">
+                <ul class="list-group list-group-flush mb-0">
+                    {% for team in user_teams %}
+                    <li class="list-group-item px-0">
+                        <div class="d-flex align-items-center">
+                            <div class="mr-3">
+                                <div class="avatar avatar-sm">
+                                    <span class="avatar-title rounded-circle bg-soft-primary text-primary">{{ team.name|first }}</span>
+                                </div>
+                            </div>
+                            <div class="flex">
+                                <a href="{% url 'teamflow:team-detail' team.url %}" class="text-body">
+                                    <strong>{{ team.name }}</strong>
+                                </a>
+                                <div class="d-flex align-items-center">
+                                    <small class="text-muted">{{ team.members.count }} members</small>
+                                    <small class="text-muted ml-2">{{ team.projects.count }} projects</small>
+                                </div>
+                            </div>
+                            <div>
+                                <a href="{% url 'teamflow:team-detail' team.url %}" class="btn btn-sm btn-outline-primary">View</a>
+                            </div>
+                        </div>
+                    </li>
+                    {% empty %}
+                    <li class="list-group-item px-0">
+                        <div class="text-center text-muted">You're not a member of any team</div>
+                    </li>
+                    {% endfor %}
+                </ul>
+            </div>
+            <div class="card-footer text-center">
+                <a href="{% url 'teamflow:team-list' %}" class="text-muted">View All Teams</a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script src="{% static 'vendor/moment.min.js' %}"></script>
+<script src="{% static 'vendor/moment-range.js' %}"></script>
+<script src="{% static 'vendor/flatpickr/flatpickr.min.js' %}"></script>
+<script src="{% static 'js/flatpickr.js' %}"></script>
+{% endblock %}

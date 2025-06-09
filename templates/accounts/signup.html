@@ -6,7 +6,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>Login - Workflow</title>
+    <title>Sign Up - Workflow</title>
 
     <!-- Prevent the demo from appearing in search engines -->
     <meta name="robots" content="noindex">
@@ -56,7 +56,7 @@
                 <img class="navbar-brand-icon mr-0 mb-2" src="{% static 'images/stack-logo-blue.svg' %}" width="25" alt="Workflow">
                 <span>Workflow</span>
             </a>
-            <p class="m-0">Login to access your Workflow Account</p>
+            <p class="m-0">Create an account with Workflow</p>
         </div>
 
         {% if messages %}
@@ -69,7 +69,7 @@
         {% endif %}
 
         <div class="page-separator">
-            <div class="page-separator__text">Login with Email</div>
+            <div class="page-separator__text">Sign Up with Email</div>
         </div>
 
         <form method="post" novalidate>
@@ -77,7 +77,7 @@
             <div class="form-group">
                 <label class="text-label" for="id_username">Username:</label>
                 <div class="input-group input-group-merge">
-                    <input id="id_username" name="username" type="text" required class="form-control form-control-prepended" placeholder="Enter your username">
+                    <input id="id_username" name="username" type="text" required class="form-control form-control-prepended" placeholder="Choose a username">
                     <div class="input-group-prepend">
                         <div class="input-group-text">
                             <span class="far fa-user"></span>
@@ -93,35 +93,71 @@
                 {% endif %}
             </div>
             <div class="form-group">
-                <label class="text-label" for="id_password">Password:</label>
+                <label class="text-label" for="id_email">Email Address:</label>
                 <div class="input-group input-group-merge">
-                    <input id="id_password" name="password" type="password" required class="form-control form-control-prepended" placeholder="Enter your password">
+                    <input id="id_email" name="email" type="email" required class="form-control form-control-prepended" placeholder="name@example.com">
                     <div class="input-group-prepend">
                         <div class="input-group-text">
-                            <span class="fa fa-key"></span>
+                            <span class="far fa-envelope"></span>
                         </div>
                     </div>
                 </div>
-                {% if form.password.errors %}
+                {% if form.email.errors %}
                     <div class="invalid-feedback d-block">
-                        {% for error in form.password.errors %}
+                        {% for error in form.email.errors %}
                             {{ error }}
                         {% endfor %}
                     </div>
                 {% endif %}
             </div>
             <div class="form-group">
-                <button class="btn btn-block btn-primary" type="submit">Login</button>
+                <label class="text-label" for="id_password1">Password:</label>
+                <div class="input-group input-group-merge">
+                    <input id="id_password1" name="password1" type="password" required class="form-control form-control-prepended" placeholder="Choose a password">
+                    <div class="input-group-prepend">
+                        <div class="input-group-text">
+                            <span class="fa fa-key"></span>
+                        </div>
+                    </div>
+                </div>
+                {% if form.password1.errors %}
+                    <div class="invalid-feedback d-block">
+                        {% for error in form.password1.errors %}
+                            {{ error }}
+                        {% endfor %}
+                    </div>
+                {% endif %}
+                {% if form.password1.help_text %}
+                    <small class="form-text text-muted">{{ form.password1.help_text }}</small>
+                {% endif %}
             </div>
-            <div class="form-group text-center">
+            <div class="form-group">
+                <label class="text-label" for="id_password2">Confirm Password:</label>
+                <div class="input-group input-group-merge">
+                    <input id="id_password2" name="password2" type="password" required class="form-control form-control-prepended" placeholder="Confirm your password">
+                    <div class="input-group-prepend">
+                        <div class="input-group-text">
+                            <span class="fa fa-key"></span>
+                        </div>
+                    </div>
+                </div>
+                {% if form.password2.errors %}
+                    <div class="invalid-feedback d-block">
+                        {% for error in form.password2.errors %}
+                            {{ error }}
+                        {% endfor %}
+                    </div>
+                {% endif %}
+            </div>
+            <div class="form-group mb-5">
                 <div class="custom-control custom-checkbox">
-                    <input type="checkbox" class="custom-control-input" id="remember" name="remember">
-                    <label class="custom-control-label" for="remember">Remember me</label>
+                    <input type="checkbox" checked class="custom-control-input" id="terms" name="terms" required>
+                    <label class="custom-control-label" for="terms">I accept the <a href="#">Terms and Conditions</a></label>
                 </div>
             </div>
             <div class="form-group text-center">
-                <a href="{% url 'accounts:password_reset' %}">Forgot password?</a> <br>
-                Don't have an account? <a class="text-body text-underline" href="{% url 'accounts:signup' %}">Sign up!</a>
+                <button class="btn btn-primary mb-2" type="submit">Create Account</button><br>
+                <a class="text-body text-underline" href="{% url 'accounts:login' %}">Have an account? Login</a>
             </div>
         </form>
     </div>
