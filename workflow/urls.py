@@ -12,6 +12,7 @@ urlpatterns = [
     path('teams/', include('teamflow.urls')),
     path('workspaces/', include('workspace.urls')),
     path('invites/', include('invites.urls')),
+    path('support/', include('support.urls')),
 ]
 
 if settings.DEBUG:

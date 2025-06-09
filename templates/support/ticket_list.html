@@ -1,0 +1,129 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Support Tickets{% endblock %}
+{% block page_title %}Support Tickets{% endblock %}
+
+{% block breadcrumb_items %}
+<li class="breadcrumb-item active" aria-current="page">Support Tickets</li>
+{% endblock %}
+
+{% block page_actions %}
+<a href="{% url 'support:ticket_create' %}" class="btn btn-success">
+    <i class="material-icons">add</i> Create Ticket
+</a>
+{% endblock %}
+
+{% block content %}
+<div class="card">
+    <div class="card-header card-header-large bg-white">
+        <div class="row align-items-center">
+            <div class="col">
+                <h4 class="card-header__title">All Support Tickets</h4>
+                <div class="card-subtitle text-muted">View and manage your support tickets</div>
+            </div>
+            <div class="col-auto">
+                <div class="search-form search-form--light">
+                    <input type="text" class="form-control search" placeholder="Search tickets" id="search-tickets">
+                    <button class="btn" type="button"><i class="material-icons">search</i></button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="card-body p-0">
+        <div class="table-responsive border-bottom" data-toggle="lists" data-lists-values='["js-lists-values-title"]'>
+            <table class="table mb-0 thead-border-top-0">
+                <thead>
+                    <tr>
+                        <th>Ticket</th>
+                        <th>Status</th>
+                        <th>Priority</th>
+                        <th>Created</th>
+                        <th>Last Updated</th>
+                        <th style="width: 60px;">Actions</th>
+                    </tr>
+                </thead>
+                <tbody class="list" id="tickets">
+                    {% for ticket in tickets %}
+                    <tr>
+                        <td>
+                            <div class="d-flex align-items-center">
+                                <div class="avatar avatar-sm mr-3">
+                                    <span class="avatar-title rounded-circle bg-soft-primary text-primary">
+                                        {{ ticket.title|first }}
+                                    </span>
+                                </div>
+                                <div class="d-flex flex-column">
+                                    <a href="{% url 'support:ticket_detail' ticket.id %}" class="text-body js-lists-values-title">
+                                        <strong>{{ ticket.title }}</strong>
+                                    </a>
+                                    <small class="text-muted">{{ ticket.description|truncatechars:50 }}</small>
+                                </div>
+                            </div>
+                        </td>
+                        <td>
+                            <span class="badge badge-{% if ticket.status == 'Open' %}soft-warning{% elif ticket.status == 'In Progress' %}soft-primary{% elif ticket.status == 'Resolved' %}soft-success{% else %}soft-secondary{% endif %}">
+                                {{ ticket.status }}
+                            </span>
+                        </td>
+                        <td>
+                            <span class="badge badge-{% if ticket.priority == 'Low' %}soft-secondary{% elif ticket.priority == 'Medium' %}soft-info{% elif ticket.priority == 'High' %}soft-warning{% else %}soft-danger{% endif %}">
+                                {{ ticket.priority }}
+                            </span>
+                        </td>
+                        <td>
+                            <small class="text-muted">{{ ticket.created_at|date:"M d, Y" }}</small>
+                        </td>
+                        <td>
+                            <small class="text-muted">{{ ticket.updated_at|date:"M d, Y" }}</small>
+                        </td>
+                        <td>
+                            <a href="{% url 'support:ticket_detail' ticket.id %}" class="btn btn-sm btn-light">
+                                <i class="material-icons">visibility</i>
+                            </a>
+                        </td>
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <td colspan="6" class="text-center">
+                            <div class="empty-state">
+                                <div class="empty-state__content">
+                                    <div class="empty-state__icon">
+                                        <i class="material-icons">support</i>
+                                    </div>
+                                    <p class="empty-state__description">No support tickets found. Create your first ticket to get help!</p>
+                                    <a href="{% url 'support:ticket_create' %}" class="btn btn-primary">Create Ticket</a>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script src="{% static 'vendor/list.min.js' %}"></script>
+{% endblock %}
+
+{% block inline_js %}
+<script>
+    $(document).ready(function() {
+        // Initialize List.js
+        var options = {
+            valueNames: ['js-lists-values-title']
+        };
+        var ticketsList = new List('tickets', options);
+        
+        // Ticket search
+        var searchInput = document.getElementById('search-tickets');
+        searchInput.addEventListener('keyup', function() {
+            ticketsList.search(this.value);
+        });
+    });
+</script>
+{% endblock %}

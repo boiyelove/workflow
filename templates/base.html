@@ -258,10 +258,10 @@
 
                             <div class="sidebar-heading">Support</div>
                             <ul class="sidebar-menu">
-                                <li class="sidebar-menu-item">
-                                    <a class="sidebar-menu-button" href="#">
-                                        <i class="sidebar-menu-icon sidebar-menu-icon--left material-icons">help</i>
-                                        <span class="sidebar-menu-text">Documentation</span>
+                                <li class="sidebar-menu-item {% if 'support' in request.path %}active{% endif %}">
+                                    <a class="sidebar-menu-button" href="{% url 'support:ticket_list' %}">
+                                        <i class="sidebar-menu-icon sidebar-menu-icon--left material-icons">support</i>
+                                        <span class="sidebar-menu-text">Support Tickets</span>
                                     </a>
                                 </li>
                             </ul>
