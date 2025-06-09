@@ -26,4 +26,9 @@ urlpatterns = [
     path('subtasks/<int:pk>/update/', views.SubTaskUpdate.as_view(), name="subtask-update"),
     path('subtasks/<int:pk>/delete/', views.SubTaskDelete.as_view(), name="subtask-delete"),
     path('subtasks/<int:pk>/status/', views.update_subtask_status, name="subtask-update-status"),
+    
+    # API endpoints for Select2
+    path('api/users/', views.user_search, name="user-search"),
+    path('api/teams/', views.team_search, name="team-search"),
+    path('api/team-members/', views.team_member_search, name="team-member-search"),
 ]

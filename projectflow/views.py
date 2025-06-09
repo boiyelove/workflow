@@ -3,11 +3,117 @@ from django.views.generic import DetailView, ListView, CreateView, UpdateView, D
 from django.urls import reverse_lazy, reverse
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.contrib.auth.decorators import login_required
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, JsonResponse
 from django.db.models import Q
+from django.contrib.auth.models import User
 from .models import Project, Task, SubTask, JOB_STATUS
 from .forms import ProjectForm, TaskForm, SubTaskForm
 from teamflow.models import Team, TeamMember
+
+# API views for Select2 autocomplete
+@login_required
+def user_search(request):
+    q = request.GET.get('q', '')
+    page = int(request.GET.get('page', 1))
+    page_size = 10
+    
+    users = User.objects.filter(
+        Q(username__icontains=q) | 
+        Q(first_name__icontains=q) | 
+        Q(last_name__icontains=q) | 
+        Q(email__icontains=q)
+    ).distinct()
+    
+    # Pagination
+    start = (page - 1) * page_size
+    end = page * page_size
+    total = users.count()
+    
+    results = []
+    for user in users[start:end]:
+        display_name = f"{user.get_full_name() or user.username}"
+        results.append({
+            'id': user.id,
+            'text': display_name,
+        })
+    
+    return JsonResponse({
+        'results': results,
+        'pagination': {
+            'more': total > page * page_size
+        }
+    })
+
+@login_required
+def team_search(request):
+    q = request.GET.get('q', '')
+    page = int(request.GET.get('page', 1))
+    page_size = 10
+    
+    user = request.user
+    teams = Team.objects.filter(
+        Q(name__icontains=q) | 
+        Q(description__icontains=q)
+    ).filter(
+        Q(teammember__user=user) | Q(is_public=True)
+    ).distinct()
+    
+    # Pagination
+    start = (page - 1) * page_size
+    end = page * page_size
+    total = teams.count()
+    
+    results = []
+    for team in teams[start:end]:
+        results.append({
+            'id': team.id,
+            'text': team.name,
+        })
+    
+    return JsonResponse({
+        'results': results,
+        'pagination': {
+            'more': total > page * page_size
+        }
+    })
+
+@login_required
+def team_member_search(request):
+    q = request.GET.get('q', '')
+    team_id = request.GET.get('team_id')
+    page = int(request.GET.get('page', 1))
+    page_size = 10
+    
+    query = Q(user__username__icontains=q) | Q(user__first_name__icontains=q) | Q(user__last_name__icontains=q)
+    
+    if team_id:
+        team_members = TeamMember.objects.filter(query, team_id=team_id)
+    else:
+        team_members = TeamMember.objects.filter(query)
+    
+    # Pagination
+    start = (page - 1) * page_size
+    end = page * page_size
+    total = team_members.count()
+    
+    results = []
+    for member in team_members[start:end]:
+        display_name = f"{member.user.get_full_name() or member.user.username}"
+        if member.handle:
+            display_name = f"{display_name} ({member.handle})"
+            
+        results.append({
+            'id': member.id,
+            'text': display_name,
+            'designation': member.designation,
+        })
+    
+    return JsonResponse({
+        'results': results,
+        'pagination': {
+            'more': total > page * page_size
+        }
+    })
 
 class ProjectDetail(LoginRequiredMixin, DetailView):
     model = Project
@@ -17,6 +123,7 @@ class ProjectDetail(LoginRequiredMixin, DetailView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['tasks'] = self.object.tasks.all()
+        context['subprojects'] = self.object.subprojects.all()
         return context
     
     def get_queryset(self):
@@ -25,7 +132,9 @@ class ProjectDetail(LoginRequiredMixin, DetailView):
         # Show public projects or projects where user is a team member
         return queryset.filter(
             Q(is_public=True) | 
-            Q(team__teammember__user=user)
+            Q(team__teammember__user=user) |
+            Q(assigned_users=user) |
+            Q(assigned_teams__teammember__user=user)
         ).distinct()
 
 class ProjectList(LoginRequiredMixin, ListView):
@@ -38,7 +147,11 @@ class ProjectList(LoginRequiredMixin, ListView):
         # Show public projects or projects where user is a team member
         return Project.objects.filter(
             Q(is_public=True) | 
-            Q(team__teammember__user=user)
+            Q(team__teammember__user=user) |
+            Q(assigned_users=user) |
+            Q(assigned_teams__teammember__user=user)
+        ).filter(
+            parent__isnull=True  # Only show top-level projects
         ).distinct()
 
 class ProjectCreate(LoginRequiredMixin, CreateView):
@@ -50,6 +163,10 @@ class ProjectCreate(LoginRequiredMixin, CreateView):
         form = super().get_form(form_class)
         user = self.request.user
         form.fields['team'].queryset = Team.objects.filter(teammember__user=user, teammember__is_manager=True)
+        form.fields['parent'].queryset = Project.objects.filter(
+            Q(is_public=True) | 
+            Q(team__teammember__user=user, team__teammember__is_manager=True)
+        ).distinct()
         return form
     
     def get_success_url(self):
@@ -72,6 +189,16 @@ class ProjectUpdate(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
         form = super().get_form(form_class)
         user = self.request.user
         form.fields['team'].queryset = Team.objects.filter(teammember__user=user, teammember__is_manager=True)
+        
+        # Exclude self and its subprojects from parent options to prevent circular references
+        if self.object.pk:
+            subproject_ids = [p.pk for p in self.object.get_all_subprojects()]
+            subproject_ids.append(self.object.pk)
+            form.fields['parent'].queryset = Project.objects.filter(
+                Q(is_public=True) | 
+                Q(team__teammember__user=user, team__teammember__is_manager=True)
+            ).exclude(pk__in=subproject_ids).distinct()
+        
         return form
     
     def get_success_url(self):
@@ -106,7 +233,11 @@ class TaskDetail(LoginRequiredMixin, DetailView):
         # Show tasks from public projects or projects where user is a team member
         return queryset.filter(
             Q(project__is_public=True) | 
-            Q(project__team__teammember__user=user)
+            Q(project__team__teammember__user=user) |
+            Q(assigned_users=user) |
+            Q(assigned_teams__teammember__user=user) |
+            Q(project__assigned_users=user) |
+            Q(project__assigned_teams__teammember__user=user)
         ).distinct()
 
 class TaskList(LoginRequiredMixin, ListView):
@@ -119,7 +250,11 @@ class TaskList(LoginRequiredMixin, ListView):
         # Show tasks from public projects or projects where user is a team member
         return Task.objects.filter(
             Q(project__is_public=True) | 
-            Q(project__team__teammember__user=user)
+            Q(project__team__teammember__user=user) |
+            Q(assigned_users=user) |
+            Q(assigned_teams__teammember__user=user) |
+            Q(project__assigned_users=user) |
+            Q(project__assigned_teams__teammember__user=user)
         ).distinct()
 
 class TaskCreate(LoginRequiredMixin, CreateView):
@@ -133,7 +268,9 @@ class TaskCreate(LoginRequiredMixin, CreateView):
         teams = Team.objects.filter(teammember__user=user)
         form.fields['project'].queryset = Project.objects.filter(
             Q(is_public=True) | 
-            Q(team__in=teams)
+            Q(team__in=teams) |
+            Q(assigned_users=user) |
+            Q(assigned_teams__in=teams)
         ).distinct()
         form.fields['team_member'].queryset = TeamMember.objects.filter(team__in=teams)
         
@@ -154,10 +291,16 @@ class TaskUpdate(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
     
     def test_func(self):
         task = self.get_object()
-        return TeamMember.objects.filter(
-            user=self.request.user,
-            team=task.project.team,
-        ).exists()
+        user = self.request.user
+        return (
+            TeamMember.objects.filter(user=user, team=task.project.team).exists() or
+            user in task.assigned_users.all() or
+            user in task.project.assigned_users.all() or
+            Team.objects.filter(teammember__user=user).filter(
+                Q(pk__in=task.assigned_teams.all()) |
+                Q(pk__in=task.project.assigned_teams.all())
+            ).exists()
+        )
     
     def get_form(self, form_class=None):
         form = super().get_form(form_class)
@@ -165,7 +308,9 @@ class TaskUpdate(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
         teams = Team.objects.filter(teammember__user=user)
         form.fields['project'].queryset = Project.objects.filter(
             Q(is_public=True) | 
-            Q(team__in=teams)
+            Q(team__in=teams) |
+            Q(assigned_users=user) |
+            Q(assigned_teams__in=teams)
         ).distinct()
         form.fields['team_member'].queryset = TeamMember.objects.filter(team__in=teams)
         return form
@@ -205,13 +350,21 @@ class SubTaskCreate(LoginRequiredMixin, CreateView):
             form.initial['task'] = task
             form.fields['task'].queryset = Task.objects.filter(
                 Q(project__is_public=True) | 
-                Q(project__team__in=teams)
+                Q(project__team__in=teams) |
+                Q(assigned_users=user) |
+                Q(assigned_teams__in=teams) |
+                Q(project__assigned_users=user) |
+                Q(project__assigned_teams__in=teams)
             ).distinct()
             form.fields['team_member'].queryset = TeamMember.objects.filter(team=task.project.team)
         else:
             form.fields['task'].queryset = Task.objects.filter(
                 Q(project__is_public=True) | 
-                Q(project__team__in=teams)
+                Q(project__team__in=teams) |
+                Q(assigned_users=user) |
+                Q(assigned_teams__in=teams) |
+                Q(project__assigned_users=user) |
+                Q(project__assigned_teams__in=teams)
             ).distinct()
             form.fields['team_member'].queryset = TeamMember.objects.filter(team__in=teams)
         
@@ -227,10 +380,13 @@ class SubTaskUpdate(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
     
     def test_func(self):
         subtask = self.get_object()
-        return TeamMember.objects.filter(
-            user=self.request.user,
-            team=subtask.task.project.team
-        ).exists()
+        user = self.request.user
+        return (
+            TeamMember.objects.filter(user=user, team=subtask.task.project.team).exists() or
+            user in subtask.assigned_users.all() or
+            user in subtask.task.assigned_users.all() or
+            user in subtask.task.project.assigned_users.all()
+        )
     
     def get_form(self, form_class=None):
         form = super().get_form(form_class)
@@ -238,7 +394,11 @@ class SubTaskUpdate(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
         teams = Team.objects.filter(teammember__user=user)
         form.fields['task'].queryset = Task.objects.filter(
             Q(project__is_public=True) | 
-            Q(project__team__in=teams)
+            Q(project__team__in=teams) |
+            Q(assigned_users=user) |
+            Q(assigned_teams__in=teams) |
+            Q(project__assigned_users=user) |
+            Q(project__assigned_teams__in=teams)
         ).distinct()
         form.fields['team_member'].queryset = TeamMember.objects.filter(team__in=teams)
         return form

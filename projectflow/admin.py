@@ -1,25 +1,21 @@
 from django.contrib import admin
-from .models import Project, Board, Task
+from .models import Project, Task, SubTask
 
 @admin.register(Project)
 class ProjectAdmin(admin.ModelAdmin):
-    list_display = ('name', 'team', 'author', 'created_on')
-    list_filter = ('created_on',)
+    list_display = ('name', 'status', 'created_at', 'updated_at')
+    list_filter = ('status', 'created_at')
     search_fields = ('name', 'description')
     prepopulated_fields = {'slug': ('name',)}
-    raw_id_fields = ('team', 'author')
-
-@admin.register(Board)
-class BoardAdmin(admin.ModelAdmin):
-    list_display = ('name', 'project', 'created_on')
-    list_filter = ('project', 'created_on')
-    search_fields = ('name',)
-    prepopulated_fields = {'slug': ('name',)}
-    raw_id_fields = ('project',)
 
 @admin.register(Task)
 class TaskAdmin(admin.ModelAdmin):
-    list_display = ('title', 'status', 'board', 'project', 'assignee', 'creator', 'created_on')
-    list_filter = ('status', 'board', 'project', 'created_on')
-    search_fields = ('title', 'description')
-    raw_id_fields = ('board', 'project', 'assignee', 'creator', 'parent_task')
+    list_display = ('name', 'project', 'status', 'created_at')
+    list_filter = ('status', 'project', 'created_at')
+    search_fields = ('name', 'description')
+
+@admin.register(SubTask)
+class SubTaskAdmin(admin.ModelAdmin):
+    list_display = ('name', 'task', 'status', 'team_member', 'created_at')
+    list_filter = ('status', 'task', 'created_at')
+    search_fields = ('name', 'description')
