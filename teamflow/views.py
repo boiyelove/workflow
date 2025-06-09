@@ -8,8 +8,9 @@ from webcore.forms import FormLink, ExtraFormContext
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib import messages
 from django.contrib.messages.views import SuccessMessageMixin
-from django.http import JsonResponse
+from django.http import JsonResponse, HttpResponseRedirect
 from django.urls import reverse_lazy
+from django.contrib.auth import logout
 
 
 class LoginRqMixin(LoginRequiredMixin):
@@ -40,7 +41,7 @@ class LogoutView(LoginRqMixin, View):
 # Create your views here.
 class NewUnconfirmedUser(SuccessMessageMixin, FormView):
 	form_class = EmailSignUpForm
-	template_name = 'form_inside.html'
+	template_name = 'form.html'  # Changed from form_inside.html to form.html
 	success_url = '/'
 	success_message = "An invitation has been sent to %(email)s"
 
@@ -50,7 +51,7 @@ class NewUnconfirmedUser(SuccessMessageMixin, FormView):
 
 class CreateAccount(SuccessMessageMixin, FormView):
 	form_class =  UserInfoForm
-	template_name = 'webcore/form_inside.html'
+	template_name = 'form.html'  # Changed from webcore/form_inside.html to form.html
 	success_url = '/'
 	success_message = "Account Has Been Created Successfully"
 
