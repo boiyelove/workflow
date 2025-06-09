@@ -11,11 +11,17 @@
                 Project: <a href="{% url 'projectflow:project-detail' task.project.slug %}">{{ task.project.name }}</a>
             </p>
         </div>
-        <div class="col-md-4 text-right">
+        <div class="col-md-4 text-end">
             <div class="btn-group" role="group">
-                <a href="{% url 'projectflow:task-update' task.id %}" class="btn btn-outline-primary">Edit Task</a>
-                <a href="{% url 'projectflow:subtask-create-for-task' task.id %}" class="btn btn-outline-secondary">Add Subtask</a>
-                <a href="{% url 'projectflow:task-delete' task.id %}" class="btn btn-outline-danger">Delete</a>
+                <a href="{% url 'projectflow:task-update' task.id %}" class="btn btn-outline-primary">
+                    <i class="fas fa-edit"></i> Edit Task
+                </a>
+                <a href="{% url 'projectflow:subtask-create-for-task' task.id %}" class="btn btn-outline-secondary">
+                    <i class="fas fa-plus"></i> Add Subtask
+                </a>
+                <a href="{% url 'projectflow:task-delete' task.id %}" class="btn btn-outline-danger">
+                    <i class="fas fa-trash"></i> Delete
+                </a>
             </div>
         </div>
     </div>
@@ -24,43 +30,43 @@
         <div class="col-md-8">
             <div class="card mb-4">
                 <div class="card-header">
-                    <h5>Task Details</h5>
+                    <h5 class="mb-0">Task Details</h5>
                 </div>
                 <div class="card-body">
                     <div class="row mb-3">
-                        <div class="col-md-3 font-weight-bold">Description:</div>
+                        <div class="col-md-3 fw-bold">Description:</div>
                         <div class="col-md-9">{{ task.description|linebreaks }}</div>
                     </div>
                     <div class="row mb-3">
-                        <div class="col-md-3 font-weight-bold">Status:</div>
+                        <div class="col-md-3 fw-bold">Status:</div>
                         <div class="col-md-9">
                             <div class="dropdown">
-                                <button class="btn btn-sm dropdown-toggle badge badge-{% if task.status == 'Todo' %}secondary{% elif task.status == 'Doing' %}primary{% else %}success{% endif %}" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <button class="btn btn-sm dropdown-toggle badge bg-{% if task.status == 'Todo' %}secondary{% elif task.status == 'Doing' %}primary{% else %}success{% endif %}" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
                                     {{ task.status }}
                                 </button>
-                                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                                     <form method="post" action="{% url 'projectflow:task-update-status' task.id %}">
                                         {% csrf_token %}
-                                        <button type="submit" name="status" value="Todo" class="dropdown-item">Todo</button>
-                                        <button type="submit" name="status" value="Doing" class="dropdown-item">Doing</button>
-                                        <button type="submit" name="status" value="Done" class="dropdown-item">Done</button>
+                                        <li><button type="submit" name="status" value="Todo" class="dropdown-item">Todo</button></li>
+                                        <li><button type="submit" name="status" value="Doing" class="dropdown-item">Doing</button></li>
+                                        <li><button type="submit" name="status" value="Done" class="dropdown-item">Done</button></li>
                                     </form>
-                                </div>
+                                </ul>
                             </div>
                         </div>
                     </div>
                     <div class="row mb-3">
-                        <div class="col-md-3 font-weight-bold">Assigned To:</div>
+                        <div class="col-md-3 fw-bold">Assigned To:</div>
                         <div class="col-md-9">
                             {% for member in task.team_member.all %}
-                                <span class="badge badge-info">{{ member.handle }}</span>
+                                <span class="badge bg-info text-dark">{{ member.handle }}</span>
                             {% empty %}
                                 <span class="text-muted">Unassigned</span>
                             {% endfor %}
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col-md-3 font-weight-bold">Created:</div>
+                        <div class="col-md-3 fw-bold">Created:</div>
                         <div class="col-md-9">{{ task.created_at|date:"F j, Y, g:i a" }}</div>
                     </div>
                 </div>
@@ -68,8 +74,10 @@
 
             <div class="card">
                 <div class="card-header d-flex justify-content-between align-items-center">
-                    <h5>Subtasks</h5>
-                    <a href="{% url 'projectflow:subtask-create-for-task' task.id %}" class="btn btn-sm btn-primary">Add Subtask</a>
+                    <h5 class="mb-0">Subtasks</h5>
+                    <a href="{% url 'projectflow:subtask-create-for-task' task.id %}" class="btn btn-sm btn-primary">
+                        <i class="fas fa-plus"></i> Add Subtask
+                    </a>
                 </div>
                 <div class="card-body">
                     {% if subtasks %}
@@ -88,32 +96,38 @@
                                     {% for subtask in subtasks %}
                                         <tr>
                                             <td>{{ subtask.name }}</td>
-                                            <td>{{ subtask.description }}</td>
+                                            <td>{{ subtask.description|truncatechars:50 }}</td>
                                             <td>
                                                 <div class="dropdown">
-                                                    <button class="btn btn-sm dropdown-toggle badge badge-{% if subtask.status == 'Todo' %}secondary{% elif subtask.status == 'Doing' %}primary{% else %}success{% endif %}" type="button" id="dropdownMenuButton-{{ subtask.id }}" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                    <button class="btn btn-sm dropdown-toggle badge bg-{% if subtask.status == 'Todo' %}secondary{% elif subtask.status == 'Doing' %}primary{% else %}success{% endif %}" type="button" id="dropdownMenuButton-{{ subtask.id }}" data-bs-toggle="dropdown" aria-expanded="false">
                                                         {{ subtask.status }}
                                                     </button>
-                                                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton-{{ subtask.id }}">
+                                                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton-{{ subtask.id }}">
                                                         <form method="post" action="{% url 'projectflow:subtask-update-status' subtask.id %}">
                                                             {% csrf_token %}
-                                                            <button type="submit" name="status" value="Todo" class="dropdown-item">Todo</button>
-                                                            <button type="submit" name="status" value="Doing" class="dropdown-item">Doing</button>
-                                                            <button type="submit" name="status" value="Done" class="dropdown-item">Done</button>
+                                                            <li><button type="submit" name="status" value="Todo" class="dropdown-item">Todo</button></li>
+                                                            <li><button type="submit" name="status" value="Doing" class="dropdown-item">Doing</button></li>
+                                                            <li><button type="submit" name="status" value="Done" class="dropdown-item">Done</button></li>
                                                         </form>
-                                                    </div>
+                                                    </ul>
                                                 </div>
                                             </td>
                                             <td>
                                                 {% if subtask.team_member %}
-                                                    <span class="badge badge-info">{{ subtask.team_member.handle }}</span>
+                                                    <span class="badge bg-info text-dark">{{ subtask.team_member.handle }}</span>
                                                 {% else %}
                                                     <span class="text-muted">Unassigned</span>
                                                 {% endif %}
                                             </td>
                                             <td>
-                                                <a href="{% url 'projectflow:subtask-update' subtask.id %}" class="btn btn-sm btn-outline-secondary">Edit</a>
-                                                <a href="{% url 'projectflow:subtask-delete' subtask.id %}" class="btn btn-sm btn-outline-danger">Delete</a>
+                                                <div class="btn-group btn-group-sm" role="group">
+                                                    <a href="{% url 'projectflow:subtask-update' subtask.id %}" class="btn btn-outline-secondary">
+                                                        <i class="fas fa-edit"></i>
+                                                    </a>
+                                                    <a href="{% url 'projectflow:subtask-delete' subtask.id %}" class="btn btn-outline-danger">
+                                                        <i class="fas fa-trash"></i>
+                                                    </a>
+                                                </div>
                                             </td>
                                         </tr>
                                     {% endfor %}
@@ -132,13 +146,19 @@
         <div class="col-md-4">
             <div class="card mb-4">
                 <div class="card-header">
-                    <h5>Project Information</h5>
+                    <h5 class="mb-0">Project Information</h5>
                 </div>
                 <div class="card-body">
                     <h6>{{ task.project.name }}</h6>
-                    <p>{{ task.project.description }}</p>
-                    <p><strong>Status:</strong> {{ task.project.status }}</p>
-                    <a href="{% url 'projectflow:project-detail' task.project.slug %}" class="btn btn-outline-primary btn-block">View Project</a>
+                    <p>{{ task.project.description|truncatechars:150 }}</p>
+                    <p><strong>Status:</strong> 
+                        <span class="badge bg-{% if task.project.status == 'Todo' %}secondary{% elif task.project.status == 'Doing' %}primary{% else %}success{% endif %}">
+                            {{ task.project.status }}
+                        </span>
+                    </p>
+                    <a href="{% url 'projectflow:project-detail' task.project.slug %}" class="btn btn-outline-primary w-100">
+                        <i class="fas fa-project-diagram"></i> View Project
+                    </a>
                 </div>
             </div>
         </div>

@@ -8,8 +8,10 @@
         <div class="col-md-8">
             <h1>Projects</h1>
         </div>
-        <div class="col-md-4 text-right">
-            <a href="{% url 'projectflow:project-create' %}" class="btn btn-primary">Create New Project</a>
+        <div class="col-md-4 text-end">
+            <a href="{% url 'projectflow:project-create' %}" class="btn btn-primary">
+                <i class="fas fa-plus"></i> Create New Project
+            </a>
         </div>
     </div>
 
@@ -17,7 +19,7 @@
         <div class="col-md-12">
             <div class="card">
                 <div class="card-header d-flex justify-content-between align-items-center">
-                    <h5>Filter Projects</h5>
+                    <h5 class="mb-0">Filter Projects</h5>
                     <div class="btn-group btn-group-sm" role="group">
                         <button type="button" class="btn btn-outline-secondary active" data-filter="all">All</button>
                         <button type="button" class="btn btn-outline-secondary" data-filter="Todo">Todo</button>
@@ -33,14 +35,16 @@
         {% if projects %}
             {% for project in projects %}
                 <div class="col-md-4 mb-4 project-card" data-status="{{ project.status }}">
-                    <div class="card h-100">
+                    <div class="card h-100 shadow-sm">
                         <div class="card-header d-flex justify-content-between align-items-center">
                             <h5 class="mb-0">{{ project.name }}</h5>
-                            <span class="badge badge-{% if project.status == 'Todo' %}secondary{% elif project.status == 'Doing' %}primary{% else %}success{% endif %}">{{ project.status }}</span>
+                            <span class="badge bg-{% if project.status == 'Todo' %}secondary{% elif project.status == 'Doing' %}primary{% else %}success{% endif %}">{{ project.status }}</span>
                         </div>
                         <div class="card-body">
                             <p class="card-text">{{ project.description|truncatechars:150 }}</p>
-                            <p class="text-muted">Team: {{ project.team.name }}</p>
+                            <p class="text-muted">
+                                <i class="fas fa-users me-1"></i> Team: {{ project.team.name }}
+                            </p>
                             
                             <div class="progress mb-3">
                                 {% with todo=project.tasks.filter.count|default:0 doing=project.tasks.filter.count|default:0 done=project.tasks.filter.count|default:0 %}
@@ -57,8 +61,14 @@
                             </div>
                         </div>
                         <div class="card-footer bg-transparent">
-                            <a href="{% url 'projectflow:project-detail' project.slug %}" class="btn btn-sm btn-outline-primary">View Project</a>
-                            <a href="{% url 'projectflow:task-create-for-project' project.id %}" class="btn btn-sm btn-outline-secondary">Add Task</a>
+                            <div class="d-flex justify-content-between">
+                                <a href="{% url 'projectflow:project-detail' project.slug %}" class="btn btn-sm btn-outline-primary">
+                                    <i class="fas fa-eye"></i> View
+                                </a>
+                                <a href="{% url 'projectflow:task-create-for-project' project.id %}" class="btn btn-sm btn-outline-secondary">
+                                    <i class="fas fa-tasks"></i> Add Task
+                                </a>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -66,7 +76,7 @@
         {% else %}
             <div class="col-12">
                 <div class="alert alert-info">
-                    No projects found. Create your first project to get started!
+                    <i class="fas fa-info-circle me-2"></i> No projects found. Create your first project to get started!
                 </div>
             </div>
         {% endif %}
@@ -75,18 +85,35 @@
 
 {% block extra_js %}
 <script>
-    $(document).ready(function() {
+    document.addEventListener('DOMContentLoaded', function() {
         // Project filtering
-        $('[data-filter]').click(function() {
-            $(this).addClass('active').siblings().removeClass('active');
-            var filterValue = $(this).data('filter');
-            
-            if (filterValue === 'all') {
-                $('.project-card').show();
-            } else {
-                $('.project-card').hide();
-                $('.project-card[data-status="' + filterValue + '"]').show();
-            }
+        document.querySelectorAll('[data-filter]').forEach(function(button) {
+            button.addEventListener('click', function() {
+                // Remove active class from all buttons
+                document.querySelectorAll('[data-filter]').forEach(function(btn) {
+                    btn.classList.remove('active');
+                });
+                
+                // Add active class to clicked button
+                this.classList.add('active');
+                
+                var filterValue = this.getAttribute('data-filter');
+                var projectCards = document.querySelectorAll('.project-card');
+                
+                if (filterValue === 'all') {
+                    projectCards.forEach(function(card) {
+                        card.style.display = '';
+                    });
+                } else {
+                    projectCards.forEach(function(card) {
+                        if (card.getAttribute('data-status') === filterValue) {
+                            card.style.display = '';
+                        } else {
+                            card.style.display = 'none';
+                        }
+                    });
+                }
+            });
         });
     });
 </script>
