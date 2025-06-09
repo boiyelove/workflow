@@ -7,7 +7,6 @@ from .models import UserProfile, COUNTRY, PAYCHOICE, DonateMethod
 from .utils import email_password, code_generator
 
 
-
 class LoginForm(forms.Form):
 	username = BsCharField(min_length=6)
 	password = BsPasswordField()
@@ -99,9 +98,12 @@ class RegisterForm(forms.Form):
 		return password
 
 	def register_user(self, referral=''):
-		user = User.objects.create(username = self.cleaned_data.get('username'),
-			 password = self.cleaned_data.get('password'), 
-			 email=self.cleaned_data.get('email'))
+		# Use create_user instead of create to properly hash the password
+		user = User.objects.create_user(
+			username=self.cleaned_data.get('username'),
+			password=self.cleaned_data.get('password'), 
+			email=self.cleaned_data.get('email')
+		)
 		obj, created = UserProfile.objects.get_or_create(user = user)
 		obj.full_name = self.cleaned_data.get('full_name')
 		try:
@@ -109,7 +111,6 @@ class RegisterForm(forms.Form):
 		except:
 			pass
 		obj.save()
-
 
 
 
@@ -206,6 +207,7 @@ class PasswordChangeForm(forms.Form):
 
 
 
+
 	def clean_password_again(self):
 		password = self.cleaned_data.get('password')
 		password_again = self.cleaned_data.get('password_again')
@@ -225,17 +227,14 @@ class PasswordChangeForm(forms.Form):
 		return password
 
 	def done(self):
-		password = self.cleaned_data.get(password)
+		password = self.cleaned_data.get('password')  # Fixed: was using string 'password' instead of variable
 		u = self.request.user
-		u.set_password = password
+		u.set_password(password)  # Fixed: was using assignment instead of method call
 		u.save()
 		email_password(u, password)
 
 
 		
-
-
-
 
 
 

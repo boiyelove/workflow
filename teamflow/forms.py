@@ -25,11 +25,14 @@ class UserInfoForm(forms.Form):
 			return username
 
 	def done(self, email):
-		me = User.objects.create(first_name = self.cleaned_data.get('firstname'),
-							last_name = self.cleaned_data.get('lastname'),
-							username = self.cleaned_data.get('username'),
-							password = self.cleaned_data.get('password'),
-							email = email)
+		# Create user with create_user method to properly hash the password
+		me = User.objects.create_user(
+			first_name=self.cleaned_data.get('firstname'),
+			last_name=self.cleaned_data.get('lastname'),
+			username=self.cleaned_data.get('username'),
+			password=self.cleaned_data.get('password'),
+			email=email
+		)
 		return me
 
 
