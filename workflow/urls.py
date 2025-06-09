@@ -20,4 +20,5 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('webcore.urls')),
     path('', include('teamflow.urls')),
+    path('accounts/', include('accounts.urls')),
 ]
