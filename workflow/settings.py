@@ -61,6 +61,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     # 'channels',
     'crispy_forms',
+    'crispy_bootstrap4',
     'webcore.apps.WebcoreConfig',
     'teamflow.apps.TeamflowConfig',
     'projectflow.apps.ProjectflowConfig',
@@ -100,6 +101,7 @@ TEMPLATES = [
 ]
 
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
+CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap4"
 
 WSGI_APPLICATION = 'workflow.wsgi.application'
 

@@ -4,7 +4,7 @@ from django.urls import reverse_lazy, reverse
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseRedirect
-from .models import Project, Task, SubTask
+from .models import Project, Task, SubTask, JOB_STATUS
 from .forms import ProjectForm, TaskForm, SubTaskForm
 from teamflow.models import Team, TeamMember
 
@@ -225,7 +225,7 @@ def update_task_status(request, pk):
     task = get_object_or_404(Task, pk=pk)
     if request.method == 'POST':
         new_status = request.POST.get('status')
-        if new_status in dict(task.JOB_STATUS).keys():
+        if new_status in dict(JOB_STATUS).keys():
             task.status = new_status
             task.save()
     return HttpResponseRedirect(request.META.get('HTTP_REFERER', reverse('projectflow:task-detail', kwargs={'pk': pk})))
@@ -235,7 +235,7 @@ def update_subtask_status(request, pk):
     subtask = get_object_or_404(SubTask, pk=pk)
     if request.method == 'POST':
         new_status = request.POST.get('status')
-        if new_status in dict(subtask.JOB_STATUS).keys():
+        if new_status in dict(JOB_STATUS).keys():
             subtask.status = new_status
             subtask.save()
     return HttpResponseRedirect(request.META.get('HTTP_REFERER', reverse('projectflow:task-detail', kwargs={'pk': subtask.task.pk})))
