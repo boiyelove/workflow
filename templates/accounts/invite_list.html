@@ -1,57 +1,37 @@
 {% extends 'base.html' %}
+{% load static %}
 
-{% block title %}Invitations{% endblock %}
+{% block title %}Invite Codes{% endblock %}
+{% block page_title %}Invite Codes{% endblock %}
+
+{% block breadcrumb_items %}
+<li class="breadcrumb-item active" aria-current="page">Invite Codes</li>
+{% endblock %}
+
+{% block page_actions %}
+<a href="{% url 'accounts:invite_create' %}" class="btn btn-success">
+    <i class="material-icons">add</i> Create Invite
+</a>
+{% endblock %}
 
 {% block content %}
-<div class="container mt-4">
-    <div class="row mb-4">
-        <div class="col-md-8">
-            <h1>Invitations</h1>
-        </div>
-        <div class="col-md-4 text-right">
-            <a href="{% url 'accounts:invite_create' %}" class="btn btn-primary">Invite New User</a>
+<div class="card">
+    <div class="card-header card-header-large bg-white">
+        <div class="row align-items-center">
+            <div class="col">
+                <h4 class="card-header__title">All Invite Codes</h4>
+                <div class="card-subtitle text-muted">Manage your invite codes</div>
+            </div>
         </div>
     </div>
 
-    <div class="row">
-        <div class="col-md-12">
-            <div class="card">
-                <div class="card-body">
-                    {% if invites %}
-                        <div class="table-responsive">
-                            <table class="table table-hover">
-                                <thead>
-                                    <tr>
-                                        <th>Email</th>
-                                        <th>Invite Code</th>
-                                        <th>Status</th>
-                                        <th>Created</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    {% for invite in invites %}
-                                        <tr>
-                                            <td>{{ invite.email }}</td>
-                                            <td>{{ invite.code }}</td>
-                                            <td>
-                                                {% if invite.is_used %}
-                                                    <span class="badge badge-success">Used</span>
-                                                {% else %}
-                                                    <span class="badge badge-warning">Pending</span>
-                                                {% endif %}
-                                            </td>
-                                            <td>{{ invite.created_at|date:"M d, Y" }}</td>
-                                        </tr>
-                                    {% endfor %}
-                                </tbody>
-                            </table>
-                        </div>
-                    {% else %}
-                        <div class="alert alert-info">
-                            No invitations found. Create your first invitation to get started!
-                        </div>
-                    {% endif %}
+    <div class="card-body">
+        <div class="alert alert-soft-info">
+            <div class="d-flex flex-wrap align-items-center">
+                <div class="mr-8pt">
+                    <i class="material-icons">info</i>
                 </div>
+                <div class="flex">This is a placeholder for the invite codes list. Implement this feature to manage user invitations.</div>
             </div>
         </div>
     </div>
