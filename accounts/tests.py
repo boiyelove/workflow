@@ -1,209 +1,246 @@
-from django.test import TestCase
+from django.test import TestCase, Client
 from django.contrib.auth.models import User
-from django.conf import settings
-from faker import Faker
-from .models import UserProfile, UserToken, EmailVerification, Program
-from .utils import is_test_email
+from django.urls import reverse
+from .models import UserProfile, InviteCode
+import uuid
 
-fake = Faker()
-
-class TestUserCreation(TestCase):
+class InviteCodeModelTest(TestCase):
     def setUp(self):
-        self.test_domain = settings.TEST_EMAIL_DOMAIN
-        
-    def test_regular_user_creation(self):
-        """Test creating a regular user"""
-        username = fake.user_name()
-        email = fake.email()
-        password = fake.password()
-        
-        user = User.objects.create_user(
-            username=username,
-            email=email,
-            password=password
+        self.user = User.objects.create_user(
+            username='testuser',
+            email='test@example.com',
+            password='testpassword'
         )
         
-        # Check user was created
-        self.assertIsNotNone(user)
-        self.assertEqual(user.username, username)
-        self.assertEqual(user.email, email)
-        
-        # Check profile was created
-        profile = UserProfile.objects.filter(user=user).first()
-        self.assertIsNotNone(profile)
-        self.assertFalse(profile.verified)
-        
-        # Check token was created
-        token = UserToken.objects.filter(user=user).first()
-        self.assertIsNotNone(token)
-        self.assertEqual(token.balance, 0)
-        
-        # Check email verification was created
-        verification = EmailVerification.objects.filter(email=email).first()
-        self.assertIsNotNone(verification)
-        self.assertFalse(verification.confirmed)
-    
-    def test_test_user_auto_verification(self):
-        """Test creating a test user with auto verification"""
-        username = fake.user_name()
-        email = f"{username}-test@{self.test_domain}"
-        password = fake.password()
-        
-        user = User.objects.create_user(
-            username=username,
-            email=email,
-            password=password
+        self.invite_code = InviteCode.objects.create(
+            email='invited@example.com',
+            created_by=self.user
         )
-        
-        # Check user was created
-        self.assertIsNotNone(user)
-        
-        # Check profile was created and verified
-        profile = UserProfile.objects.filter(user=user).first()
-        self.assertIsNotNone(profile)
-        self.assertTrue(profile.verified)
-        
-        # Check email verification was created and confirmed
-        verification = EmailVerification.objects.filter(email=email).first()
-        self.assertIsNotNone(verification)
-        self.assertTrue(verification.confirmed)
     
-    def test_is_test_email_function(self):
-        """Test the is_test_email utility function"""
-        regular_email = fake.email()
-        test_email = f"user-test@{self.test_domain}"
+    def test_invite_code_creation(self):
+        self.assertEqual(self.invite_code.email, 'invited@example.com')
+        self.assertEqual(self.invite_code.created_by, self.user)
+        self.assertFalse(self.invite_code.is_used)
+        self.assertIsNotNone(self.invite_code.code)
         
-        self.assertFalse(is_test_email(regular_email))
-        self.assertTrue(is_test_email(test_email))
+    def test_invite_code_str_method(self):
+        self.assertEqual(str(self.invite_code), f"Invite for invited@example.com - Unused")
+        
+        # Test used invite code
+        self.invite_code.is_used = True
+        self.invite_code.save()
+        self.assertEqual(str(self.invite_code), f"Invite for invited@example.com - Used")
 
 class UserProfileModelTest(TestCase):
     def setUp(self):
         self.user = User.objects.create_user(
-            username=fake.user_name(),
-            email=fake.email(),
-            password=fake.password()
-        )
-        self.profile = UserProfile.objects.get(user=self.user)
-        self.profile.full_name = fake.name()
-        self.profile.phone_number = fake.phone_number()
-        self.profile.country = 'NG'
-        self.profile.state = fake.state()
-        self.profile.address = fake.address()
-        self.profile.save()
-    
-    def test_profile_to_dict(self):
-        """Test the profile_to_dict method"""
-        profile_dict = self.profile.profile_to_dict()
-        self.assertEqual(profile_dict['full_name'], self.profile.full_name)
-        self.assertEqual(profile_dict['phone_number'], self.profile.phone_number)
-        self.assertEqual(profile_dict['country'], self.profile.country)
-    
-    def test_profile_valid(self):
-        """Test the profile_valid method"""
-        self.assertTrue(self.profile.profile_valid())
-        
-        # Test with missing data
-        self.profile.full_name = None
-        self.profile.save()
-        self.assertFalse(self.profile.profile_valid())
-    
-    def test_set_parent(self):
-        """Test the set_parent method"""
-        parent_user = User.objects.create_user(
-            username=fake.user_name(),
-            email=fake.email(),
-            password=fake.password()
+            username='testuser',
+            email='test@example.com',
+            password='testpassword'
         )
         
-        self.profile.set_parent(parent_user)
-        self.assertEqual(self.profile.referral, parent_user)
+        self.invite_code = InviteCode.objects.create(
+            email='test@example.com',
+            created_by=self.user
+        )
+        
+        self.profile = UserProfile.objects.create(
+            user=self.user,
+            bio='Test bio',
+            phone='1234567890',
+            position='Developer',
+            invite_code=self.invite_code
+        )
+    
+    def test_profile_creation(self):
+        self.assertEqual(self.profile.user, self.user)
+        self.assertEqual(self.profile.bio, 'Test bio')
+        self.assertEqual(self.profile.phone, '1234567890')
+        self.assertEqual(self.profile.position, 'Developer')
+        self.assertEqual(self.profile.invite_code, self.invite_code)
+        
+    def test_profile_str_method(self):
+        self.assertEqual(str(self.profile), 'testuser')
+        
+    def test_profile_creation_signal(self):
+        # Create a new user and check if profile is automatically created
+        new_user = User.objects.create_user(
+            username='newuser',
+            email='new@example.com',
+            password='newpassword'
+        )
+        self.assertTrue(hasattr(new_user, 'profile'))
+        self.assertIsInstance(new_user.profile, UserProfile)
 
-class UserTokenModelTest(TestCase):
+class AuthViewsTest(TestCase):
     def setUp(self):
+        self.client = Client()
         self.user = User.objects.create_user(
-            username=fake.user_name(),
-            email=fake.email(),
-            password=fake.password()
+            username='testuser',
+            email='test@example.com',
+            password='testpassword'
         )
-        self.token = UserToken.objects.get(user=self.user)
+        
+        self.invite_code = InviteCode.objects.create(
+            email='invited@example.com',
+            created_by=self.user
+        )
     
-    def test_deposit_valid(self):
-        """Test valid deposit"""
-        initial_balance = self.token.balance
-        amount = 100
+    def test_login_view(self):
+        response = self.client.get(reverse('accounts:login'))
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, 'accounts/login.html')
         
-        self.token.deposit(amount)
-        self.token.refresh_from_db()
+        # Test successful login
+        response = self.client.post(reverse('accounts:login'), {
+            'username': 'testuser',
+            'password': 'testpassword'
+        })
+        self.assertEqual(response.status_code, 302)  # Redirect after successful login
+        self.assertTrue(response.url.endswith(reverse('webcore:home')))
         
-        self.assertEqual(self.token.balance, initial_balance + amount)
-    
-    def test_deposit_invalid(self):
-        """Test invalid deposit (negative or zero)"""
-        initial_balance = self.token.balance
+        # Test failed login
+        response = self.client.post(reverse('accounts:login'), {
+            'username': 'testuser',
+            'password': 'wrongpassword'
+        })
+        self.assertEqual(response.status_code, 200)  # Stay on login page
+        self.assertTemplateUsed(response, 'accounts/login.html')
         
-        result = self.token.deposit(0)
-        self.assertEqual(result, "Invalid deposit amount")
+    def test_logout_view(self):
+        self.client.login(username='testuser', password='testpassword')
+        response = self.client.get(reverse('accounts:logout'))
+        self.assertEqual(response.status_code, 302)  # Redirect after logout
+        self.assertTrue(response.url.endswith(reverse('accounts:login')))
         
-        result = self.token.deposit(-50)
-        self.assertEqual(result, "Invalid deposit amount")
+    def test_invite_code_view(self):
+        response = self.client.get(reverse('accounts:invite_code'))
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, 'accounts/invite_code.html')
         
-        self.token.refresh_from_db()
-        self.assertEqual(self.token.balance, initial_balance)
-    
-    def test_withdraw_valid(self):
-        """Test valid withdrawal"""
-        self.token.balance = 100
-        self.token.save()
+        # Test valid invite code
+        response = self.client.post(reverse('accounts:invite_code'), {
+            'invite_code': str(self.invite_code.code),
+            'email': 'invited@example.com'
+        })
+        self.assertEqual(response.status_code, 302)  # Redirect to registration page
+        self.assertTrue(response.url.endswith(reverse('accounts:register', kwargs={'invite_code': self.invite_code.code})))
         
-        self.token.withdraw(50)
-        self.token.refresh_from_db()
+        # Test invalid invite code
+        response = self.client.post(reverse('accounts:invite_code'), {
+            'invite_code': str(uuid.uuid4()),
+            'email': 'invited@example.com'
+        })
+        self.assertEqual(response.status_code, 200)  # Stay on invite code page
+        self.assertTemplateUsed(response, 'accounts/invite_code.html')
         
-        self.assertEqual(self.token.balance, 50)
-    
-    def test_withdraw_zero_balance(self):
-        """Test withdrawal with zero balance"""
-        self.token.balance = 0
-        self.token.save()
+    def test_register_view(self):
+        response = self.client.get(reverse('accounts:register', kwargs={'invite_code': self.invite_code.code}))
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, 'accounts/register.html')
         
-        result = self.token.withdraw(50)
-        self.assertEqual(result, "Invalid deposit amount")
-    
-    def test_withdraw_invalid_negative_amount(self):
-        """Test withdrawal with negative amount"""
-        self.token.balance = 100
-        self.token.save()
+        # Test successful registration
+        response = self.client.post(reverse('accounts:register', kwargs={'invite_code': self.invite_code.code}), {
+            'username': 'newuser',
+            'email': 'invited@example.com',
+            'first_name': 'New',
+            'last_name': 'User',
+            'password1': 'complex_password123',
+            'password2': 'complex_password123',
+            'invite_code': self.invite_code.id
+        })
+        self.assertEqual(response.status_code, 302)  # Redirect after successful registration
+        self.assertTrue(response.url.endswith(reverse('webcore:home')))
         
-        result = self.token.withdraw(-50)
-        self.assertEqual(result, "invalid withdrawal amount")
+        # Check if invite code is marked as used
+        self.invite_code.refresh_from_db()
+        self.assertTrue(self.invite_code.is_used)
         
-        self.token.refresh_from_db()
-        self.assertEqual(self.token.balance, 100)
+        # Check if user is created
+        self.assertTrue(User.objects.filter(username='newuser').exists())
+        new_user = User.objects.get(username='newuser')
+        
+        # Check if profile is created
+        self.assertTrue(hasattr(new_user, 'profile'))
+        self.assertEqual(new_user.profile.invite_code, self.invite_code)
 
-class ProgramModelTest(TestCase):
+class ProfileViewTest(TestCase):
     def setUp(self):
-        self.program = Program.objects.create(
-            title=fake.sentence(nb_words=3),
-            slug=fake.slug(),
-            description=fake.paragraph(),
-            active=True
+        self.client = Client()
+        self.user = User.objects.create_user(
+            username='testuser',
+            email='test@example.com',
+            password='testpassword'
         )
-    
-    def test_program_creation(self):
-        """Test program creation"""
-        self.assertIsNotNone(self.program)
-        self.assertEqual(str(self.program), self.program.title)
-    
-    def test_program_assignment_to_user(self):
-        """Test assigning program to user profile"""
-        user = User.objects.create_user(
-            username=fake.user_name(),
-            email=fake.email(),
-            password=fake.password()
+        
+        self.profile = UserProfile.objects.create(
+            user=self.user,
+            bio='Test bio',
+            phone='1234567890',
+            position='Developer'
         )
-        profile = UserProfile.objects.get(user=user)
         
-        profile.programs.add(self.program)
+        self.client.login(username='testuser', password='testpassword')
+    
+    def test_profile_view(self):
+        response = self.client.get(reverse('accounts:profile'))
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, 'accounts/profile.html')
+        self.assertContains(response, 'Test bio')
+        self.assertContains(response, '1234567890')
+        self.assertContains(response, 'Developer')
         
-        self.assertEqual(profile.programs.count(), 1)
-        self.assertEqual(profile.programs.first(), self.program)
-        self.assertEqual(self.program.programs_entered.first(), profile)
+        # Test profile update
+        response = self.client.post(reverse('accounts:profile'), {
+            'bio': 'Updated bio',
+            'phone': '0987654321',
+            'position': 'Senior Developer'
+        })
+        self.assertEqual(response.status_code, 302)  # Redirect after successful update
+        self.assertTrue(response.url.endswith(reverse('accounts:profile')))
+        
+        # Check if profile is updated
+        self.profile.refresh_from_db()
+        self.assertEqual(self.profile.bio, 'Updated bio')
+        self.assertEqual(self.profile.phone, '0987654321')
+        self.assertEqual(self.profile.position, 'Senior Developer')
+
+class InviteUserViewTest(TestCase):
+    def setUp(self):
+        self.client = Client()
+        self.user = User.objects.create_user(
+            username='testuser',
+            email='test@example.com',
+            password='testpassword'
+        )
+        
+        self.client.login(username='testuser', password='testpassword')
+    
+    def test_invite_user_view(self):
+        response = self.client.get(reverse('accounts:invite_create'))
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, 'accounts/invite_user.html')
+        
+        # Test invite creation
+        response = self.client.post(reverse('accounts:invite_create'), {
+            'email': 'invited@example.com'
+        })
+        self.assertEqual(response.status_code, 302)  # Redirect after successful creation
+        self.assertTrue(response.url.endswith(reverse('accounts:invite_list')))
+        
+        # Check if invite is created
+        self.assertTrue(InviteCode.objects.filter(email='invited@example.com').exists())
+        invite = InviteCode.objects.get(email='invited@example.com')
+        self.assertEqual(invite.created_by, self.user)
+        self.assertFalse(invite.is_used)
+    
+    def test_invite_list_view(self):
+        # Create some invites
+        InviteCode.objects.create(email='invited1@example.com', created_by=self.user)
+        InviteCode.objects.create(email='invited2@example.com', created_by=self.user)
+        
+        response = self.client.get(reverse('accounts:invite_list'))
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, 'accounts/invite_list.html')
+        self.assertContains(response, 'invited1@example.com')
+        self.assertContains(response, 'invited2@example.com')
