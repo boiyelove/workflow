@@ -3,13 +3,15 @@ from . import views
 
 app_name = "projectflow"
 urlpatterns = [
+    # Project URLs
     path('', views.ProjectList.as_view(), name="project-list"),
     path('create/', views.ProjectCreate.as_view(), name="project-create"),
-    path('<slug:slug>/', views.ProjectDetail.as_view(), name="project-detail"),
-    path('<slug:slug>/update/', views.ProjectUpdate.as_view(), name="project-update"),
-    path('<slug:slug>/delete/', views.ProjectDelete.as_view(), name="project-delete"),
-    path('<slug:slug>/manage/', views.ProjectDetail.as_view(), name="project-detail-admin"),
+    path('project/<slug:slug>/', views.ProjectDetail.as_view(), name="project-detail"),
+    path('project/<slug:slug>/update/', views.ProjectUpdate.as_view(), name="project-update"),
+    path('project/<slug:slug>/delete/', views.ProjectDelete.as_view(), name="project-delete"),
+    path('project/<slug:slug>/manage/', views.ProjectDetail.as_view(), name="project-detail-admin"),
     
+    # Task URLs
     path('tasks/', views.TaskList.as_view(), name="task-list"),
     path('tasks/create/', views.TaskCreate.as_view(), name="task-create"),
     path('tasks/create/<int:project_id>/', views.TaskCreate.as_view(), name="task-create-for-project"),
@@ -18,6 +20,7 @@ urlpatterns = [
     path('tasks/<int:pk>/delete/', views.TaskDelete.as_view(), name="task-delete"),
     path('tasks/<int:pk>/status/', views.update_task_status, name="task-update-status"),
     
+    # Subtask URLs
     path('subtasks/create/', views.SubTaskCreate.as_view(), name="subtask-create"),
     path('subtasks/create/<int:task_id>/', views.SubTaskCreate.as_view(), name="subtask-create-for-task"),
     path('subtasks/<int:pk>/update/', views.SubTaskUpdate.as_view(), name="subtask-update"),

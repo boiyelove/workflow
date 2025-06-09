@@ -1,0 +1,148 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ project.name }}{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <div class="row mb-4">
+        <div class="col-md-8">
+            <h1>{{ project.name }}</h1>
+            <p class="text-muted">Team: {{ project.team.name }}</p>
+        </div>
+        <div class="col-md-4 text-right">
+            <div class="btn-group" role="group">
+                <a href="{% url 'projectflow:project-update' project.slug %}" class="btn btn-outline-primary">Edit Project</a>
+                <a href="{% url 'projectflow:task-create-for-project' project.id %}" class="btn btn-outline-secondary">Add Task</a>
+                <a href="{% url 'projectflow:project-delete' project.slug %}" class="btn btn-outline-danger">Delete</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-4">
+            <div class="card mb-4">
+                <div class="card-header">
+                    <h5>Project Details</h5>
+                </div>
+                <div class="card-body">
+                    <div class="row mb-3">
+                        <div class="col-md-4 font-weight-bold">Status:</div>
+                        <div class="col-md-8">
+                            <span class="badge badge-{% if project.status == 'Todo' %}secondary{% elif project.status == 'Doing' %}primary{% else %}success{% endif %}">{{ project.status }}</span>
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col-md-4 font-weight-bold">Description:</div>
+                        <div class="col-md-8">{{ project.description|linebreaks }}</div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4 font-weight-bold">Created:</div>
+                        <div class="col-md-8">{{ project.created_at|date:"F j, Y" }}</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-header">
+                    <h5>Progress</h5>
+                </div>
+                <div class="card-body">
+                    {% with todo=tasks.filter.count|default:0 doing=tasks.filter.count|default:0 done=tasks.filter.count|default:0 %}
+                    {% with total=todo|add:doing|add:done %}
+                        <div class="progress mb-3">
+                            {% if total > 0 %}
+                                {% with done_percent=done|floatformat:0|default:0 %}
+                                    <div class="progress-bar bg-success" role="progressbar" style="width: {{ done_percent }}%" aria-valuenow="{{ done_percent }}" aria-valuemin="0" aria-valuemax="100">{{ done_percent }}%</div>
+                                {% endwith %}
+                            {% else %}
+                                <div class="progress-bar" role="progressbar" style="width: 0%" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">0%</div>
+                            {% endif %}
+                        </div>
+                        
+                        <div class="row text-center">
+                            <div class="col-4">
+                                <div class="h4">{{ todo }}</div>
+                                <div class="text-muted">Todo</div>
+                            </div>
+                            <div class="col-4">
+                                <div class="h4">{{ doing }}</div>
+                                <div class="text-muted">Doing</div>
+                            </div>
+                            <div class="col-4">
+                                <div class="h4">{{ done }}</div>
+                                <div class="text-muted">Done</div>
+                            </div>
+                        </div>
+                    {% endwith %}
+                    {% endwith %}
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-8">
+            <div class="card">
+                <div class="card-header d-flex justify-content-between align-items-center">
+                    <h5>Tasks</h5>
+                    <a href="{% url 'projectflow:task-create-for-project' project.id %}" class="btn btn-sm btn-primary">Add Task</a>
+                </div>
+                <div class="card-body">
+                    {% if tasks %}
+                        <div class="table-responsive">
+                            <table class="table table-hover">
+                                <thead>
+                                    <tr>
+                                        <th>Name</th>
+                                        <th>Description</th>
+                                        <th>Status</th>
+                                        <th>Assigned To</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for task in tasks %}
+                                        <tr>
+                                            <td>{{ task.name }}</td>
+                                            <td>{{ task.description|truncatechars:50 }}</td>
+                                            <td>
+                                                <div class="dropdown">
+                                                    <button class="btn btn-sm dropdown-toggle badge badge-{% if task.status == 'Todo' %}secondary{% elif task.status == 'Doing' %}primary{% else %}success{% endif %}" type="button" id="dropdownMenuButton-{{ task.id }}" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                        {{ task.status }}
+                                                    </button>
+                                                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton-{{ task.id }}">
+                                                        <form method="post" action="{% url 'projectflow:task-update-status' task.id %}">
+                                                            {% csrf_token %}
+                                                            <button type="submit" name="status" value="Todo" class="dropdown-item">Todo</button>
+                                                            <button type="submit" name="status" value="Doing" class="dropdown-item">Doing</button>
+                                                            <button type="submit" name="status" value="Done" class="dropdown-item">Done</button>
+                                                        </form>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                {% for member in task.team_member.all %}
+                                                    <span class="badge badge-info">{{ member.handle }}</span>
+                                                {% empty %}
+                                                    <span class="text-muted">Unassigned</span>
+                                                {% endfor %}
+                                            </td>
+                                            <td>
+                                                <a href="{% url 'projectflow:task-detail' task.id %}" class="btn btn-sm btn-outline-primary">View</a>
+                                                <a href="{% url 'projectflow:task-update' task.id %}" class="btn btn-sm btn-outline-secondary">Edit</a>
+                                                <a href="{% url 'projectflow:task-delete' task.id %}" class="btn btn-sm btn-outline-danger">Delete</a>
+                                            </td>
+                                        </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    {% else %}
+                        <div class="alert alert-info">
+                            No tasks found. Add your first task to get started!
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
