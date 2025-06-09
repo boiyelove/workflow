@@ -68,7 +68,7 @@ class UserProfile(TimestampedModel):
 		return False
 
 	def set_parent(self, user):
-		self.parent = user
+		self.referral = user
 		self.save()
 
 
@@ -106,5 +106,17 @@ class DonateMethod(TimestampedModel):
 	is_default = models.BooleanField(default = False)
 
 
-
+class EmailVerification(TimestampedModel):
+	email = models.EmailField()
+	slug = models.CharField(max_length=25, null=True, blank=True)
+	action = models.CharField(max_length=100, null=True, blank=True)
+	actiontype = models.CharField(max_length=20, null=True, blank=True)
+	
+	def send_activation_email(self):
+		message = render_to_string("accounts/newsletter/verification_message.txt", {
+			"website": settings.SITE_NAME,
+			"verification_key": self.slug,
+		})
+		subject = "Verify your email address"
+		send_mail(subject, message, settings.DEFAULT_FROM_EMAIL, [self.email])
 
