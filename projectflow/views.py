@@ -4,8 +4,12 @@ from django.urls import reverse_lazy, reverse
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseRedirect, JsonResponse
-from django.db.models import Q
+from django.db.models import Q, Max
 from django.contrib.auth.models import User
+from django.views.decorators.http import require_POST
+from django.views.decorators.csrf import csrf_exempt
+import json
+
 from .models import Project, Task, SubTask, JOB_STATUS
 from .forms import ProjectForm, TaskForm, SubTaskForm
 from teamflow.models import Team, TeamMember
@@ -122,7 +126,7 @@ class ProjectDetail(LoginRequiredMixin, DetailView):
     
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['tasks'] = self.object.tasks.all()
+        context['tasks'] = self.object.tasks.all().order_by('order', 'created_at')
         context['subprojects'] = self.object.subprojects.all()
         return context
     
@@ -217,6 +221,61 @@ class ProjectDelete(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
             is_manager=True
         ).exists()
 
+@login_required
+def project_timeline_view(request, slug):
+    """View for displaying the project timeline"""
+    project = get_object_or_404(Project, slug=slug)
+    tasks = project.tasks.all().order_by('order', 'created_at')
+    
+    # Check if user has permission to view this project
+    user = request.user
+    if not (project.is_public or 
+            TeamMember.objects.filter(user=user, team=project.team).exists() or
+            user in project.assigned_users.all() or
+            Team.objects.filter(teammember__user=user).filter(pk__in=project.assigned_teams.all()).exists()):
+        return HttpResponseRedirect(reverse('projectflow:project-list'))
+    
+    return render(request, 'projectflow/project_timeline.html', {
+        'project': project,
+        'tasks': tasks,
+    })
+
+@login_required
+def roadmap_list_view(request):
+    """View for displaying all roadmaps"""
+    user = request.user
+    roadmaps = Project.objects.filter(
+        project_type='roadmap'
+    ).filter(
+        Q(is_public=True) | 
+        Q(team__teammember__user=user) |
+        Q(assigned_users=user) |
+        Q(assigned_teams__teammember__user=user)
+    ).distinct()
+    
+    return render(request, 'projectflow/roadmap_list.html', {
+        'roadmaps': roadmaps
+    })
+
+@login_required
+def roadmap_detail_view(request, slug):
+    """View for displaying a roadmap with its features (subprojects)"""
+    roadmap = get_object_or_404(Project, slug=slug, project_type='roadmap')
+    features = Project.objects.filter(parent=roadmap).order_by('due_date', 'name')
+    
+    # Check if user has permission to view this roadmap
+    user = request.user
+    if not (roadmap.is_public or 
+            TeamMember.objects.filter(user=user, team=roadmap.team).exists() or
+            user in roadmap.assigned_users.all() or
+            Team.objects.filter(teammember__user=user).filter(pk__in=roadmap.assigned_teams.all()).exists()):
+        return HttpResponseRedirect(reverse('projectflow:roadmap-list'))
+    
+    return render(request, 'projectflow/roadmap_detail.html', {
+        'roadmap': roadmap,
+        'features': features,
+    })
+
 class TaskDetail(LoginRequiredMixin, DetailView):
     model = Task
     template_name = 'projectflow/task_detail.html'
@@ -224,7 +283,7 @@ class TaskDetail(LoginRequiredMixin, DetailView):
     
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['subtasks'] = self.object.subtasks.all()
+        context['subtasks'] = self.object.subtasks.all().order_by('order', 'created_at')
         return context
     
     def get_queryset(self):
@@ -255,7 +314,7 @@ class TaskList(LoginRequiredMixin, ListView):
             Q(assigned_teams__teammember__user=user) |
             Q(project__assigned_users=user) |
             Q(project__assigned_teams__teammember__user=user)
-        ).distinct()
+        ).distinct().order_by('project', 'order', 'created_at')
 
 class TaskCreate(LoginRequiredMixin, CreateView):
     model = Task
@@ -278,6 +337,11 @@ class TaskCreate(LoginRequiredMixin, CreateView):
         project_id = self.kwargs.get('project_id')
         if project_id:
             form.initial['project'] = project_id
+            
+            # Set the order to be the next available order
+            project = Project.objects.get(pk=project_id)
+            max_order = project.tasks.aggregate(Max('order'))['order__max'] or 0
+            form.initial['order'] = max_order + 1
         
         return form
     
@@ -357,6 +421,10 @@ class SubTaskCreate(LoginRequiredMixin, CreateView):
                 Q(project__assigned_teams__in=teams)
             ).distinct()
             form.fields['team_member'].queryset = TeamMember.objects.filter(team=task.project.team)
+            
+            # Set the order to be the next available order
+            max_order = task.subtasks.aggregate(Max('order'))['order__max'] or 0
+            form.initial['order'] = max_order + 1
         else:
             form.fields['task'].queryset = Task.objects.filter(
                 Q(project__is_public=True) | 
@@ -440,3 +508,52 @@ def update_subtask_status(request, pk):
             subtask.status = new_status
             subtask.save()
     return HttpResponseRedirect(request.META.get('HTTP_REFERER', reverse('projectflow:task-detail', kwargs={'pk': subtask.task.pk})))
+
+@login_required
+@require_POST
+@csrf_exempt
+def reorder_tasks(request, project_slug):
+    """API endpoint for reordering tasks via drag and drop"""
+    try:
+        project = get_object_or_404(Project, slug=project_slug)
+        data = json.loads(request.body)
+        task_order = data.get('taskOrder', [])
+        
+        # Check if user has permission to modify this project
+        user = request.user
+        if not (TeamMember.objects.filter(user=user, team=project.team).exists() or
+                user in project.assigned_users.all()):
+            return JsonResponse({'status': 'error', 'message': 'Permission denied'}, status=403)
+        
+        # Update the order of each task
+        for index, task_id in enumerate(task_order):
+            Task.objects.filter(pk=task_id, project=project).update(order=index)
+        
+        return JsonResponse({'status': 'success'})
+    except Exception as e:
+        return JsonResponse({'status': 'error', 'message': str(e)}, status=400)
+
+@login_required
+@require_POST
+@csrf_exempt
+def reorder_subtasks(request, task_id):
+    """API endpoint for reordering subtasks via drag and drop"""
+    try:
+        task = get_object_or_404(Task, pk=task_id)
+        data = json.loads(request.body)
+        subtask_order = data.get('subtaskOrder', [])
+        
+        # Check if user has permission to modify this task
+        user = request.user
+        if not (TeamMember.objects.filter(user=user, team=task.project.team).exists() or
+                user in task.assigned_users.all() or
+                user in task.project.assigned_users.all()):
+            return JsonResponse({'status': 'error', 'message': 'Permission denied'}, status=403)
+        
+        # Update the order of each subtask
+        for index, subtask_id in enumerate(subtask_order):
+            SubTask.objects.filter(pk=subtask_id, task=task).update(order=index)
+        
+        return JsonResponse({'status': 'success'})
+    except Exception as e:
+        return JsonResponse({'status': 'error', 'message': str(e)}, status=400)

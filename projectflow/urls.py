@@ -10,6 +10,12 @@ urlpatterns = [
     path('project/<slug:slug>/update/', views.ProjectUpdate.as_view(), name="project-update"),
     path('project/<slug:slug>/delete/', views.ProjectDelete.as_view(), name="project-delete"),
     path('project/<slug:slug>/manage/', views.ProjectDetail.as_view(), name="project-detail-admin"),
+    path('project/<slug:slug>/timeline/', views.project_timeline_view, name="project-timeline"),
+    path('project/<slug:project_slug>/reorder-tasks/', views.reorder_tasks, name="reorder-tasks"),
+    
+    # Roadmap URLs
+    path('roadmaps/', views.roadmap_list_view, name="roadmap-list"),
+    path('roadmaps/<slug:slug>/', views.roadmap_detail_view, name="roadmap-detail"),
     
     # Task URLs
     path('tasks/', views.TaskList.as_view(), name="task-list"),
@@ -19,6 +25,7 @@ urlpatterns = [
     path('tasks/<int:pk>/update/', views.TaskUpdate.as_view(), name="task-update"),
     path('tasks/<int:pk>/delete/', views.TaskDelete.as_view(), name="task-delete"),
     path('tasks/<int:pk>/status/', views.update_task_status, name="task-update-status"),
+    path('tasks/<int:task_id>/reorder-subtasks/', views.reorder_subtasks, name="reorder-subtasks"),
     
     # Subtask URLs
     path('subtasks/create/', views.SubTaskCreate.as_view(), name="subtask-create"),
