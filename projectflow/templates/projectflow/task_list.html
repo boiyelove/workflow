@@ -121,25 +121,28 @@
                                                 {% endfor %}
                                             </td>
                                             <td>
-                                                <div class="btn-group">
+                                                <div class="btn-group" role="group" aria-label="Task actions">
                                                     <a href="{% url 'projectflow:task-detail' task.id %}" class="btn btn-sm btn-outline-primary">
-                                                        <i class="fas fa-eye"></i>
+                                                        <i class="fas fa-eye"></i> View
                                                     </a>
-                                                    <button type="button" class="btn btn-sm btn-outline-primary dropdown-toggle dropdown-toggle-split" data-bs-toggle="dropdown" aria-expanded="false">
-                                                        <span class="visually-hidden">Toggle Dropdown</span>
-                                                    </button>
-                                                    <ul class="dropdown-menu">
-                                                        <li><a class="dropdown-item" href="{% url 'projectflow:task-update' task.id %}">
-                                                            <i class="fas fa-edit"></i> Edit
-                                                        </a></li>
-                                                        <li><a class="dropdown-item" href="{% url 'projectflow:subtask-create-for-task' task.id %}">
-                                                            <i class="fas fa-tasks"></i> Add Subtask
-                                                        </a></li>
-                                                        <li><hr class="dropdown-divider"></li>
-                                                        <li><a class="dropdown-item text-danger" href="{% url 'projectflow:task-delete' task.id %}">
-                                                            <i class="fas fa-trash"></i> Delete
-                                                        </a></li>
-                                                    </ul>
+                                                    <a href="{% url 'projectflow:task-update' task.id %}" class="btn btn-sm btn-outline-secondary">
+                                                        <i class="fas fa-edit"></i> Edit
+                                                    </a>
+                                                    
+                                                    <div class="btn-group" role="group">
+                                                        <button type="button" class="btn btn-sm btn-outline-danger dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                                                            <i class="fas fa-ellipsis-v"></i>
+                                                        </button>
+                                                        <ul class="dropdown-menu dropdown-menu-end">
+                                                            <li><a class="dropdown-item" href="{% url 'projectflow:subtask-create-for-task' task.id %}">
+                                                                <i class="fas fa-tasks"></i> Add Subtask
+                                                            </a></li>
+                                                            <li><hr class="dropdown-divider"></li>
+                                                            <li><a class="dropdown-item text-danger" href="{% url 'projectflow:task-delete' task.id %}">
+                                                                <i class="fas fa-trash"></i> Delete
+                                                            </a></li>
+                                                        </ul>
+                                                    </div>
                                                 </div>
                                             </td>
                                         </tr>
