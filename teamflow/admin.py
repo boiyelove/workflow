@@ -1,22 +1,14 @@
 from django.contrib import admin
-from .models import Team, TeamMember, TeamInvite
+from .models import Team, TeamMember
 
 @admin.register(Team)
 class TeamAdmin(admin.ModelAdmin):
-    list_display = ('name', 'teamAuthor', 'created_at')
+    list_display = ('name', 'url', 'teamAuthor', 'created_at')
     search_fields = ('name', 'description')
-    raw_id_fields = ('teamAuthor',)
+    prepopulated_fields = {'url': ('name',)}
 
 @admin.register(TeamMember)
 class TeamMemberAdmin(admin.ModelAdmin):
-    list_display = ('user', 'team', 'is_manager', 'created_at')
+    list_display = ('user', 'team', 'handle', 'is_manager', 'joined_at')
     list_filter = ('is_manager', 'team')
-    search_fields = ('user__username', 'team__name')
-    raw_id_fields = ('user', 'team')
-
-@admin.register(TeamInvite)
-class TeamInviteAdmin(admin.ModelAdmin):
-    list_display = ('email', 'team', 'sender', 'accepted', 'created_at')
-    list_filter = ('accepted', 'team')
-    search_fields = ('email', 'team__name', 'sender__username')
-    raw_id_fields = ('team', 'sender')
+    search_fields = ('user__username', 'handle', 'team__name')

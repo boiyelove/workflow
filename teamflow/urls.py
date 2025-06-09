@@ -1,9 +1,11 @@
 from django.urls import path
 from . import views
 
+app_name = 'teamflow'
 urlpatterns = [
-    path('', views.TeamListView.as_view(), name='team_list'),
-    path('create/', views.TeamCreateView.as_view(), name='team_create'),
-    path('<int:pk>/', views.TeamDetailView.as_view(), name='team_detail'),
-    path('<int:pk>/invite/', views.TeamInviteView.as_view(), name='team_invite'),
+    path('', views.team_list, name='team-list'),
+    path('create/', views.team_create, name='team-create'),
+    path('<slug:url>/', views.team_detail, name='team-detail'),
+    path('<slug:url>/update/', views.team_update, name='team-update'),
+    path('<slug:url>/delete/', views.team_delete, name='team-delete'),
 ]

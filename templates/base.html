@@ -37,13 +37,16 @@
                 <ul class="navbar-nav me-auto">
                     {% if user.is_authenticated %}
                     <li class="nav-item">
-                        <a class="nav-link" href="{% url 'webcore:home' %}">Home</a>
+                        <a class="nav-link" href="/">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'workspace:list' %}">Workspaces</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="{% url 'projectflow:project-list' %}">Projects</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="{% url 'projectflow:task-list' %}">Tasks</a>
+                        <a class="nav-link" href="{% url 'teamflow:team-list' %}">Teams</a>
                     </li>
                     {% endif %}
                 </ul>
@@ -54,8 +57,7 @@
                                 {{ user.username }}
                             </a>
                             <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-                                <li><a class="dropdown-item" href="{% url 'accounts:profile' %}">Profile</a></li>
-                                <li><a class="dropdown-item" href="{% url 'accounts:invite_list' %}">Invitations</a></li>
+                                <li><a class="dropdown-item" href="/accounts/profile/">Profile</a></li>
                                 <li><hr class="dropdown-divider"></li>
                                 <li><a class="dropdown-item" href="{% url 'accounts:logout' %}">Logout</a></li>
                             </ul>
@@ -63,9 +65,6 @@
                     {% else %}
                         <li class="nav-item">
                             <a class="nav-link" href="{% url 'accounts:login' %}">Login</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="{% url 'accounts:invite_code' %}">Register</a>
                         </li>
                     {% endif %}
                 </ul>
@@ -107,7 +106,7 @@
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
     <!-- Select2 JS -->
     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
-    
+    {% block extra_js %}{% endblock %}
     <script>
         // Initialize all dropdowns
         document.addEventListener('DOMContentLoaded', function() {
@@ -124,7 +123,6 @@
             });
         });
     </script>
-    
-    {% block extra_js %}{% endblock %}
+    {% block inline_js %}{% endblock %}
 </body>
 </html>
