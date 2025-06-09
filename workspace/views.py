@@ -7,7 +7,7 @@ from .models import Workspace, WorkspaceUser
 def workspace_list(request):
     """View for listing workspaces"""
     workspaces = Workspace.objects.filter(workspaceuser__user=request.user)
-    return render(request, 'workspace/workspace_list.html', {'workspaces': workspaces})
+    return render(request, 'workspace/workspace_list_reimagined.html', {'workspaces': workspaces})
 
 @login_required
 def workspace_detail(request, workspace_id):

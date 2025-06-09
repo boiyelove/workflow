@@ -20,7 +20,7 @@ def project_list(request):
         Q(assigned_teams__members__user=request.user)
     ).distinct()
     
-    return render(request, 'projectflow/project_list.html', {'projects': projects})
+    return render(request, 'projectflow/project_list_reimagined.html', {'projects': projects})
 
 @login_required
 def project_detail(request, slug):
@@ -72,6 +72,31 @@ def project_timeline_view(request, slug):
     return render(request, 'projectflow/project_timeline.html', {
         'project': project,
         'tasks': tasks,
+    })
+
+@login_required
+def project_task_board(request, slug):
+    """View for project task board (Trello-like interface)"""
+    project = get_object_or_404(Project, slug=slug)
+    
+    # Check if user has access to this project
+    if not (project.is_public or 
+            project.team and project.team.members.filter(user=request.user).exists() or
+            project.assigned_users.filter(id=request.user.id).exists() or
+            project.assigned_teams.filter(members__user=request.user).exists()):
+        messages.error(request, "You don't have access to this project.")
+        return redirect('projectflow:project-list')
+    
+    # Get tasks grouped by status
+    todo_tasks = project.tasks.filter(status='Todo').order_by('order')
+    doing_tasks = project.tasks.filter(status='Doing').order_by('order')
+    done_tasks = project.tasks.filter(status='Done').order_by('order')
+    
+    return render(request, 'projectflow/task_board.html', {
+        'project': project,
+        'todo_tasks': todo_tasks,
+        'doing_tasks': doing_tasks,
+        'done_tasks': done_tasks,
     })
 
 @login_required

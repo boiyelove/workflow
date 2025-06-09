@@ -12,6 +12,9 @@ urlpatterns = [
     path('project/<slug:slug>/timeline/', views.project_timeline_view, name="project-timeline"),
     path('project/<slug:project_slug>/reorder-tasks/', views.reorder_tasks, name="reorder-tasks"),
     
+    # Task Board URL
+    path('project/<slug:slug>/board/', views.project_task_board, name="project-task-board"),
+    
     # Roadmap URLs
     path('roadmaps/', views.roadmap_list_view, name="roadmap-list"),
     path('roadmaps/<slug:slug>/', views.roadmap_detail_view, name="roadmap-detail"),
