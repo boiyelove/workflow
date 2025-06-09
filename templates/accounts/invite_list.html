@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Invite Codes{% endblock %}
+{% block page_title %}Invite Codes{% endblock %}
+
+{% block breadcrumb_items %}
+<li class="breadcrumb-item active" aria-current="page">Invite Codes</li>
+{% endblock %}
+
+{% block page_actions %}
+<a href="{% url 'accounts:invite_create' %}" class="btn btn-success">
+    <i class="material-icons">add</i> Create Invite
+</a>
+{% endblock %}
+
+{% block content %}
+<div class="card">
+    <div class="card-header card-header-large bg-white">
+        <div class="row align-items-center">
+            <div class="col">
+                <h4 class="card-header__title">All Invite Codes</h4>
+                <div class="card-subtitle text-muted">Manage your invite codes</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="card-body">
+        <div class="alert alert-soft-info">
+            <div class="d-flex flex-wrap align-items-center">
+                <div class="mr-8pt">
+                    <i class="material-icons">info</i>
+                </div>
+                <div class="flex">This is a placeholder for the invite codes list. Implement this feature to manage user invitations.</div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

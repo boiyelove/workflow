@@ -12,7 +12,7 @@ h1, h2, h3, h4, h5, h6 {
   color: #fff !important;
   margin-bottom: 0px; }
   .navbar li:hover, .navbar li.active, .navbar li:focus, .navbar-nav li:hover, .navbar-nav li.active, .navbar-nav li:focus, .dropdown-menu li:hover, .dropdown-menu li.active, .dropdown-menu li:focus {
-    color: #2196F3 !important;
+    color: #fff !important;
     background-color: #2196F3 !important; }
   .navbar a, .navbar-nav a, .dropdown-menu a {
     color: #fff !important; }
@@ -20,7 +20,15 @@ h1, h2, h3, h4, h5, h6 {
     color: #fff !important;
     background-color: #2196F3 !important; }
   .navbar .navbar-toggle, .navbar-nav .navbar-toggle, .dropdown-menu .navbar-toggle {
-    color: #2196F3 !important; }
+    color: #fff !important;
+    border-color: #fff !important; }
+  .navbar .navbar-toggle .icon-bar, .navbar-nav .navbar-toggle .icon-bar, .dropdown-menu .navbar-toggle .icon-bar {
+    background-color: #fff !important; }
+
+.navbar-brand {
+  color: #fff !important;
+  font-weight: bold;
+}
 
 nav, .copyright {
   padding-top: 10px;
@@ -40,7 +48,7 @@ nav, .copyright {
   .box-link:hover, .box-link:active, .box-link:focus {
     text-decoration: none;
     background-color: #2196F3;
-    color: #2196F3; }
+    color: #fff; }
 
 .box-link-md {
   display: block;
@@ -56,18 +64,18 @@ nav, .copyright {
   .box-link-md:hover, .box-link-md:active, .box-link-md:focus {
     text-decoration: none;
     background-color: #2196F3;
-    color: #2196F3; }
+    color: #fff; }
 
 a {
   color: #2196F3; }
   a:hover {
-    color: #2196F3; }
+    color: #0c7cd5; }
 
 .box-link-o {
   display: block;
   border: 1px solid #2196F3;
   background-color: #2196F3;
-  color: #2196F3;
+  color: #fff;
   margin: 5%;
   padding: 5%;
   text-decoration: none;
@@ -77,8 +85,8 @@ a {
   cursor: default; }
   .box-link-o:hover, .box-link-o:active, .box-link-o:focus {
     text-decoration: none;
-    background-color: #2196F3;
-    color: #2196F3; }
+    background-color: #0c7cd5;
+    color: #fff; }
 
 .padtb10 {
   padding-top: 10px;
@@ -125,5 +133,20 @@ section {
 
 .makewidth80 {
   width: 80%; }
+
+/* Fix for navbar on mobile */
+@media (max-width: 767px) {
+  .navbar-collapse {
+    background-color: #104773;
+    border-color: #104773;
+  }
+  .navbar-toggle {
+    display: block;
+    margin-right: 15px;
+  }
+  .navbar-header {
+    float: none;
+  }
+}
 
 /*# sourceMappingURL=style.css.map */

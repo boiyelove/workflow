@@ -1,0 +1,2178 @@
+2025-06-09 20:55:57,768 - INFO - ====== WebDriver manager ======
+2025-06-09 20:55:58,345 - INFO - Get LATEST chromedriver version for google-chrome
+2025-06-09 20:55:58,719 - INFO - Get LATEST chromedriver version for google-chrome
+2025-06-09 20:55:59,105 - INFO - Driver [/Users/boiyelove/.wdm/drivers/chromedriver/mac64/137.0.7151.68/chromedriver-mac-x64/chromedriver] found in cache
+2025-06-09 20:56:05,221 - INFO - Chrome driver initialized successfully
+2025-06-09 20:56:05,656 - ERROR - Failed to initialize Safari driver: Message: Could not create a session: You must enable 'Allow remote automation' in the Developer section of Safari Settings to control Safari via WebDriver.
+
+2025-06-09 20:56:07,107 - INFO - LiveServerCrawlerTest setup complete with browsers: ['chrome']
+2025-06-09 20:56:07,108 - INFO - Starting admin crawl with chrome
+2025-06-09 20:56:09,239 - WARNING - Not Found: /favicon.ico
+2025-06-09 20:56:10,362 - INFO - Screenshot saved: crawler_screenshots/before_login_admin_crawler_20250609-205610.png
+2025-06-09 20:56:16,408 - INFO - Screenshot saved: crawler_screenshots/after_login_admin_crawler_20250609-205616.png
+2025-06-09 20:56:16,412 - INFO - Login successful for admin_crawler
+2025-06-09 20:56:16,412 - INFO - Crawling: http://localhost:49755 (depth 0)
+2025-06-09 20:56:18,090 - INFO - Screenshot saved: crawler_screenshots/page_home_20250609-205617.png
+2025-06-09 20:56:18,151 - INFO - Found 1 clickable elements on http://localhost:49755
+2025-06-09 20:56:18,807 - INFO - Screenshot saved: crawler_screenshots/before_click_home_0_20250609-205618.png
+2025-06-09 20:56:18,816 - WARNING - Could not click element 0 on http://localhost:49755: Message: element not interactable
+  (Session info: chrome=137.0.7151.69)
+Stacktrace:
+0   chromedriver                        0x0000000104aa6728 chromedriver + 5891880
+1   chromedriver                        0x0000000104a9de7a chromedriver + 5856890
+2   chromedriver                        0x000000010456e243 chromedriver + 418371
+3   chromedriver                        0x00000001045c143e chromedriver + 758846
+4   chromedriver                        0x00000001045b434d chromedriver + 705357
+5   chromedriver                        0x00000001045e64e2 chromedriver + 910562
+6   chromedriver                        0x00000001045b3cc8 chromedriver + 703688
+7   chromedriver                        0x00000001045e669e chromedriver + 911006
+8   chromedriver                        0x000000010460e073 chromedriver + 1073267
+9   chromedriver                        0x00000001045e62b3 chromedriver + 910003
+10  chromedriver                        0x00000001045b2507 chromedriver + 697607
+11  chromedriver                        0x00000001045b3171 chromedriver + 700785
+12  chromedriver                        0x0000000104a644d0 chromedriver + 5620944
+13  chromedriver                        0x0000000104a6845f chromedriver + 5637215
+14  chromedriver                        0x0000000104a3f8e2 chromedriver + 5470434
+15  chromedriver                        0x0000000104a68dcf chromedriver + 5639631
+16  chromedriver                        0x0000000104a2e0a4 chromedriver + 5398692
+17  chromedriver                        0x0000000104a8b688 chromedriver + 5781128
+18  chromedriver                        0x0000000104a8b850 chromedriver + 5781584
+19  chromedriver                        0x0000000104a9da41 chromedriver + 5855809
+20  libsystem_pthread.dylib             0x00007ff808612df1 _pthread_start + 99
+21  libsystem_pthread.dylib             0x00007ff80860e857 thread_start + 15
+
+2025-06-09 20:56:19,106 - INFO - Found 22 links on http://localhost:49755
+2025-06-09 20:56:19,106 - INFO - Crawling: http://localhost:49755/ (depth 1)
+2025-06-09 20:56:19,336 - INFO - Screenshot saved: crawler_screenshots/page___20250609-205619.png
+2025-06-09 20:56:19,481 - INFO - Found 1 clickable elements on http://localhost:49755/
+2025-06-09 20:56:20,121 - INFO - Screenshot saved: crawler_screenshots/before_click___0_20250609-205619.png
+2025-06-09 20:56:20,129 - WARNING - Could not click element 0 on http://localhost:49755/: Message: element not interactable
+  (Session info: chrome=137.0.7151.69)
+Stacktrace:
+0   chromedriver                        0x0000000104aa6728 chromedriver + 5891880
+1   chromedriver                        0x0000000104a9de7a chromedriver + 5856890
+2   chromedriver                        0x000000010456e243 chromedriver + 418371
+3   chromedriver                        0x00000001045c143e chromedriver + 758846
+4   chromedriver                        0x00000001045b434d chromedriver + 705357
+5   chromedriver                        0x00000001045e64e2 chromedriver + 910562
+6   chromedriver                        0x00000001045b3cc8 chromedriver + 703688
+7   chromedriver                        0x00000001045e669e chromedriver + 911006
+8   chromedriver                        0x000000010460e073 chromedriver + 1073267
+9   chromedriver                        0x00000001045e62b3 chromedriver + 910003
+10  chromedriver                        0x00000001045b2507 chromedriver + 697607
+11  chromedriver                        0x00000001045b3171 chromedriver + 700785
+12  chromedriver                        0x0000000104a644d0 chromedriver + 5620944
+13  chromedriver                        0x0000000104a6845f chromedriver + 5637215
+14  chromedriver                        0x0000000104a3f8e2 chromedriver + 5470434
+15  chromedriver                        0x0000000104a68dcf chromedriver + 5639631
+16  chromedriver                        0x0000000104a2e0a4 chromedriver + 5398692
+17  chromedriver                        0x0000000104a8b688 chromedriver + 5781128
+18  chromedriver                        0x0000000104a8b850 chromedriver + 5781584
+19  chromedriver                        0x0000000104a9da41 chromedriver + 5855809
+20  libsystem_pthread.dylib             0x00007ff808612df1 _pthread_start + 99
+21  libsystem_pthread.dylib             0x00007ff80860e857 thread_start + 15
+
+2025-06-09 20:56:20,321 - INFO - Found 22 links on http://localhost:49755/
+2025-06-09 20:56:20,321 - INFO - Crawling: http://localhost:49755/accounts/profile/ (depth 2)
+2025-06-09 20:56:20,328 - WARNING - Not Found: /accounts/profile/
+2025-06-09 20:56:20,464 - INFO - Screenshot saved: crawler_screenshots/page__accounts_profile__20250609-205620.png
+2025-06-09 20:56:20,499 - INFO - Found 0 clickable elements on http://localhost:49755/accounts/profile/
+2025-06-09 20:56:20,503 - INFO - Found 0 links on http://localhost:49755/accounts/profile/
+2025-06-09 20:56:20,503 - INFO - Crawling: http://localhost:49755/projects/ (depth 2)
+2025-06-09 20:56:21,479 - INFO - Screenshot saved: crawler_screenshots/page__projects__20250609-205620.png
+2025-06-09 20:56:21,496 - INFO - Found 12 clickable elements on http://localhost:49755/projects/
+2025-06-09 20:56:22,118 - INFO - Screenshot saved: crawler_screenshots/before_click__projects__0_20250609-205622.png
+2025-06-09 20:56:22,130 - WARNING - Could not click element 0 on http://localhost:49755/projects/: Message: element not interactable
+  (Session info: chrome=137.0.7151.69)
+Stacktrace:
+0   chromedriver                        0x0000000104aa6728 chromedriver + 5891880
+1   chromedriver                        0x0000000104a9de7a chromedriver + 5856890
+2   chromedriver                        0x000000010456e243 chromedriver + 418371
+3   chromedriver                        0x00000001045c143e chromedriver + 758846
+4   chromedriver                        0x00000001045b434d chromedriver + 705357
+5   chromedriver                        0x00000001045e64e2 chromedriver + 910562
+6   chromedriver                        0x00000001045b3cc8 chromedriver + 703688
+7   chromedriver                        0x00000001045e669e chromedriver + 911006
+8   chromedriver                        0x000000010460e073 chromedriver + 1073267
+9   chromedriver                        0x00000001045e62b3 chromedriver + 910003
+10  chromedriver                        0x00000001045b2507 chromedriver + 697607
+11  chromedriver                        0x00000001045b3171 chromedriver + 700785
+12  chromedriver                        0x0000000104a644d0 chromedriver + 5620944
+13  chromedriver                        0x0000000104a6845f chromedriver + 5637215
+14  chromedriver                        0x0000000104a3f8e2 chromedriver + 5470434
+15  chromedriver                        0x0000000104a68dcf chromedriver + 5639631
+16  chromedriver                        0x0000000104a2e0a4 chromedriver + 5398692
+17  chromedriver                        0x0000000104a8b688 chromedriver + 5781128
+18  chromedriver                        0x0000000104a8b850 chromedriver + 5781584
+19  chromedriver                        0x0000000104a9da41 chromedriver + 5855809
+20  libsystem_pthread.dylib             0x00007ff808612df1 _pthread_start + 99
+21  libsystem_pthread.dylib             0x00007ff80860e857 thread_start + 15
+
+2025-06-09 20:56:22,770 - INFO - Screenshot saved: crawler_screenshots/before_click__projects__1_20250609-205622.png
+2025-06-09 20:56:24,338 - INFO - Screenshot saved: crawler_screenshots/after_click__projects__1_20250609-205624.png
+2025-06-09 20:56:25,580 - WARNING - Could not click element 2 on http://localhost:49755/projects/: Message: stale element reference: stale element not found
+  (Session info: chrome=137.0.7151.69); For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#stale-element-reference-exception
+Stacktrace:
+0   chromedriver                        0x0000000104aa6728 chromedriver + 5891880
+1   chromedriver                        0x0000000104a9de7a chromedriver + 5856890
+2   chromedriver                        0x000000010456e400 chromedriver + 418816
+3   chromedriver                        0x0000000104581c7b chromedriver + 498811
+4   chromedriver                        0x0000000104580a42 chromedriver + 494146
+5   chromedriver                        0x0000000104575b79 chromedriver + 449401
+6   chromedriver                        0x0000000104575ca5 chromedriver + 449701
+7   chromedriver                        0x0000000104573cc8 chromedriver + 441544
+8   chromedriver                        0x0000000104577e87 chromedriver + 458375
+9   chromedriver                        0x000000010460f0a6 chromedriver + 1077414
+10  chromedriver                        0x00000001045e64e2 chromedriver + 910562
+11  chromedriver                        0x000000010460e073 chromedriver + 1073267
+12  chromedriver                        0x00000001045e62b3 chromedriver + 910003
+13  chromedriver                        0x00000001045b2507 chromedriver + 697607
+14  chromedriver                        0x00000001045b3171 chromedriver + 700785
+15  chromedriver                        0x0000000104a644d0 chromedriver + 5620944
+16  chromedriver                        0x0000000104a6845f chromedriver + 5637215
+17  chromedriver                        0x0000000104a3f8e2 chromedriver + 5470434
+18  chromedriver                        0x0000000104a68dcf chromedriver + 5639631
+19  chromedriver                        0x0000000104a2e0a4 chromedriver + 5398692
+20  chromedriver                        0x0000000104a8b688 chromedriver + 5781128
+21  chromedriver                        0x0000000104a8b850 chromedriver + 5781584
+22  chromedriver                        0x0000000104a9da41 chromedriver + 5855809
+23  libsystem_pthread.dylib             0x00007ff808612df1 _pthread_start + 99
+24  libsystem_pthread.dylib             0x00007ff80860e857 thread_start + 15
+
+2025-06-09 20:56:25,586 - WARNING - Could not click element 3 on http://localhost:49755/projects/: Message: stale element reference: stale element not found
+  (Session info: chrome=137.0.7151.69); For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#stale-element-reference-exception
+Stacktrace:
+0   chromedriver                        0x0000000104aa6728 chromedriver + 5891880
+1   chromedriver                        0x0000000104a9de7a chromedriver + 5856890
+2   chromedriver                        0x000000010456e400 chromedriver + 418816
+3   chromedriver                        0x0000000104581c7b chromedriver + 498811
+4   chromedriver                        0x0000000104580a42 chromedriver + 494146
+5   chromedriver                        0x0000000104575b79 chromedriver + 449401
+6   chromedriver                        0x0000000104575ca5 chromedriver + 449701
+7   chromedriver                        0x0000000104573cc8 chromedriver + 441544
+8   chromedriver                        0x0000000104577e87 chromedriver + 458375
+9   chromedriver                        0x000000010460f0a6 chromedriver + 1077414
+10  chromedriver                        0x00000001045e64e2 chromedriver + 910562
+11  chromedriver                        0x000000010460e073 chromedriver + 1073267
+12  chromedriver                        0x00000001045e62b3 chromedriver + 910003
+13  chromedriver                        0x00000001045b2507 chromedriver + 697607
+14  chromedriver                        0x00000001045b3171 chromedriver + 700785
+15  chromedriver                        0x0000000104a644d0 chromedriver + 5620944
+16  chromedriver                        0x0000000104a6845f chromedriver + 5637215
+17  chromedriver                        0x0000000104a3f8e2 chromedriver + 5470434
+18  chromedriver                        0x0000000104a68dcf chromedriver + 5639631
+19  chromedriver                        0x0000000104a2e0a4 chromedriver + 5398692
+20  chromedriver                        0x0000000104a8b688 chromedriver + 5781128
+21  chromedriver                        0x0000000104a8b850 chromedriver + 5781584
+22  chromedriver                        0x0000000104a9da41 chromedriver + 5855809
+23  libsystem_pthread.dylib             0x00007ff808612df1 _pthread_start + 99
+24  libsystem_pthread.dylib             0x00007ff80860e857 thread_start + 15
+
+2025-06-09 20:56:25,592 - WARNING - Could not click element 4 on http://localhost:49755/projects/: Message: stale element reference: stale element not found
+  (Session info: chrome=137.0.7151.69); For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#stale-element-reference-exception
+Stacktrace:
+0   chromedriver                        0x0000000104aa6728 chromedriver + 5891880
+1   chromedriver                        0x0000000104a9de7a chromedriver + 5856890
+2   chromedriver                        0x000000010456e400 chromedriver + 418816
+3   chromedriver                        0x0000000104581c7b chromedriver + 498811
+4   chromedriver                        0x0000000104580a42 chromedriver + 494146
+5   chromedriver                        0x0000000104575b79 chromedriver + 449401
+6   chromedriver                        0x0000000104575ca5 chromedriver + 449701
+7   chromedriver                        0x0000000104573cc8 chromedriver + 441544
+8   chromedriver                        0x0000000104577e87 chromedriver + 458375
+9   chromedriver                        0x000000010460f0a6 chromedriver + 1077414
+10  chromedriver                        0x00000001045e64e2 chromedriver + 910562
+11  chromedriver                        0x000000010460e073 chromedriver + 1073267
+12  chromedriver                        0x00000001045e62b3 chromedriver + 910003
+13  chromedriver                        0x00000001045b2507 chromedriver + 697607
+14  chromedriver                        0x00000001045b3171 chromedriver + 700785
+15  chromedriver                        0x0000000104a644d0 chromedriver + 5620944
+16  chromedriver                        0x0000000104a6845f chromedriver + 5637215
+17  chromedriver                        0x0000000104a3f8e2 chromedriver + 5470434
+18  chromedriver                        0x0000000104a68dcf chromedriver + 5639631
+19  chromedriver                        0x0000000104a2e0a4 chromedriver + 5398692
+20  chromedriver                        0x0000000104a8b688 chromedriver + 5781128
+21  chromedriver                        0x0000000104a8b850 chromedriver + 5781584
+22  chromedriver                        0x0000000104a9da41 chromedriver + 5855809
+23  libsystem_pthread.dylib             0x00007ff808612df1 _pthread_start + 99
+24  libsystem_pthread.dylib             0x00007ff80860e857 thread_start + 15
+
+2025-06-09 20:56:25,712 - INFO - Found 19 links on http://localhost:49755/projects/
+2025-06-09 20:56:25,712 - INFO - Crawling: http://localhost:49755/projects/tasks/ (depth 2)
+2025-06-09 20:56:26,300 - INFO - Screenshot saved: crawler_screenshots/page__projects_tasks__20250609-205625.png
+2025-06-09 20:56:26,325 - INFO - Found 8 clickable elements on http://localhost:49755/projects/tasks/
+2025-06-09 20:56:26,946 - INFO - Screenshot saved: crawler_screenshots/before_click__projects_tasks__0_20250609-205626.png
+2025-06-09 20:56:26,962 - WARNING - Could not click element 0 on http://localhost:49755/projects/tasks/: Message: element not interactable
+  (Session info: chrome=137.0.7151.69)
+Stacktrace:
+0   chromedriver                        0x0000000104aa6728 chromedriver + 5891880
+1   chromedriver                        0x0000000104a9de7a chromedriver + 5856890
+2   chromedriver                        0x000000010456e243 chromedriver + 418371
+3   chromedriver                        0x00000001045c143e chromedriver + 758846
+4   chromedriver                        0x00000001045b434d chromedriver + 705357
+5   chromedriver                        0x00000001045e64e2 chromedriver + 910562
+6   chromedriver                        0x00000001045b3cc8 chromedriver + 703688
+7   chromedriver                        0x00000001045e669e chromedriver + 911006
+8   chromedriver                        0x000000010460e073 chromedriver + 1073267
+9   chromedriver                        0x00000001045e62b3 chromedriver + 910003
+10  chromedriver                        0x00000001045b2507 chromedriver + 697607
+11  chromedriver                        0x00000001045b3171 chromedriver + 700785
+12  chromedriver                        0x0000000104a644d0 chromedriver + 5620944
+13  chromedriver                        0x0000000104a6845f chromedriver + 5637215
+14  chromedriver                        0x0000000104a3f8e2 chromedriver + 5470434
+15  chromedriver                        0x0000000104a68dcf chromedriver + 5639631
+16  chromedriver                        0x0000000104a2e0a4 chromedriver + 5398692
+17  chromedriver                        0x0000000104a8b688 chromedriver + 5781128
+18  chromedriver                        0x0000000104a8b850 chromedriver + 5781584
+19  chromedriver                        0x0000000104a9da41 chromedriver + 5855809
+20  libsystem_pthread.dylib             0x00007ff808612df1 _pthread_start + 99
+21  libsystem_pthread.dylib             0x00007ff80860e857 thread_start + 15
+
+2025-06-09 20:56:27,586 - INFO - Screenshot saved: crawler_screenshots/before_click__projects_tasks__1_20250609-205627.png
+2025-06-09 20:56:28,986 - INFO - Screenshot saved: crawler_screenshots/after_click__projects_tasks__1_20250609-205628.png
+2025-06-09 20:56:30,131 - WARNING - Could not click element 2 on http://localhost:49755/projects/tasks/: Message: stale element reference: stale element not found
+  (Session info: chrome=137.0.7151.69); For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#stale-element-reference-exception
+Stacktrace:
+0   chromedriver                        0x0000000104aa6728 chromedriver + 5891880
+1   chromedriver                        0x0000000104a9de7a chromedriver + 5856890
+2   chromedriver                        0x000000010456e400 chromedriver + 418816
+3   chromedriver                        0x0000000104581c7b chromedriver + 498811
+4   chromedriver                        0x0000000104580a42 chromedriver + 494146
+5   chromedriver                        0x0000000104575b79 chromedriver + 449401
+6   chromedriver                        0x0000000104575ca5 chromedriver + 449701
+7   chromedriver                        0x0000000104573cc8 chromedriver + 441544
+8   chromedriver                        0x0000000104577e87 chromedriver + 458375
+9   chromedriver                        0x000000010460f0a6 chromedriver + 1077414
+10  chromedriver                        0x00000001045e64e2 chromedriver + 910562
+11  chromedriver                        0x000000010460e073 chromedriver + 1073267
+12  chromedriver                        0x00000001045e62b3 chromedriver + 910003
+13  chromedriver                        0x00000001045b2507 chromedriver + 697607
+14  chromedriver                        0x00000001045b3171 chromedriver + 700785
+15  chromedriver                        0x0000000104a644d0 chromedriver + 5620944
+16  chromedriver                        0x0000000104a6845f chromedriver + 5637215
+17  chromedriver                        0x0000000104a3f8e2 chromedriver + 5470434
+18  chromedriver                        0x0000000104a68dcf chromedriver + 5639631
+19  chromedriver                        0x0000000104a2e0a4 chromedriver + 5398692
+20  chromedriver                        0x0000000104a8b688 chromedriver + 5781128
+21  chromedriver                        0x0000000104a8b850 chromedriver + 5781584
+22  chromedriver                        0x0000000104a9da41 chromedriver + 5855809
+23  libsystem_pthread.dylib             0x00007ff808612df1 _pthread_start + 99
+24  libsystem_pthread.dylib             0x00007ff80860e857 thread_start + 15
+
+2025-06-09 20:56:30,139 - WARNING - Could not click element 3 on http://localhost:49755/projects/tasks/: Message: stale element reference: stale element not found
+  (Session info: chrome=137.0.7151.69); For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#stale-element-reference-exception
+Stacktrace:
+0   chromedriver                        0x0000000104aa6728 chromedriver + 5891880
+1   chromedriver                        0x0000000104a9de7a chromedriver + 5856890
+2   chromedriver                        0x000000010456e400 chromedriver + 418816
+3   chromedriver                        0x0000000104581c7b chromedriver + 498811
+4   chromedriver                        0x0000000104580a42 chromedriver + 494146
+5   chromedriver                        0x0000000104575b79 chromedriver + 449401
+6   chromedriver                        0x0000000104575ca5 chromedriver + 449701
+7   chromedriver                        0x0000000104573cc8 chromedriver + 441544
+8   chromedriver                        0x0000000104577e87 chromedriver + 458375
+9   chromedriver                        0x000000010460f0a6 chromedriver + 1077414
+10  chromedriver                        0x00000001045e64e2 chromedriver + 910562
+11  chromedriver                        0x000000010460e073 chromedriver + 1073267
+12  chromedriver                        0x00000001045e62b3 chromedriver + 910003
+13  chromedriver                        0x00000001045b2507 chromedriver + 697607
+14  chromedriver                        0x00000001045b3171 chromedriver + 700785
+15  chromedriver                        0x0000000104a644d0 chromedriver + 5620944
+16  chromedriver                        0x0000000104a6845f chromedriver + 5637215
+17  chromedriver                        0x0000000104a3f8e2 chromedriver + 5470434
+18  chromedriver                        0x0000000104a68dcf chromedriver + 5639631
+19  chromedriver                        0x0000000104a2e0a4 chromedriver + 5398692
+20  chromedriver                        0x0000000104a8b688 chromedriver + 5781128
+21  chromedriver                        0x0000000104a8b850 chromedriver + 5781584
+22  chromedriver                        0x0000000104a9da41 chromedriver + 5855809
+23  libsystem_pthread.dylib             0x00007ff808612df1 _pthread_start + 99
+24  libsystem_pthread.dylib             0x00007ff80860e857 thread_start + 15
+
+2025-06-09 20:56:30,146 - WARNING - Could not click element 4 on http://localhost:49755/projects/tasks/: Message: stale element reference: stale element not found
+  (Session info: chrome=137.0.7151.69); For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#stale-element-reference-exception
+Stacktrace:
+0   chromedriver                        0x0000000104aa6728 chromedriver + 5891880
+1   chromedriver                        0x0000000104a9de7a chromedriver + 5856890
+2   chromedriver                        0x000000010456e400 chromedriver + 418816
+3   chromedriver                        0x0000000104581c7b chromedriver + 498811
+4   chromedriver                        0x0000000104580a42 chromedriver + 494146
+5   chromedriver                        0x0000000104575b79 chromedriver + 449401
+6   chromedriver                        0x0000000104575ca5 chromedriver + 449701
+7   chromedriver                        0x0000000104573cc8 chromedriver + 441544
+8   chromedriver                        0x0000000104577e87 chromedriver + 458375
+9   chromedriver                        0x000000010460f0a6 chromedriver + 1077414
+10  chromedriver                        0x00000001045e64e2 chromedriver + 910562
+11  chromedriver                        0x000000010460e073 chromedriver + 1073267
+12  chromedriver                        0x00000001045e62b3 chromedriver + 910003
+13  chromedriver                        0x00000001045b2507 chromedriver + 697607
+14  chromedriver                        0x00000001045b3171 chromedriver + 700785
+15  chromedriver                        0x0000000104a644d0 chromedriver + 5620944
+16  chromedriver                        0x0000000104a6845f chromedriver + 5637215
+17  chromedriver                        0x0000000104a3f8e2 chromedriver + 5470434
+18  chromedriver                        0x0000000104a68dcf chromedriver + 5639631
+19  chromedriver                        0x0000000104a2e0a4 chromedriver + 5398692
+20  chromedriver                        0x0000000104a8b688 chromedriver + 5781128
+21  chromedriver                        0x0000000104a8b850 chromedriver + 5781584
+22  chromedriver                        0x0000000104a9da41 chromedriver + 5855809
+23  libsystem_pthread.dylib             0x00007ff808612df1 _pthread_start + 99
+24  libsystem_pthread.dylib             0x00007ff80860e857 thread_start + 15
+
+2025-06-09 20:56:30,254 - INFO - Found 19 links on http://localhost:49755/projects/tasks/
+2025-06-09 20:56:30,254 - INFO - Crawling: http://localhost:49755/teams/ (depth 2)
+2025-06-09 20:56:30,516 - INFO - Screenshot saved: crawler_screenshots/page__teams__20250609-205630.png
+2025-06-09 20:56:30,529 - INFO - Found 2 clickable elements on http://localhost:49755/teams/
+2025-06-09 20:56:31,169 - INFO - Screenshot saved: crawler_screenshots/before_click__teams__0_20250609-205631.png
+2025-06-09 20:56:31,177 - WARNING - Could not click element 0 on http://localhost:49755/teams/: Message: element not interactable
+  (Session info: chrome=137.0.7151.69)
+Stacktrace:
+0   chromedriver                        0x0000000104aa6728 chromedriver + 5891880
+1   chromedriver                        0x0000000104a9de7a chromedriver + 5856890
+2   chromedriver                        0x000000010456e243 chromedriver + 418371
+3   chromedriver                        0x00000001045c143e chromedriver + 758846
+4   chromedriver                        0x00000001045b434d chromedriver + 705357
+5   chromedriver                        0x00000001045e64e2 chromedriver + 910562
+6   chromedriver                        0x00000001045b3cc8 chromedriver + 703688
+7   chromedriver                        0x00000001045e669e chromedriver + 911006
+8   chromedriver                        0x000000010460e073 chromedriver + 1073267
+9   chromedriver                        0x00000001045e62b3 chromedriver + 910003
+10  chromedriver                        0x00000001045b2507 chromedriver + 697607
+11  chromedriver                        0x00000001045b3171 chromedriver + 700785
+12  chromedriver                        0x0000000104a644d0 chromedriver + 5620944
+13  chromedriver                        0x0000000104a6845f chromedriver + 5637215
+14  chromedriver                        0x0000000104a3f8e2 chromedriver + 5470434
+15  chromedriver                        0x0000000104a68dcf chromedriver + 5639631
+16  chromedriver                        0x0000000104a2e0a4 chromedriver + 5398692
+17  chromedriver                        0x0000000104a8b688 chromedriver + 5781128
+18  chromedriver                        0x0000000104a8b850 chromedriver + 5781584
+19  chromedriver                        0x0000000104a9da41 chromedriver + 5855809
+20  libsystem_pthread.dylib             0x00007ff808612df1 _pthread_start + 99
+21  libsystem_pthread.dylib             0x00007ff80860e857 thread_start + 15
+
+2025-06-09 20:56:31,796 - INFO - Screenshot saved: crawler_screenshots/before_click__teams__1_20250609-205631.png
+2025-06-09 20:56:33,352 - INFO - Screenshot saved: crawler_screenshots/after_click__teams__1_20250609-205633.png
+2025-06-09 20:56:34,595 - INFO - Found 19 links on http://localhost:49755/teams/
+2025-06-09 20:56:34,595 - INFO - Crawling: http://localhost:49755/workspaces/ (depth 2)
+2025-06-09 20:56:35,053 - INFO - Screenshot saved: crawler_screenshots/page__workspaces__20250609-205634.png
+2025-06-09 20:56:35,082 - INFO - Found 5 clickable elements on http://localhost:49755/workspaces/
+2025-06-09 20:56:35,720 - INFO - Screenshot saved: crawler_screenshots/before_click__workspaces__0_20250609-205635.png
+2025-06-09 20:56:35,728 - WARNING - Could not click element 0 on http://localhost:49755/workspaces/: Message: element not interactable
+  (Session info: chrome=137.0.7151.69)
+Stacktrace:
+0   chromedriver                        0x0000000104aa6728 chromedriver + 5891880
+1   chromedriver                        0x0000000104a9de7a chromedriver + 5856890
+2   chromedriver                        0x000000010456e243 chromedriver + 418371
+3   chromedriver                        0x00000001045c143e chromedriver + 758846
+4   chromedriver                        0x00000001045b434d chromedriver + 705357
+5   chromedriver                        0x00000001045e64e2 chromedriver + 910562
+6   chromedriver                        0x00000001045b3cc8 chromedriver + 703688
+7   chromedriver                        0x00000001045e669e chromedriver + 911006
+8   chromedriver                        0x000000010460e073 chromedriver + 1073267
+9   chromedriver                        0x00000001045e62b3 chromedriver + 910003
+10  chromedriver                        0x00000001045b2507 chromedriver + 697607
+11  chromedriver                        0x00000001045b3171 chromedriver + 700785
+12  chromedriver                        0x0000000104a644d0 chromedriver + 5620944
+13  chromedriver                        0x0000000104a6845f chromedriver + 5637215
+14  chromedriver                        0x0000000104a3f8e2 chromedriver + 5470434
+15  chromedriver                        0x0000000104a68dcf chromedriver + 5639631
+16  chromedriver                        0x0000000104a2e0a4 chromedriver + 5398692
+17  chromedriver                        0x0000000104a8b688 chromedriver + 5781128
+18  chromedriver                        0x0000000104a8b850 chromedriver + 5781584
+19  chromedriver                        0x0000000104a9da41 chromedriver + 5855809
+20  libsystem_pthread.dylib             0x00007ff808612df1 _pthread_start + 99
+21  libsystem_pthread.dylib             0x00007ff80860e857 thread_start + 15
+
+2025-06-09 20:56:36,351 - INFO - Screenshot saved: crawler_screenshots/before_click__workspaces__1_20250609-205636.png
+2025-06-09 20:56:37,537 - INFO - Screenshot saved: crawler_screenshots/after_click__workspaces__1_20250609-205637.png
+2025-06-09 20:56:38,646 - WARNING - Could not click element 2 on http://localhost:49755/workspaces/: Message: stale element reference: stale element not found
+  (Session info: chrome=137.0.7151.69); For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#stale-element-reference-exception
+Stacktrace:
+0   chromedriver                        0x0000000104aa6728 chromedriver + 5891880
+1   chromedriver                        0x0000000104a9de7a chromedriver + 5856890
+2   chromedriver                        0x000000010456e400 chromedriver + 418816
+3   chromedriver                        0x0000000104581c7b chromedriver + 498811
+4   chromedriver                        0x0000000104580a42 chromedriver + 494146
+5   chromedriver                        0x0000000104575b79 chromedriver + 449401
+6   chromedriver                        0x0000000104575ca5 chromedriver + 449701
+7   chromedriver                        0x0000000104573cc8 chromedriver + 441544
+8   chromedriver                        0x0000000104577e87 chromedriver + 458375
+9   chromedriver                        0x000000010460f0a6 chromedriver + 1077414
+10  chromedriver                        0x00000001045e64e2 chromedriver + 910562
+11  chromedriver                        0x000000010460e073 chromedriver + 1073267
+12  chromedriver                        0x00000001045e62b3 chromedriver + 910003
+13  chromedriver                        0x00000001045b2507 chromedriver + 697607
+14  chromedriver                        0x00000001045b3171 chromedriver + 700785
+15  chromedriver                        0x0000000104a644d0 chromedriver + 5620944
+16  chromedriver                        0x0000000104a6845f chromedriver + 5637215
+17  chromedriver                        0x0000000104a3f8e2 chromedriver + 5470434
+18  chromedriver                        0x0000000104a68dcf chromedriver + 5639631
+19  chromedriver                        0x0000000104a2e0a4 chromedriver + 5398692
+20  chromedriver                        0x0000000104a8b688 chromedriver + 5781128
+21  chromedriver                        0x0000000104a8b850 chromedriver + 5781584
+22  chromedriver                        0x0000000104a9da41 chromedriver + 5855809
+23  libsystem_pthread.dylib             0x00007ff808612df1 _pthread_start + 99
+24  libsystem_pthread.dylib             0x00007ff80860e857 thread_start + 15
+
+2025-06-09 20:56:38,654 - WARNING - Could not click element 3 on http://localhost:49755/workspaces/: Message: stale element reference: stale element not found
+  (Session info: chrome=137.0.7151.69); For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#stale-element-reference-exception
+Stacktrace:
+0   chromedriver                        0x0000000104aa6728 chromedriver + 5891880
+1   chromedriver                        0x0000000104a9de7a chromedriver + 5856890
+2   chromedriver                        0x000000010456e400 chromedriver + 418816
+3   chromedriver                        0x0000000104581c7b chromedriver + 498811
+4   chromedriver                        0x0000000104580a42 chromedriver + 494146
+5   chromedriver                        0x0000000104575b79 chromedriver + 449401
+6   chromedriver                        0x0000000104575ca5 chromedriver + 449701
+7   chromedriver                        0x0000000104573cc8 chromedriver + 441544
+8   chromedriver                        0x0000000104577e87 chromedriver + 458375
+9   chromedriver                        0x000000010460f0a6 chromedriver + 1077414
+10  chromedriver                        0x00000001045e64e2 chromedriver + 910562
+11  chromedriver                        0x000000010460e073 chromedriver + 1073267
+12  chromedriver                        0x00000001045e62b3 chromedriver + 910003
+13  chromedriver                        0x00000001045b2507 chromedriver + 697607
+14  chromedriver                        0x00000001045b3171 chromedriver + 700785
+15  chromedriver                        0x0000000104a644d0 chromedriver + 5620944
+16  chromedriver                        0x0000000104a6845f chromedriver + 5637215
+17  chromedriver                        0x0000000104a3f8e2 chromedriver + 5470434
+18  chromedriver                        0x0000000104a68dcf chromedriver + 5639631
+19  chromedriver                        0x0000000104a2e0a4 chromedriver + 5398692
+20  chromedriver                        0x0000000104a8b688 chromedriver + 5781128
+21  chromedriver                        0x0000000104a8b850 chromedriver + 5781584
+22  chromedriver                        0x0000000104a9da41 chromedriver + 5855809
+23  libsystem_pthread.dylib             0x00007ff808612df1 _pthread_start + 99
+24  libsystem_pthread.dylib             0x00007ff80860e857 thread_start + 15
+
+2025-06-09 20:56:38,661 - WARNING - Could not click element 4 on http://localhost:49755/workspaces/: Message: stale element reference: stale element not found
+  (Session info: chrome=137.0.7151.69); For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#stale-element-reference-exception
+Stacktrace:
+0   chromedriver                        0x0000000104aa6728 chromedriver + 5891880
+1   chromedriver                        0x0000000104a9de7a chromedriver + 5856890
+2   chromedriver                        0x000000010456e400 chromedriver + 418816
+3   chromedriver                        0x0000000104581c7b chromedriver + 498811
+4   chromedriver                        0x0000000104580a42 chromedriver + 494146
+5   chromedriver                        0x0000000104575b79 chromedriver + 449401
+6   chromedriver                        0x0000000104575ca5 chromedriver + 449701
+7   chromedriver                        0x0000000104573cc8 chromedriver + 441544
+8   chromedriver                        0x0000000104577e87 chromedriver + 458375
+9   chromedriver                        0x000000010460f0a6 chromedriver + 1077414
+10  chromedriver                        0x00000001045e64e2 chromedriver + 910562
+11  chromedriver                        0x000000010460e073 chromedriver + 1073267
+12  chromedriver                        0x00000001045e62b3 chromedriver + 910003
+13  chromedriver                        0x00000001045b2507 chromedriver + 697607
+14  chromedriver                        0x00000001045b3171 chromedriver + 700785
+15  chromedriver                        0x0000000104a644d0 chromedriver + 5620944
+16  chromedriver                        0x0000000104a6845f chromedriver + 5637215
+17  chromedriver                        0x0000000104a3f8e2 chromedriver + 5470434
+18  chromedriver                        0x0000000104a68dcf chromedriver + 5639631
+19  chromedriver                        0x0000000104a2e0a4 chromedriver + 5398692
+20  chromedriver                        0x0000000104a8b688 chromedriver + 5781128
+21  chromedriver                        0x0000000104a8b850 chromedriver + 5781584
+22  chromedriver                        0x0000000104a9da41 chromedriver + 5855809
+23  libsystem_pthread.dylib             0x00007ff808612df1 _pthread_start + 99
+24  libsystem_pthread.dylib             0x00007ff80860e857 thread_start + 15
+
+2025-06-09 20:56:38,774 - INFO - Found 20 links on http://localhost:49755/workspaces/
+2025-06-09 20:56:38,774 - INFO - Crawling: http://localhost:49755/workspaces/create/ (depth 2)
+2025-06-09 20:56:38,984 - INFO - Screenshot saved: crawler_screenshots/page__workspaces_create__20250609-205638.png
+2025-06-09 20:56:39,001 - INFO - Found 5 clickable elements on http://localhost:49755/workspaces/create/
+2025-06-09 20:56:39,638 - INFO - Screenshot saved: crawler_screenshots/before_click__workspaces_create__0_20250609-205639.png
+2025-06-09 20:56:39,647 - WARNING - Could not click element 0 on http://localhost:49755/workspaces/create/: Message: element not interactable
+  (Session info: chrome=137.0.7151.69)
+Stacktrace:
+0   chromedriver                        0x0000000104aa6728 chromedriver + 5891880
+1   chromedriver                        0x0000000104a9de7a chromedriver + 5856890
+2   chromedriver                        0x000000010456e243 chromedriver + 418371
+3   chromedriver                        0x00000001045c143e chromedriver + 758846
+4   chromedriver                        0x00000001045b434d chromedriver + 705357
+5   chromedriver                        0x00000001045e64e2 chromedriver + 910562
+6   chromedriver                        0x00000001045b3cc8 chromedriver + 703688
+7   chromedriver                        0x00000001045e669e chromedriver + 911006
+8   chromedriver                        0x000000010460e073 chromedriver + 1073267
+9   chromedriver                        0x00000001045e62b3 chromedriver + 910003
+10  chromedriver                        0x00000001045b2507 chromedriver + 697607
+11  chromedriver                        0x00000001045b3171 chromedriver + 700785
+12  chromedriver                        0x0000000104a644d0 chromedriver + 5620944
+13  chromedriver                        0x0000000104a6845f chromedriver + 5637215
+14  chromedriver                        0x0000000104a3f8e2 chromedriver + 5470434
+15  chromedriver                        0x0000000104a68dcf chromedriver + 5639631
+16  chromedriver                        0x0000000104a2e0a4 chromedriver + 5398692
+17  chromedriver                        0x0000000104a8b688 chromedriver + 5781128
+18  chromedriver                        0x0000000104a8b850 chromedriver + 5781584
+19  chromedriver                        0x0000000104a9da41 chromedriver + 5855809
+20  libsystem_pthread.dylib             0x00007ff808612df1 _pthread_start + 99
+21  libsystem_pthread.dylib             0x00007ff80860e857 thread_start + 15
+
+2025-06-09 20:56:40,269 - INFO - Screenshot saved: crawler_screenshots/before_click__workspaces_create__1_20250609-205640.png
+2025-06-09 20:56:41,476 - INFO - Screenshot saved: crawler_screenshots/after_click__workspaces_create__1_20250609-205641.png
+2025-06-09 20:56:42,584 - WARNING - Could not click element 2 on http://localhost:49755/workspaces/create/: Message: stale element reference: stale element not found
+  (Session info: chrome=137.0.7151.69); For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#stale-element-reference-exception
+Stacktrace:
+0   chromedriver                        0x0000000104aa6728 chromedriver + 5891880
+1   chromedriver                        0x0000000104a9de7a chromedriver + 5856890
+2   chromedriver                        0x000000010456e400 chromedriver + 418816
+3   chromedriver                        0x0000000104581c7b chromedriver + 498811
+4   chromedriver                        0x0000000104580a42 chromedriver + 494146
+5   chromedriver                        0x0000000104575b79 chromedriver + 449401
+6   chromedriver                        0x0000000104575ca5 chromedriver + 449701
+7   chromedriver                        0x0000000104573cc8 chromedriver + 441544
+8   chromedriver                        0x0000000104577e87 chromedriver + 458375
+9   chromedriver                        0x000000010460f0a6 chromedriver + 1077414
+10  chromedriver                        0x00000001045e64e2 chromedriver + 910562
+11  chromedriver                        0x000000010460e073 chromedriver + 1073267
+12  chromedriver                        0x00000001045e62b3 chromedriver + 910003
+13  chromedriver                        0x00000001045b2507 chromedriver + 697607
+14  chromedriver                        0x00000001045b3171 chromedriver + 700785
+15  chromedriver                        0x0000000104a644d0 chromedriver + 5620944
+16  chromedriver                        0x0000000104a6845f chromedriver + 5637215
+17  chromedriver                        0x0000000104a3f8e2 chromedriver + 5470434
+18  chromedriver                        0x0000000104a68dcf chromedriver + 5639631
+19  chromedriver                        0x0000000104a2e0a4 chromedriver + 5398692
+20  chromedriver                        0x0000000104a8b688 chromedriver + 5781128
+21  chromedriver                        0x0000000104a8b850 chromedriver + 5781584
+22  chromedriver                        0x0000000104a9da41 chromedriver + 5855809
+23  libsystem_pthread.dylib             0x00007ff808612df1 _pthread_start + 99
+24  libsystem_pthread.dylib             0x00007ff80860e857 thread_start + 15
+
+2025-06-09 20:56:42,592 - WARNING - Could not click element 3 on http://localhost:49755/workspaces/create/: Message: stale element reference: stale element not found
+  (Session info: chrome=137.0.7151.69); For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#stale-element-reference-exception
+Stacktrace:
+0   chromedriver                        0x0000000104aa6728 chromedriver + 5891880
+1   chromedriver                        0x0000000104a9de7a chromedriver + 5856890
+2   chromedriver                        0x000000010456e400 chromedriver + 418816
+3   chromedriver                        0x0000000104581c7b chromedriver + 498811
+4   chromedriver                        0x0000000104580a42 chromedriver + 494146
+5   chromedriver                        0x0000000104575b79 chromedriver + 449401
+6   chromedriver                        0x0000000104575ca5 chromedriver + 449701
+7   chromedriver                        0x0000000104573cc8 chromedriver + 441544
+8   chromedriver                        0x0000000104577e87 chromedriver + 458375
+9   chromedriver                        0x000000010460f0a6 chromedriver + 1077414
+10  chromedriver                        0x00000001045e64e2 chromedriver + 910562
+11  chromedriver                        0x000000010460e073 chromedriver + 1073267
+12  chromedriver                        0x00000001045e62b3 chromedriver + 910003
+13  chromedriver                        0x00000001045b2507 chromedriver + 697607
+14  chromedriver                        0x00000001045b3171 chromedriver + 700785
+15  chromedriver                        0x0000000104a644d0 chromedriver + 5620944
+16  chromedriver                        0x0000000104a6845f chromedriver + 5637215
+17  chromedriver                        0x0000000104a3f8e2 chromedriver + 5470434
+18  chromedriver                        0x0000000104a68dcf chromedriver + 5639631
+19  chromedriver                        0x0000000104a2e0a4 chromedriver + 5398692
+20  chromedriver                        0x0000000104a8b688 chromedriver + 5781128
+21  chromedriver                        0x0000000104a8b850 chromedriver + 5781584
+22  chromedriver                        0x0000000104a9da41 chromedriver + 5855809
+23  libsystem_pthread.dylib             0x00007ff808612df1 _pthread_start + 99
+24  libsystem_pthread.dylib             0x00007ff80860e857 thread_start + 15
+
+2025-06-09 20:56:42,599 - WARNING - Could not click element 4 on http://localhost:49755/workspaces/create/: Message: stale element reference: stale element not found
+  (Session info: chrome=137.0.7151.69); For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#stale-element-reference-exception
+Stacktrace:
+0   chromedriver                        0x0000000104aa6728 chromedriver + 5891880
+1   chromedriver                        0x0000000104a9de7a chromedriver + 5856890
+2   chromedriver                        0x000000010456e400 chromedriver + 418816
+3   chromedriver                        0x0000000104581c7b chromedriver + 498811
+4   chromedriver                        0x0000000104580a42 chromedriver + 494146
+5   chromedriver                        0x0000000104575b79 chromedriver + 449401
+6   chromedriver                        0x0000000104575ca5 chromedriver + 449701
+7   chromedriver                        0x0000000104573cc8 chromedriver + 441544
+8   chromedriver                        0x0000000104577e87 chromedriver + 458375
+9   chromedriver                        0x000000010460f0a6 chromedriver + 1077414
+10  chromedriver                        0x00000001045e64e2 chromedriver + 910562
+11  chromedriver                        0x000000010460e073 chromedriver + 1073267
+12  chromedriver                        0x00000001045e62b3 chromedriver + 910003
+13  chromedriver                        0x00000001045b2507 chromedriver + 697607
+14  chromedriver                        0x00000001045b3171 chromedriver + 700785
+15  chromedriver                        0x0000000104a644d0 chromedriver + 5620944
+16  chromedriver                        0x0000000104a6845f chromedriver + 5637215
+17  chromedriver                        0x0000000104a3f8e2 chromedriver + 5470434
+18  chromedriver                        0x0000000104a68dcf chromedriver + 5639631
+19  chromedriver                        0x0000000104a2e0a4 chromedriver + 5398692
+20  chromedriver                        0x0000000104a8b688 chromedriver + 5781128
+21  chromedriver                        0x0000000104a8b850 chromedriver + 5781584
+22  chromedriver                        0x0000000104a9da41 chromedriver + 5855809
+23  libsystem_pthread.dylib             0x00007ff808612df1 _pthread_start + 99
+24  libsystem_pthread.dylib             0x00007ff80860e857 thread_start + 15
+
+2025-06-09 20:56:42,711 - INFO - Found 20 links on http://localhost:49755/workspaces/create/
+2025-06-09 20:56:42,711 - INFO - Crawling: http://localhost:49755/projects/create/ (depth 2)
+2025-06-09 20:56:42,934 - INFO - Screenshot saved: crawler_screenshots/page__projects_create__20250609-205642.png
+2025-06-09 20:56:42,947 - INFO - Found 12 clickable elements on http://localhost:49755/projects/create/
+2025-06-09 20:56:43,587 - INFO - Screenshot saved: crawler_screenshots/before_click__projects_create__0_20250609-205643.png
+2025-06-09 20:56:43,595 - WARNING - Could not click element 0 on http://localhost:49755/projects/create/: Message: element not interactable
+  (Session info: chrome=137.0.7151.69)
+Stacktrace:
+0   chromedriver                        0x0000000104aa6728 chromedriver + 5891880
+1   chromedriver                        0x0000000104a9de7a chromedriver + 5856890
+2   chromedriver                        0x000000010456e243 chromedriver + 418371
+3   chromedriver                        0x00000001045c143e chromedriver + 758846
+4   chromedriver                        0x00000001045b434d chromedriver + 705357
+5   chromedriver                        0x00000001045e64e2 chromedriver + 910562
+6   chromedriver                        0x00000001045b3cc8 chromedriver + 703688
+7   chromedriver                        0x00000001045e669e chromedriver + 911006
+8   chromedriver                        0x000000010460e073 chromedriver + 1073267
+9   chromedriver                        0x00000001045e62b3 chromedriver + 910003
+10  chromedriver                        0x00000001045b2507 chromedriver + 697607
+11  chromedriver                        0x00000001045b3171 chromedriver + 700785
+12  chromedriver                        0x0000000104a644d0 chromedriver + 5620944
+13  chromedriver                        0x0000000104a6845f chromedriver + 5637215
+14  chromedriver                        0x0000000104a3f8e2 chromedriver + 5470434
+15  chromedriver                        0x0000000104a68dcf chromedriver + 5639631
+16  chromedriver                        0x0000000104a2e0a4 chromedriver + 5398692
+17  chromedriver                        0x0000000104a8b688 chromedriver + 5781128
+18  chromedriver                        0x0000000104a8b850 chromedriver + 5781584
+19  chromedriver                        0x0000000104a9da41 chromedriver + 5855809
+20  libsystem_pthread.dylib             0x00007ff808612df1 _pthread_start + 99
+21  libsystem_pthread.dylib             0x00007ff80860e857 thread_start + 15
+
+2025-06-09 20:56:44,217 - INFO - Screenshot saved: crawler_screenshots/before_click__projects_create__1_20250609-205644.png
+2025-06-09 20:56:45,419 - INFO - Screenshot saved: crawler_screenshots/after_click__projects_create__1_20250609-205645.png
+2025-06-09 20:56:46,675 - WARNING - Could not click element 2 on http://localhost:49755/projects/create/: Message: stale element reference: stale element not found
+  (Session info: chrome=137.0.7151.69); For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#stale-element-reference-exception
+Stacktrace:
+0   chromedriver                        0x0000000104aa6728 chromedriver + 5891880
+1   chromedriver                        0x0000000104a9de7a chromedriver + 5856890
+2   chromedriver                        0x000000010456e400 chromedriver + 418816
+3   chromedriver                        0x0000000104581c7b chromedriver + 498811
+4   chromedriver                        0x0000000104580a42 chromedriver + 494146
+5   chromedriver                        0x0000000104575b79 chromedriver + 449401
+6   chromedriver                        0x0000000104575ca5 chromedriver + 449701
+7   chromedriver                        0x0000000104573cc8 chromedriver + 441544
+8   chromedriver                        0x0000000104577e87 chromedriver + 458375
+9   chromedriver                        0x000000010460f0a6 chromedriver + 1077414
+10  chromedriver                        0x00000001045e64e2 chromedriver + 910562
+11  chromedriver                        0x000000010460e073 chromedriver + 1073267
+12  chromedriver                        0x00000001045e62b3 chromedriver + 910003
+13  chromedriver                        0x00000001045b2507 chromedriver + 697607
+14  chromedriver                        0x00000001045b3171 chromedriver + 700785
+15  chromedriver                        0x0000000104a644d0 chromedriver + 5620944
+16  chromedriver                        0x0000000104a6845f chromedriver + 5637215
+17  chromedriver                        0x0000000104a3f8e2 chromedriver + 5470434
+18  chromedriver                        0x0000000104a68dcf chromedriver + 5639631
+19  chromedriver                        0x0000000104a2e0a4 chromedriver + 5398692
+20  chromedriver                        0x0000000104a8b688 chromedriver + 5781128
+21  chromedriver                        0x0000000104a8b850 chromedriver + 5781584
+22  chromedriver                        0x0000000104a9da41 chromedriver + 5855809
+23  libsystem_pthread.dylib             0x00007ff808612df1 _pthread_start + 99
+24  libsystem_pthread.dylib             0x00007ff80860e857 thread_start + 15
+
+2025-06-09 20:56:46,733 - WARNING - Could not click element 3 on http://localhost:49755/projects/create/: Message: stale element reference: stale element not found
+  (Session info: chrome=137.0.7151.69); For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#stale-element-reference-exception
+Stacktrace:
+0   chromedriver                        0x0000000104aa6728 chromedriver + 5891880
+1   chromedriver                        0x0000000104a9de7a chromedriver + 5856890
+2   chromedriver                        0x000000010456e400 chromedriver + 418816
+3   chromedriver                        0x0000000104581c7b chromedriver + 498811
+4   chromedriver                        0x0000000104580a42 chromedriver + 494146
+5   chromedriver                        0x0000000104575b79 chromedriver + 449401
+6   chromedriver                        0x0000000104575ca5 chromedriver + 449701
+7   chromedriver                        0x0000000104573cc8 chromedriver + 441544
+8   chromedriver                        0x0000000104577e87 chromedriver + 458375
+9   chromedriver                        0x000000010460f0a6 chromedriver + 1077414
+10  chromedriver                        0x00000001045e64e2 chromedriver + 910562
+11  chromedriver                        0x000000010460e073 chromedriver + 1073267
+12  chromedriver                        0x00000001045e62b3 chromedriver + 910003
+13  chromedriver                        0x00000001045b2507 chromedriver + 697607
+14  chromedriver                        0x00000001045b3171 chromedriver + 700785
+15  chromedriver                        0x0000000104a644d0 chromedriver + 5620944
+16  chromedriver                        0x0000000104a6845f chromedriver + 5637215
+17  chromedriver                        0x0000000104a3f8e2 chromedriver + 5470434
+18  chromedriver                        0x0000000104a68dcf chromedriver + 5639631
+19  chromedriver                        0x0000000104a2e0a4 chromedriver + 5398692
+20  chromedriver                        0x0000000104a8b688 chromedriver + 5781128
+21  chromedriver                        0x0000000104a8b850 chromedriver + 5781584
+22  chromedriver                        0x0000000104a9da41 chromedriver + 5855809
+23  libsystem_pthread.dylib             0x00007ff808612df1 _pthread_start + 99
+24  libsystem_pthread.dylib             0x00007ff80860e857 thread_start + 15
+
+2025-06-09 20:56:46,753 - WARNING - Could not click element 4 on http://localhost:49755/projects/create/: Message: stale element reference: stale element not found
+  (Session info: chrome=137.0.7151.69); For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#stale-element-reference-exception
+Stacktrace:
+0   chromedriver                        0x0000000104aa6728 chromedriver + 5891880
+1   chromedriver                        0x0000000104a9de7a chromedriver + 5856890
+2   chromedriver                        0x000000010456e400 chromedriver + 418816
+3   chromedriver                        0x0000000104581c7b chromedriver + 498811
+4   chromedriver                        0x0000000104580a42 chromedriver + 494146
+5   chromedriver                        0x0000000104575b79 chromedriver + 449401
+6   chromedriver                        0x0000000104575ca5 chromedriver + 449701
+7   chromedriver                        0x0000000104573cc8 chromedriver + 441544
+8   chromedriver                        0x0000000104577e87 chromedriver + 458375
+9   chromedriver                        0x000000010460f0a6 chromedriver + 1077414
+10  chromedriver                        0x00000001045e64e2 chromedriver + 910562
+11  chromedriver                        0x000000010460e073 chromedriver + 1073267
+12  chromedriver                        0x00000001045e62b3 chromedriver + 910003
+13  chromedriver                        0x00000001045b2507 chromedriver + 697607
+14  chromedriver                        0x00000001045b3171 chromedriver + 700785
+15  chromedriver                        0x0000000104a644d0 chromedriver + 5620944
+16  chromedriver                        0x0000000104a6845f chromedriver + 5637215
+17  chromedriver                        0x0000000104a3f8e2 chromedriver + 5470434
+18  chromedriver                        0x0000000104a68dcf chromedriver + 5639631
+19  chromedriver                        0x0000000104a2e0a4 chromedriver + 5398692
+20  chromedriver                        0x0000000104a8b688 chromedriver + 5781128
+21  chromedriver                        0x0000000104a8b850 chromedriver + 5781584
+22  chromedriver                        0x0000000104a9da41 chromedriver + 5855809
+23  libsystem_pthread.dylib             0x00007ff808612df1 _pthread_start + 99
+24  libsystem_pthread.dylib             0x00007ff80860e857 thread_start + 15
+
+2025-06-09 20:56:47,698 - INFO - Found 19 links on http://localhost:49755/projects/create/
+2025-06-09 20:56:47,698 - INFO - Crawling: http://localhost:49755/projects/roadmaps/ (depth 2)
+2025-06-09 20:56:48,891 - INFO - Screenshot saved: crawler_screenshots/page__projects_roadmaps__20250609-205648.png
+2025-06-09 20:56:49,373 - INFO - Found 2 clickable elements on http://localhost:49755/projects/roadmaps/
+2025-06-09 20:56:50,035 - INFO - Screenshot saved: crawler_screenshots/before_click__projects_roadmaps__0_20250609-205649.png
+2025-06-09 20:56:50,130 - WARNING - Could not click element 0 on http://localhost:49755/projects/roadmaps/: Message: element not interactable
+  (Session info: chrome=137.0.7151.69)
+Stacktrace:
+0   chromedriver                        0x0000000104aa6728 chromedriver + 5891880
+1   chromedriver                        0x0000000104a9de7a chromedriver + 5856890
+2   chromedriver                        0x000000010456e243 chromedriver + 418371
+3   chromedriver                        0x00000001045c143e chromedriver + 758846
+4   chromedriver                        0x00000001045b434d chromedriver + 705357
+5   chromedriver                        0x00000001045e64e2 chromedriver + 910562
+6   chromedriver                        0x00000001045b3cc8 chromedriver + 703688
+7   chromedriver                        0x00000001045e669e chromedriver + 911006
+8   chromedriver                        0x000000010460e073 chromedriver + 1073267
+9   chromedriver                        0x00000001045e62b3 chromedriver + 910003
+10  chromedriver                        0x00000001045b2507 chromedriver + 697607
+11  chromedriver                        0x00000001045b3171 chromedriver + 700785
+12  chromedriver                        0x0000000104a644d0 chromedriver + 5620944
+13  chromedriver                        0x0000000104a6845f chromedriver + 5637215
+14  chromedriver                        0x0000000104a3f8e2 chromedriver + 5470434
+15  chromedriver                        0x0000000104a68dcf chromedriver + 5639631
+16  chromedriver                        0x0000000104a2e0a4 chromedriver + 5398692
+17  chromedriver                        0x0000000104a8b688 chromedriver + 5781128
+18  chromedriver                        0x0000000104a8b850 chromedriver + 5781584
+19  chromedriver                        0x0000000104a9da41 chromedriver + 5855809
+20  libsystem_pthread.dylib             0x00007ff808612df1 _pthread_start + 99
+21  libsystem_pthread.dylib             0x00007ff80860e857 thread_start + 15
+
+2025-06-09 20:56:50,776 - INFO - Screenshot saved: crawler_screenshots/before_click__projects_roadmaps__1_20250609-205650.png
+2025-06-09 20:56:54,136 - INFO - Screenshot saved: crawler_screenshots/after_click__projects_roadmaps__1_20250609-205654.png
+2025-06-09 20:56:55,636 - INFO - Found 20 links on http://localhost:49755/projects/roadmaps/
+2025-06-09 20:56:55,637 - INFO - Crawling: http://localhost:49755/teams/create/ (depth 2)
+2025-06-09 20:56:55,850 - INFO - Screenshot saved: crawler_screenshots/page__teams_create__20250609-205655.png
+2025-06-09 20:56:55,980 - INFO - Found 2 clickable elements on http://localhost:49755/teams/create/
+2025-06-09 20:56:56,620 - INFO - Screenshot saved: crawler_screenshots/before_click__teams_create__0_20250609-205656.png
+2025-06-09 20:56:56,630 - WARNING - Could not click element 0 on http://localhost:49755/teams/create/: Message: element not interactable
+  (Session info: chrome=137.0.7151.69)
+Stacktrace:
+0   chromedriver                        0x0000000104aa6728 chromedriver + 5891880
+1   chromedriver                        0x0000000104a9de7a chromedriver + 5856890
+2   chromedriver                        0x000000010456e243 chromedriver + 418371
+3   chromedriver                        0x00000001045c143e chromedriver + 758846
+4   chromedriver                        0x00000001045b434d chromedriver + 705357
+5   chromedriver                        0x00000001045e64e2 chromedriver + 910562
+6   chromedriver                        0x00000001045b3cc8 chromedriver + 703688
+7   chromedriver                        0x00000001045e669e chromedriver + 911006
+8   chromedriver                        0x000000010460e073 chromedriver + 1073267
+9   chromedriver                        0x00000001045e62b3 chromedriver + 910003
+10  chromedriver                        0x00000001045b2507 chromedriver + 697607
+11  chromedriver                        0x00000001045b3171 chromedriver + 700785
+12  chromedriver                        0x0000000104a644d0 chromedriver + 5620944
+13  chromedriver                        0x0000000104a6845f chromedriver + 5637215
+14  chromedriver                        0x0000000104a3f8e2 chromedriver + 5470434
+15  chromedriver                        0x0000000104a68dcf chromedriver + 5639631
+16  chromedriver                        0x0000000104a2e0a4 chromedriver + 5398692
+17  chromedriver                        0x0000000104a8b688 chromedriver + 5781128
+18  chromedriver                        0x0000000104a8b850 chromedriver + 5781584
+19  chromedriver                        0x0000000104a9da41 chromedriver + 5855809
+20  libsystem_pthread.dylib             0x00007ff808612df1 _pthread_start + 99
+21  libsystem_pthread.dylib             0x00007ff80860e857 thread_start + 15
+
+2025-06-09 20:56:57,264 - INFO - Screenshot saved: crawler_screenshots/before_click__teams_create__1_20250609-205657.png
+2025-06-09 20:56:58,779 - INFO - Screenshot saved: crawler_screenshots/after_click__teams_create__1_20250609-205658.png
+2025-06-09 20:56:59,995 - INFO - Found 19 links on http://localhost:49755/teams/create/
+2025-06-09 20:56:59,995 - INFO - Crawling: http://localhost:49755/support/tickets/ (depth 2)
+2025-06-09 20:57:00,194 - INFO - Screenshot saved: crawler_screenshots/page__support_tickets__20250609-205700.png
+2025-06-09 20:57:00,215 - INFO - Found 5 clickable elements on http://localhost:49755/support/tickets/
+2025-06-09 20:57:00,851 - INFO - Screenshot saved: crawler_screenshots/before_click__support_tickets__0_20250609-205700.png
+2025-06-09 20:57:00,859 - WARNING - Could not click element 0 on http://localhost:49755/support/tickets/: Message: element not interactable
+  (Session info: chrome=137.0.7151.69)
+Stacktrace:
+0   chromedriver                        0x0000000104aa6728 chromedriver + 5891880
+1   chromedriver                        0x0000000104a9de7a chromedriver + 5856890
+2   chromedriver                        0x000000010456e243 chromedriver + 418371
+3   chromedriver                        0x00000001045c143e chromedriver + 758846
+4   chromedriver                        0x00000001045b434d chromedriver + 705357
+5   chromedriver                        0x00000001045e64e2 chromedriver + 910562
+6   chromedriver                        0x00000001045b3cc8 chromedriver + 703688
+7   chromedriver                        0x00000001045e669e chromedriver + 911006
+8   chromedriver                        0x000000010460e073 chromedriver + 1073267
+9   chromedriver                        0x00000001045e62b3 chromedriver + 910003
+10  chromedriver                        0x00000001045b2507 chromedriver + 697607
+11  chromedriver                        0x00000001045b3171 chromedriver + 700785
+12  chromedriver                        0x0000000104a644d0 chromedriver + 5620944
+13  chromedriver                        0x0000000104a6845f chromedriver + 5637215
+14  chromedriver                        0x0000000104a3f8e2 chromedriver + 5470434
+15  chromedriver                        0x0000000104a68dcf chromedriver + 5639631
+16  chromedriver                        0x0000000104a2e0a4 chromedriver + 5398692
+17  chromedriver                        0x0000000104a8b688 chromedriver + 5781128
+18  chromedriver                        0x0000000104a8b850 chromedriver + 5781584
+19  chromedriver                        0x0000000104a9da41 chromedriver + 5855809
+20  libsystem_pthread.dylib             0x00007ff808612df1 _pthread_start + 99
+21  libsystem_pthread.dylib             0x00007ff80860e857 thread_start + 15
+
+2025-06-09 20:57:01,489 - INFO - Screenshot saved: crawler_screenshots/before_click__support_tickets__1_20250609-205701.png
+2025-06-09 20:57:02,867 - INFO - Screenshot saved: crawler_screenshots/after_click__support_tickets__1_20250609-205702.png
+2025-06-09 20:57:03,969 - WARNING - Could not click element 2 on http://localhost:49755/support/tickets/: Message: stale element reference: stale element not found
+  (Session info: chrome=137.0.7151.69); For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#stale-element-reference-exception
+Stacktrace:
+0   chromedriver                        0x0000000104aa6728 chromedriver + 5891880
+1   chromedriver                        0x0000000104a9de7a chromedriver + 5856890
+2   chromedriver                        0x000000010456e400 chromedriver + 418816
+3   chromedriver                        0x0000000104581c7b chromedriver + 498811
+4   chromedriver                        0x0000000104580a42 chromedriver + 494146
+5   chromedriver                        0x0000000104575b79 chromedriver + 449401
+6   chromedriver                        0x0000000104575ca5 chromedriver + 449701
+7   chromedriver                        0x0000000104573cc8 chromedriver + 441544
+8   chromedriver                        0x0000000104577e87 chromedriver + 458375
+9   chromedriver                        0x000000010460f0a6 chromedriver + 1077414
+10  chromedriver                        0x00000001045e64e2 chromedriver + 910562
+11  chromedriver                        0x000000010460e073 chromedriver + 1073267
+12  chromedriver                        0x00000001045e62b3 chromedriver + 910003
+13  chromedriver                        0x00000001045b2507 chromedriver + 697607
+14  chromedriver                        0x00000001045b3171 chromedriver + 700785
+15  chromedriver                        0x0000000104a644d0 chromedriver + 5620944
+16  chromedriver                        0x0000000104a6845f chromedriver + 5637215
+17  chromedriver                        0x0000000104a3f8e2 chromedriver + 5470434
+18  chromedriver                        0x0000000104a68dcf chromedriver + 5639631
+19  chromedriver                        0x0000000104a2e0a4 chromedriver + 5398692
+20  chromedriver                        0x0000000104a8b688 chromedriver + 5781128
+21  chromedriver                        0x0000000104a8b850 chromedriver + 5781584
+22  chromedriver                        0x0000000104a9da41 chromedriver + 5855809
+23  libsystem_pthread.dylib             0x00007ff808612df1 _pthread_start + 99
+24  libsystem_pthread.dylib             0x00007ff80860e857 thread_start + 15
+
+2025-06-09 20:57:03,977 - WARNING - Could not click element 3 on http://localhost:49755/support/tickets/: Message: stale element reference: stale element not found
+  (Session info: chrome=137.0.7151.69); For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#stale-element-reference-exception
+Stacktrace:
+0   chromedriver                        0x0000000104aa6728 chromedriver + 5891880
+1   chromedriver                        0x0000000104a9de7a chromedriver + 5856890
+2   chromedriver                        0x000000010456e400 chromedriver + 418816
+3   chromedriver                        0x0000000104581c7b chromedriver + 498811
+4   chromedriver                        0x0000000104580a42 chromedriver + 494146
+5   chromedriver                        0x0000000104575b79 chromedriver + 449401
+6   chromedriver                        0x0000000104575ca5 chromedriver + 449701
+7   chromedriver                        0x0000000104573cc8 chromedriver + 441544
+8   chromedriver                        0x0000000104577e87 chromedriver + 458375
+9   chromedriver                        0x000000010460f0a6 chromedriver + 1077414
+10  chromedriver                        0x00000001045e64e2 chromedriver + 910562
+11  chromedriver                        0x000000010460e073 chromedriver + 1073267
+12  chromedriver                        0x00000001045e62b3 chromedriver + 910003
+13  chromedriver                        0x00000001045b2507 chromedriver + 697607
+14  chromedriver                        0x00000001045b3171 chromedriver + 700785
+15  chromedriver                        0x0000000104a644d0 chromedriver + 5620944
+16  chromedriver                        0x0000000104a6845f chromedriver + 5637215
+17  chromedriver                        0x0000000104a3f8e2 chromedriver + 5470434
+18  chromedriver                        0x0000000104a68dcf chromedriver + 5639631
+19  chromedriver                        0x0000000104a2e0a4 chromedriver + 5398692
+20  chromedriver                        0x0000000104a8b688 chromedriver + 5781128
+21  chromedriver                        0x0000000104a8b850 chromedriver + 5781584
+22  chromedriver                        0x0000000104a9da41 chromedriver + 5855809
+23  libsystem_pthread.dylib             0x00007ff808612df1 _pthread_start + 99
+24  libsystem_pthread.dylib             0x00007ff80860e857 thread_start + 15
+
+2025-06-09 20:57:03,983 - WARNING - Could not click element 4 on http://localhost:49755/support/tickets/: Message: stale element reference: stale element not found
+  (Session info: chrome=137.0.7151.69); For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#stale-element-reference-exception
+Stacktrace:
+0   chromedriver                        0x0000000104aa6728 chromedriver + 5891880
+1   chromedriver                        0x0000000104a9de7a chromedriver + 5856890
+2   chromedriver                        0x000000010456e400 chromedriver + 418816
+3   chromedriver                        0x0000000104581c7b chromedriver + 498811
+4   chromedriver                        0x0000000104580a42 chromedriver + 494146
+5   chromedriver                        0x0000000104575b79 chromedriver + 449401
+6   chromedriver                        0x0000000104575ca5 chromedriver + 449701
+7   chromedriver                        0x0000000104573cc8 chromedriver + 441544
+8   chromedriver                        0x0000000104577e87 chromedriver + 458375
+9   chromedriver                        0x000000010460f0a6 chromedriver + 1077414
+10  chromedriver                        0x00000001045e64e2 chromedriver + 910562
+11  chromedriver                        0x000000010460e073 chromedriver + 1073267
+12  chromedriver                        0x00000001045e62b3 chromedriver + 910003
+13  chromedriver                        0x00000001045b2507 chromedriver + 697607
+14  chromedriver                        0x00000001045b3171 chromedriver + 700785
+15  chromedriver                        0x0000000104a644d0 chromedriver + 5620944
+16  chromedriver                        0x0000000104a6845f chromedriver + 5637215
+17  chromedriver                        0x0000000104a3f8e2 chromedriver + 5470434
+18  chromedriver                        0x0000000104a68dcf chromedriver + 5639631
+19  chromedriver                        0x0000000104a2e0a4 chromedriver + 5398692
+20  chromedriver                        0x0000000104a8b688 chromedriver + 5781128
+21  chromedriver                        0x0000000104a8b850 chromedriver + 5781584
+22  chromedriver                        0x0000000104a9da41 chromedriver + 5855809
+23  libsystem_pthread.dylib             0x00007ff808612df1 _pthread_start + 99
+24  libsystem_pthread.dylib             0x00007ff80860e857 thread_start + 15
+
+2025-06-09 20:57:04,102 - INFO - Found 20 links on http://localhost:49755/support/tickets/
+2025-06-09 20:57:04,102 - INFO - Crawling: http://localhost:49755/admin/ (depth 0)
+2025-06-09 20:57:04,880 - INFO - Screenshot saved: crawler_screenshots/page__admin__20250609-205704.png
+2025-06-09 20:57:04,894 - INFO - Found 2 clickable elements on http://localhost:49755/admin/
+2025-06-09 20:57:05,510 - INFO - Screenshot saved: crawler_screenshots/before_click__admin__0_20250609-205705.png
+2025-06-09 20:57:06,834 - INFO - Screenshot saved: crawler_screenshots/after_click__admin__0_20250609-205706.png
+2025-06-09 20:57:08,052 - WARNING - Could not click element 1 on http://localhost:49755/admin/: Message: stale element reference: stale element not found
+  (Session info: chrome=137.0.7151.69); For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#stale-element-reference-exception
+Stacktrace:
+0   chromedriver                        0x0000000104aa6728 chromedriver + 5891880
+1   chromedriver                        0x0000000104a9de7a chromedriver + 5856890
+2   chromedriver                        0x000000010456e400 chromedriver + 418816
+3   chromedriver                        0x0000000104581c7b chromedriver + 498811
+4   chromedriver                        0x0000000104580a42 chromedriver + 494146
+5   chromedriver                        0x0000000104575b79 chromedriver + 449401
+6   chromedriver                        0x0000000104575ca5 chromedriver + 449701
+7   chromedriver                        0x0000000104573cc8 chromedriver + 441544
+8   chromedriver                        0x0000000104577e87 chromedriver + 458375
+9   chromedriver                        0x000000010460f0a6 chromedriver + 1077414
+10  chromedriver                        0x00000001045e64e2 chromedriver + 910562
+11  chromedriver                        0x000000010460e073 chromedriver + 1073267
+12  chromedriver                        0x00000001045e62b3 chromedriver + 910003
+13  chromedriver                        0x00000001045b2507 chromedriver + 697607
+14  chromedriver                        0x00000001045b3171 chromedriver + 700785
+15  chromedriver                        0x0000000104a644d0 chromedriver + 5620944
+16  chromedriver                        0x0000000104a6845f chromedriver + 5637215
+17  chromedriver                        0x0000000104a3f8e2 chromedriver + 5470434
+18  chromedriver                        0x0000000104a68dcf chromedriver + 5639631
+19  chromedriver                        0x0000000104a2e0a4 chromedriver + 5398692
+20  chromedriver                        0x0000000104a8b688 chromedriver + 5781128
+21  chromedriver                        0x0000000104a8b850 chromedriver + 5781584
+22  chromedriver                        0x0000000104a9da41 chromedriver + 5855809
+23  libsystem_pthread.dylib             0x00007ff808612df1 _pthread_start + 99
+24  libsystem_pthread.dylib             0x00007ff80860e857 thread_start + 15
+
+2025-06-09 20:57:08,068 - INFO - Found 2 links on http://localhost:49755/admin/
+2025-06-09 20:57:08,068 - INFO - Admin crawl with chrome complete
+2025-06-09 20:57:08,069 - INFO - Visited 13 pages
+2025-06-09 20:57:08,069 - INFO - Found 0 broken links
+2025-06-09 20:57:08,090 - INFO - Starting anonymous crawl with chrome
+2025-06-09 20:57:08,090 - INFO - Crawling: http://localhost:49755 (depth 0)
+2025-06-09 20:57:08,252 - INFO - Screenshot saved: crawler_screenshots/page_home_20250609-205708.png
+2025-06-09 20:57:08,265 - INFO - Found 2 clickable elements on http://localhost:49755
+2025-06-09 20:57:08,895 - INFO - Screenshot saved: crawler_screenshots/before_click_home_0_20250609-205708.png
+2025-06-09 20:57:10,232 - INFO - Screenshot saved: crawler_screenshots/after_click_home_0_20250609-205710.png
+2025-06-09 20:57:11,302 - WARNING - Could not click element 1 on http://localhost:49755: Message: stale element reference: stale element not found
+  (Session info: chrome=137.0.7151.69); For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#stale-element-reference-exception
+Stacktrace:
+0   chromedriver                        0x0000000104aa6728 chromedriver + 5891880
+1   chromedriver                        0x0000000104a9de7a chromedriver + 5856890
+2   chromedriver                        0x000000010456e400 chromedriver + 418816
+3   chromedriver                        0x0000000104581c7b chromedriver + 498811
+4   chromedriver                        0x0000000104580a42 chromedriver + 494146
+5   chromedriver                        0x0000000104575b79 chromedriver + 449401
+6   chromedriver                        0x0000000104575ca5 chromedriver + 449701
+7   chromedriver                        0x0000000104573cc8 chromedriver + 441544
+8   chromedriver                        0x0000000104577e87 chromedriver + 458375
+9   chromedriver                        0x000000010460f0a6 chromedriver + 1077414
+10  chromedriver                        0x00000001045e64e2 chromedriver + 910562
+11  chromedriver                        0x000000010460e073 chromedriver + 1073267
+12  chromedriver                        0x00000001045e62b3 chromedriver + 910003
+13  chromedriver                        0x00000001045b2507 chromedriver + 697607
+14  chromedriver                        0x00000001045b3171 chromedriver + 700785
+15  chromedriver                        0x0000000104a644d0 chromedriver + 5620944
+16  chromedriver                        0x0000000104a6845f chromedriver + 5637215
+17  chromedriver                        0x0000000104a3f8e2 chromedriver + 5470434
+18  chromedriver                        0x0000000104a68dcf chromedriver + 5639631
+19  chromedriver                        0x0000000104a2e0a4 chromedriver + 5398692
+20  chromedriver                        0x0000000104a8b688 chromedriver + 5781128
+21  chromedriver                        0x0000000104a8b850 chromedriver + 5781584
+22  chromedriver                        0x0000000104a9da41 chromedriver + 5855809
+23  libsystem_pthread.dylib             0x00007ff808612df1 _pthread_start + 99
+24  libsystem_pthread.dylib             0x00007ff80860e857 thread_start + 15
+
+2025-06-09 20:57:11,339 - INFO - Found 3 links on http://localhost:49755
+2025-06-09 20:57:11,339 - INFO - Crawling: http://localhost:49755/ (depth 1)
+2025-06-09 20:57:11,488 - INFO - Screenshot saved: crawler_screenshots/page___20250609-205711.png
+2025-06-09 20:57:11,501 - INFO - Found 2 clickable elements on http://localhost:49755/
+2025-06-09 20:57:12,121 - INFO - Screenshot saved: crawler_screenshots/before_click___0_20250609-205712.png
+2025-06-09 20:57:13,302 - INFO - Screenshot saved: crawler_screenshots/after_click___0_20250609-205713.png
+2025-06-09 20:57:14,380 - WARNING - Could not click element 1 on http://localhost:49755/: Message: stale element reference: stale element not found
+  (Session info: chrome=137.0.7151.69); For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#stale-element-reference-exception
+Stacktrace:
+0   chromedriver                        0x0000000104aa6728 chromedriver + 5891880
+1   chromedriver                        0x0000000104a9de7a chromedriver + 5856890
+2   chromedriver                        0x000000010456e400 chromedriver + 418816
+3   chromedriver                        0x0000000104581c7b chromedriver + 498811
+4   chromedriver                        0x0000000104580a42 chromedriver + 494146
+5   chromedriver                        0x0000000104575b79 chromedriver + 449401
+6   chromedriver                        0x0000000104575ca5 chromedriver + 449701
+7   chromedriver                        0x0000000104573cc8 chromedriver + 441544
+8   chromedriver                        0x0000000104577e87 chromedriver + 458375
+9   chromedriver                        0x000000010460f0a6 chromedriver + 1077414
+10  chromedriver                        0x00000001045e64e2 chromedriver + 910562
+11  chromedriver                        0x000000010460e073 chromedriver + 1073267
+12  chromedriver                        0x00000001045e62b3 chromedriver + 910003
+13  chromedriver                        0x00000001045b2507 chromedriver + 697607
+14  chromedriver                        0x00000001045b3171 chromedriver + 700785
+15  chromedriver                        0x0000000104a644d0 chromedriver + 5620944
+16  chromedriver                        0x0000000104a6845f chromedriver + 5637215
+17  chromedriver                        0x0000000104a3f8e2 chromedriver + 5470434
+18  chromedriver                        0x0000000104a68dcf chromedriver + 5639631
+19  chromedriver                        0x0000000104a2e0a4 chromedriver + 5398692
+20  chromedriver                        0x0000000104a8b688 chromedriver + 5781128
+21  chromedriver                        0x0000000104a8b850 chromedriver + 5781584
+22  chromedriver                        0x0000000104a9da41 chromedriver + 5855809
+23  libsystem_pthread.dylib             0x00007ff808612df1 _pthread_start + 99
+24  libsystem_pthread.dylib             0x00007ff80860e857 thread_start + 15
+
+2025-06-09 20:57:14,413 - INFO - Found 3 links on http://localhost:49755/
+2025-06-09 20:57:14,413 - INFO - Crawling: http://localhost:49755/accounts/password_reset/ (depth 2)
+2025-06-09 20:57:14,593 - INFO - Screenshot saved: crawler_screenshots/page__accounts_password_reset__20250609-205714.png
+2025-06-09 20:57:14,606 - INFO - Found 2 clickable elements on http://localhost:49755/accounts/password_reset/
+2025-06-09 20:57:15,250 - INFO - Screenshot saved: crawler_screenshots/before_click__accounts_password_reset__0_20250609-205715.png
+2025-06-09 20:57:16,443 - INFO - Screenshot saved: crawler_screenshots/after_click__accounts_password_reset__0_20250609-205716.png
+2025-06-09 20:57:17,515 - WARNING - Could not click element 1 on http://localhost:49755/accounts/password_reset/: Message: stale element reference: stale element not found
+  (Session info: chrome=137.0.7151.69); For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#stale-element-reference-exception
+Stacktrace:
+0   chromedriver                        0x0000000104aa6728 chromedriver + 5891880
+1   chromedriver                        0x0000000104a9de7a chromedriver + 5856890
+2   chromedriver                        0x000000010456e400 chromedriver + 418816
+3   chromedriver                        0x0000000104581c7b chromedriver + 498811
+4   chromedriver                        0x0000000104580a42 chromedriver + 494146
+5   chromedriver                        0x0000000104575b79 chromedriver + 449401
+6   chromedriver                        0x0000000104575ca5 chromedriver + 449701
+7   chromedriver                        0x0000000104573cc8 chromedriver + 441544
+8   chromedriver                        0x0000000104577e87 chromedriver + 458375
+9   chromedriver                        0x000000010460f0a6 chromedriver + 1077414
+10  chromedriver                        0x00000001045e64e2 chromedriver + 910562
+11  chromedriver                        0x000000010460e073 chromedriver + 1073267
+12  chromedriver                        0x00000001045e62b3 chromedriver + 910003
+13  chromedriver                        0x00000001045b2507 chromedriver + 697607
+14  chromedriver                        0x00000001045b3171 chromedriver + 700785
+15  chromedriver                        0x0000000104a644d0 chromedriver + 5620944
+16  chromedriver                        0x0000000104a6845f chromedriver + 5637215
+17  chromedriver                        0x0000000104a3f8e2 chromedriver + 5470434
+18  chromedriver                        0x0000000104a68dcf chromedriver + 5639631
+19  chromedriver                        0x0000000104a2e0a4 chromedriver + 5398692
+20  chromedriver                        0x0000000104a8b688 chromedriver + 5781128
+21  chromedriver                        0x0000000104a8b850 chromedriver + 5781584
+22  chromedriver                        0x0000000104a9da41 chromedriver + 5855809
+23  libsystem_pthread.dylib             0x00007ff808612df1 _pthread_start + 99
+24  libsystem_pthread.dylib             0x00007ff80860e857 thread_start + 15
+
+2025-06-09 20:57:17,536 - INFO - Found 2 links on http://localhost:49755/accounts/password_reset/
+2025-06-09 20:57:17,536 - INFO - Crawling: http://localhost:49755/accounts/signup/ (depth 2)
+2025-06-09 20:57:17,848 - INFO - Screenshot saved: crawler_screenshots/page__accounts_signup__20250609-205717.png
+2025-06-09 20:57:17,861 - INFO - Found 2 clickable elements on http://localhost:49755/accounts/signup/
+2025-06-09 20:57:18,491 - INFO - Screenshot saved: crawler_screenshots/before_click__accounts_signup__0_20250609-205718.png
+2025-06-09 20:57:19,817 - INFO - Screenshot saved: crawler_screenshots/after_click__accounts_signup__0_20250609-205719.png
+2025-06-09 20:57:20,896 - WARNING - Could not click element 1 on http://localhost:49755/accounts/signup/: Message: stale element reference: stale element not found
+  (Session info: chrome=137.0.7151.69); For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#stale-element-reference-exception
+Stacktrace:
+0   chromedriver                        0x0000000104aa6728 chromedriver + 5891880
+1   chromedriver                        0x0000000104a9de7a chromedriver + 5856890
+2   chromedriver                        0x000000010456e400 chromedriver + 418816
+3   chromedriver                        0x0000000104581c7b chromedriver + 498811
+4   chromedriver                        0x0000000104580a42 chromedriver + 494146
+5   chromedriver                        0x0000000104575b79 chromedriver + 449401
+6   chromedriver                        0x0000000104575ca5 chromedriver + 449701
+7   chromedriver                        0x0000000104573cc8 chromedriver + 441544
+8   chromedriver                        0x0000000104577e87 chromedriver + 458375
+9   chromedriver                        0x000000010460f0a6 chromedriver + 1077414
+10  chromedriver                        0x00000001045e64e2 chromedriver + 910562
+11  chromedriver                        0x000000010460e073 chromedriver + 1073267
+12  chromedriver                        0x00000001045e62b3 chromedriver + 910003
+13  chromedriver                        0x00000001045b2507 chromedriver + 697607
+14  chromedriver                        0x00000001045b3171 chromedriver + 700785
+15  chromedriver                        0x0000000104a644d0 chromedriver + 5620944
+16  chromedriver                        0x0000000104a6845f chromedriver + 5637215
+17  chromedriver                        0x0000000104a3f8e2 chromedriver + 5470434
+18  chromedriver                        0x0000000104a68dcf chromedriver + 5639631
+19  chromedriver                        0x0000000104a2e0a4 chromedriver + 5398692
+20  chromedriver                        0x0000000104a8b688 chromedriver + 5781128
+21  chromedriver                        0x0000000104a8b850 chromedriver + 5781584
+22  chromedriver                        0x0000000104a9da41 chromedriver + 5855809
+23  libsystem_pthread.dylib             0x00007ff808612df1 _pthread_start + 99
+24  libsystem_pthread.dylib             0x00007ff80860e857 thread_start + 15
+
+2025-06-09 20:57:20,929 - INFO - Found 3 links on http://localhost:49755/accounts/signup/
+2025-06-09 20:57:20,930 - INFO - Anonymous crawl with chrome complete
+2025-06-09 20:57:20,930 - INFO - Visited 4 pages
+2025-06-09 20:57:20,930 - INFO - Found 0 broken links
+2025-06-09 20:57:20,953 - INFO - Starting user crawl with chrome
+2025-06-09 20:57:21,524 - INFO - Screenshot saved: crawler_screenshots/before_login_user_crawler_20250609-205721.png
+2025-06-09 20:57:23,780 - INFO - Screenshot saved: crawler_screenshots/after_login_user_crawler_20250609-205723.png
+2025-06-09 20:57:23,783 - WARNING - Login may have failed for user_crawler, still on login page
+2025-06-09 20:57:23,783 - ERROR - Login failed for user_crawler with chrome, skipping crawl
+2025-06-09 20:57:23,910 - INFO - Total links visited: 0
+2025-06-09 20:57:23,910 - INFO - Total broken links: 0
+2025-06-09 20:57:23,911 - INFO - Total skipped links: 0
+2025-06-09 21:01:46,604 - INFO - ====== WebDriver manager ======
+2025-06-09 21:01:47,188 - INFO - Get LATEST chromedriver version for google-chrome
+2025-06-09 21:01:47,584 - INFO - Get LATEST chromedriver version for google-chrome
+2025-06-09 21:01:47,955 - INFO - Driver [/Users/boiyelove/.wdm/drivers/chromedriver/mac64/137.0.7151.68/chromedriver-mac-x64/chromedriver] found in cache
+2025-06-09 21:01:54,120 - INFO - Chrome driver initialized successfully
+2025-06-09 21:01:54,717 - ERROR - Failed to initialize Safari driver: Message: Could not create a session: You must enable 'Allow remote automation' in the Developer section of Safari Settings to control Safari via WebDriver.
+
+2025-06-09 21:01:56,172 - INFO - LiveServerCrawlerTest setup complete with browsers: ['chrome']
+2025-06-09 21:01:56,172 - INFO - Starting admin crawl with chrome
+2025-06-09 21:01:58,248 - WARNING - Not Found: /favicon.ico
+2025-06-09 21:01:59,427 - INFO - Screenshot saved: crawler_screenshots/before_login_admin_crawler_20250609-210159.png
+2025-06-09 21:02:05,079 - INFO - Screenshot saved: crawler_screenshots/after_login_admin_crawler_20250609-210204.png
+2025-06-09 21:02:05,084 - INFO - Login successful for admin_crawler
+2025-06-09 21:02:05,084 - INFO - Crawling: http://localhost:49860 (depth 0)
+2025-06-09 21:02:06,351 - INFO - Screenshot saved: crawler_screenshots/page_home_20250609-210206.png
+2025-06-09 21:02:06,421 - INFO - Found 1 clickable elements on http://localhost:49860
+2025-06-09 21:02:07,051 - INFO - Screenshot saved: crawler_screenshots/before_click_home_0_20250609-210206.png
+2025-06-09 21:02:07,060 - WARNING - Could not click element 0 on http://localhost:49860: Message: element not interactable
+  (Session info: chrome=137.0.7151.69)
+Stacktrace:
+0   chromedriver                        0x00000001027a9728 chromedriver + 5891880
+1   chromedriver                        0x00000001027a0e7a chromedriver + 5856890
+2   chromedriver                        0x0000000102271243 chromedriver + 418371
+3   chromedriver                        0x00000001022c443e chromedriver + 758846
+4   chromedriver                        0x00000001022b734d chromedriver + 705357
+5   chromedriver                        0x00000001022e94e2 chromedriver + 910562
+6   chromedriver                        0x00000001022b6cc8 chromedriver + 703688
+7   chromedriver                        0x00000001022e969e chromedriver + 911006
+8   chromedriver                        0x0000000102311073 chromedriver + 1073267
+9   chromedriver                        0x00000001022e92b3 chromedriver + 910003
+10  chromedriver                        0x00000001022b5507 chromedriver + 697607
+11  chromedriver                        0x00000001022b6171 chromedriver + 700785
+12  chromedriver                        0x00000001027674d0 chromedriver + 5620944
+13  chromedriver                        0x000000010276b45f chromedriver + 5637215
+14  chromedriver                        0x00000001027428e2 chromedriver + 5470434
+15  chromedriver                        0x000000010276bdcf chromedriver + 5639631
+16  chromedriver                        0x00000001027310a4 chromedriver + 5398692
+17  chromedriver                        0x000000010278e688 chromedriver + 5781128
+18  chromedriver                        0x000000010278e850 chromedriver + 5781584
+19  chromedriver                        0x00000001027a0a41 chromedriver + 5855809
+20  libsystem_pthread.dylib             0x00007ff808612df1 _pthread_start + 99
+21  libsystem_pthread.dylib             0x00007ff80860e857 thread_start + 15
+
+2025-06-09 21:02:07,384 - INFO - Found 22 links on http://localhost:49860
+2025-06-09 21:02:07,384 - INFO - Crawling: http://localhost:49860/ (depth 1)
+2025-06-09 21:02:07,923 - INFO - Screenshot saved: crawler_screenshots/page___20250609-210207.png
+2025-06-09 21:02:08,073 - INFO - Found 1 clickable elements on http://localhost:49860/
+2025-06-09 21:02:08,692 - INFO - Screenshot saved: crawler_screenshots/before_click___0_20250609-210208.png
+2025-06-09 21:02:08,700 - WARNING - Could not click element 0 on http://localhost:49860/: Message: element not interactable
+  (Session info: chrome=137.0.7151.69)
+Stacktrace:
+0   chromedriver                        0x00000001027a9728 chromedriver + 5891880
+1   chromedriver                        0x00000001027a0e7a chromedriver + 5856890
+2   chromedriver                        0x0000000102271243 chromedriver + 418371
+3   chromedriver                        0x00000001022c443e chromedriver + 758846
+4   chromedriver                        0x00000001022b734d chromedriver + 705357
+5   chromedriver                        0x00000001022e94e2 chromedriver + 910562
+6   chromedriver                        0x00000001022b6cc8 chromedriver + 703688
+7   chromedriver                        0x00000001022e969e chromedriver + 911006
+8   chromedriver                        0x0000000102311073 chromedriver + 1073267
+9   chromedriver                        0x00000001022e92b3 chromedriver + 910003
+10  chromedriver                        0x00000001022b5507 chromedriver + 697607
+11  chromedriver                        0x00000001022b6171 chromedriver + 700785
+12  chromedriver                        0x00000001027674d0 chromedriver + 5620944
+13  chromedriver                        0x000000010276b45f chromedriver + 5637215
+14  chromedriver                        0x00000001027428e2 chromedriver + 5470434
+15  chromedriver                        0x000000010276bdcf chromedriver + 5639631
+16  chromedriver                        0x00000001027310a4 chromedriver + 5398692
+17  chromedriver                        0x000000010278e688 chromedriver + 5781128
+18  chromedriver                        0x000000010278e850 chromedriver + 5781584
+19  chromedriver                        0x00000001027a0a41 chromedriver + 5855809
+20  libsystem_pthread.dylib             0x00007ff808612df1 _pthread_start + 99
+21  libsystem_pthread.dylib             0x00007ff80860e857 thread_start + 15
+
+2025-06-09 21:02:08,899 - INFO - Found 22 links on http://localhost:49860/
+2025-06-09 21:02:08,899 - INFO - Crawling: http://localhost:49860/accounts/profile/ (depth 2)
+2025-06-09 21:02:08,904 - WARNING - Not Found: /accounts/profile/
+2025-06-09 21:02:09,029 - INFO - Screenshot saved: crawler_screenshots/page__accounts_profile__20250609-210208.png
+2025-06-09 21:02:09,076 - INFO - Found 0 clickable elements on http://localhost:49860/accounts/profile/
+2025-06-09 21:02:09,096 - INFO - Found 0 links on http://localhost:49860/accounts/profile/
+2025-06-09 21:02:09,096 - INFO - Crawling: http://localhost:49860/projects/ (depth 2)
+2025-06-09 21:02:09,438 - INFO - Screenshot saved: crawler_screenshots/page__projects__20250609-210209.png
+2025-06-09 21:02:09,454 - INFO - Found 12 clickable elements on http://localhost:49860/projects/
+2025-06-09 21:02:10,065 - INFO - Screenshot saved: crawler_screenshots/before_click__projects__0_20250609-210209.png
+2025-06-09 21:02:10,077 - WARNING - Could not click element 0 on http://localhost:49860/projects/: Message: element not interactable
+  (Session info: chrome=137.0.7151.69)
+Stacktrace:
+0   chromedriver                        0x00000001027a9728 chromedriver + 5891880
+1   chromedriver                        0x00000001027a0e7a chromedriver + 5856890
+2   chromedriver                        0x0000000102271243 chromedriver + 418371
+3   chromedriver                        0x00000001022c443e chromedriver + 758846
+4   chromedriver                        0x00000001022b734d chromedriver + 705357
+5   chromedriver                        0x00000001022e94e2 chromedriver + 910562
+6   chromedriver                        0x00000001022b6cc8 chromedriver + 703688
+7   chromedriver                        0x00000001022e969e chromedriver + 911006
+8   chromedriver                        0x0000000102311073 chromedriver + 1073267
+9   chromedriver                        0x00000001022e92b3 chromedriver + 910003
+10  chromedriver                        0x00000001022b5507 chromedriver + 697607
+11  chromedriver                        0x00000001022b6171 chromedriver + 700785
+12  chromedriver                        0x00000001027674d0 chromedriver + 5620944
+13  chromedriver                        0x000000010276b45f chromedriver + 5637215
+14  chromedriver                        0x00000001027428e2 chromedriver + 5470434
+15  chromedriver                        0x000000010276bdcf chromedriver + 5639631
+16  chromedriver                        0x00000001027310a4 chromedriver + 5398692
+17  chromedriver                        0x000000010278e688 chromedriver + 5781128
+18  chromedriver                        0x000000010278e850 chromedriver + 5781584
+19  chromedriver                        0x00000001027a0a41 chromedriver + 5855809
+20  libsystem_pthread.dylib             0x00007ff808612df1 _pthread_start + 99
+21  libsystem_pthread.dylib             0x00007ff80860e857 thread_start + 15
+
+2025-06-09 21:02:10,704 - INFO - Screenshot saved: crawler_screenshots/before_click__projects__1_20250609-210210.png
+2025-06-09 21:02:12,201 - INFO - Screenshot saved: crawler_screenshots/after_click__projects__1_20250609-210212.png
+2025-06-09 21:02:13,388 - WARNING - Could not click element 2 on http://localhost:49860/projects/: Message: stale element reference: stale element not found
+  (Session info: chrome=137.0.7151.69); For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#stale-element-reference-exception
+Stacktrace:
+0   chromedriver                        0x00000001027a9728 chromedriver + 5891880
+1   chromedriver                        0x00000001027a0e7a chromedriver + 5856890
+2   chromedriver                        0x0000000102271400 chromedriver + 418816
+3   chromedriver                        0x0000000102284c7b chromedriver + 498811
+4   chromedriver                        0x0000000102283a42 chromedriver + 494146
+5   chromedriver                        0x0000000102278b79 chromedriver + 449401
+6   chromedriver                        0x0000000102278ca5 chromedriver + 449701
+7   chromedriver                        0x0000000102276cc8 chromedriver + 441544
+8   chromedriver                        0x000000010227ae87 chromedriver + 458375
+9   chromedriver                        0x00000001023120a6 chromedriver + 1077414
+10  chromedriver                        0x00000001022e94e2 chromedriver + 910562
+11  chromedriver                        0x0000000102311073 chromedriver + 1073267
+12  chromedriver                        0x00000001022e92b3 chromedriver + 910003
+13  chromedriver                        0x00000001022b5507 chromedriver + 697607
+14  chromedriver                        0x00000001022b6171 chromedriver + 700785
+15  chromedriver                        0x00000001027674d0 chromedriver + 5620944
+16  chromedriver                        0x000000010276b45f chromedriver + 5637215
+17  chromedriver                        0x00000001027428e2 chromedriver + 5470434
+18  chromedriver                        0x000000010276bdcf chromedriver + 5639631
+19  chromedriver                        0x00000001027310a4 chromedriver + 5398692
+20  chromedriver                        0x000000010278e688 chromedriver + 5781128
+21  chromedriver                        0x000000010278e850 chromedriver + 5781584
+22  chromedriver                        0x00000001027a0a41 chromedriver + 5855809
+23  libsystem_pthread.dylib             0x00007ff808612df1 _pthread_start + 99
+24  libsystem_pthread.dylib             0x00007ff80860e857 thread_start + 15
+
+2025-06-09 21:02:13,395 - WARNING - Could not click element 3 on http://localhost:49860/projects/: Message: stale element reference: stale element not found
+  (Session info: chrome=137.0.7151.69); For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#stale-element-reference-exception
+Stacktrace:
+0   chromedriver                        0x00000001027a9728 chromedriver + 5891880
+1   chromedriver                        0x00000001027a0e7a chromedriver + 5856890
+2   chromedriver                        0x0000000102271400 chromedriver + 418816
+3   chromedriver                        0x0000000102284c7b chromedriver + 498811
+4   chromedriver                        0x0000000102283a42 chromedriver + 494146
+5   chromedriver                        0x0000000102278b79 chromedriver + 449401
+6   chromedriver                        0x0000000102278ca5 chromedriver + 449701
+7   chromedriver                        0x0000000102276cc8 chromedriver + 441544
+8   chromedriver                        0x000000010227ae87 chromedriver + 458375
+9   chromedriver                        0x00000001023120a6 chromedriver + 1077414
+10  chromedriver                        0x00000001022e94e2 chromedriver + 910562
+11  chromedriver                        0x0000000102311073 chromedriver + 1073267
+12  chromedriver                        0x00000001022e92b3 chromedriver + 910003
+13  chromedriver                        0x00000001022b5507 chromedriver + 697607
+14  chromedriver                        0x00000001022b6171 chromedriver + 700785
+15  chromedriver                        0x00000001027674d0 chromedriver + 5620944
+16  chromedriver                        0x000000010276b45f chromedriver + 5637215
+17  chromedriver                        0x00000001027428e2 chromedriver + 5470434
+18  chromedriver                        0x000000010276bdcf chromedriver + 5639631
+19  chromedriver                        0x00000001027310a4 chromedriver + 5398692
+20  chromedriver                        0x000000010278e688 chromedriver + 5781128
+21  chromedriver                        0x000000010278e850 chromedriver + 5781584
+22  chromedriver                        0x00000001027a0a41 chromedriver + 5855809
+23  libsystem_pthread.dylib             0x00007ff808612df1 _pthread_start + 99
+24  libsystem_pthread.dylib             0x00007ff80860e857 thread_start + 15
+
+2025-06-09 21:02:13,402 - WARNING - Could not click element 4 on http://localhost:49860/projects/: Message: stale element reference: stale element not found
+  (Session info: chrome=137.0.7151.69); For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#stale-element-reference-exception
+Stacktrace:
+0   chromedriver                        0x00000001027a9728 chromedriver + 5891880
+1   chromedriver                        0x00000001027a0e7a chromedriver + 5856890
+2   chromedriver                        0x0000000102271400 chromedriver + 418816
+3   chromedriver                        0x0000000102284c7b chromedriver + 498811
+4   chromedriver                        0x0000000102283a42 chromedriver + 494146
+5   chromedriver                        0x0000000102278b79 chromedriver + 449401
+6   chromedriver                        0x0000000102278ca5 chromedriver + 449701
+7   chromedriver                        0x0000000102276cc8 chromedriver + 441544
+8   chromedriver                        0x000000010227ae87 chromedriver + 458375
+9   chromedriver                        0x00000001023120a6 chromedriver + 1077414
+10  chromedriver                        0x00000001022e94e2 chromedriver + 910562
+11  chromedriver                        0x0000000102311073 chromedriver + 1073267
+12  chromedriver                        0x00000001022e92b3 chromedriver + 910003
+13  chromedriver                        0x00000001022b5507 chromedriver + 697607
+14  chromedriver                        0x00000001022b6171 chromedriver + 700785
+15  chromedriver                        0x00000001027674d0 chromedriver + 5620944
+16  chromedriver                        0x000000010276b45f chromedriver + 5637215
+17  chromedriver                        0x00000001027428e2 chromedriver + 5470434
+18  chromedriver                        0x000000010276bdcf chromedriver + 5639631
+19  chromedriver                        0x00000001027310a4 chromedriver + 5398692
+20  chromedriver                        0x000000010278e688 chromedriver + 5781128
+21  chromedriver                        0x000000010278e850 chromedriver + 5781584
+22  chromedriver                        0x00000001027a0a41 chromedriver + 5855809
+23  libsystem_pthread.dylib             0x00007ff808612df1 _pthread_start + 99
+24  libsystem_pthread.dylib             0x00007ff80860e857 thread_start + 15
+
+2025-06-09 21:02:13,559 - INFO - Found 19 links on http://localhost:49860/projects/
+2025-06-09 21:02:13,560 - INFO - Crawling: http://localhost:49860/projects/tasks/ (depth 2)
+2025-06-09 21:02:14,051 - INFO - Screenshot saved: crawler_screenshots/page__projects_tasks__20250609-210213.png
+2025-06-09 21:02:14,077 - INFO - Found 8 clickable elements on http://localhost:49860/projects/tasks/
+2025-06-09 21:02:14,719 - INFO - Screenshot saved: crawler_screenshots/before_click__projects_tasks__0_20250609-210214.png
+2025-06-09 21:02:14,731 - WARNING - Could not click element 0 on http://localhost:49860/projects/tasks/: Message: element not interactable
+  (Session info: chrome=137.0.7151.69)
+Stacktrace:
+0   chromedriver                        0x00000001027a9728 chromedriver + 5891880
+1   chromedriver                        0x00000001027a0e7a chromedriver + 5856890
+2   chromedriver                        0x0000000102271243 chromedriver + 418371
+3   chromedriver                        0x00000001022c443e chromedriver + 758846
+4   chromedriver                        0x00000001022b734d chromedriver + 705357
+5   chromedriver                        0x00000001022e94e2 chromedriver + 910562
+6   chromedriver                        0x00000001022b6cc8 chromedriver + 703688
+7   chromedriver                        0x00000001022e969e chromedriver + 911006
+8   chromedriver                        0x0000000102311073 chromedriver + 1073267
+9   chromedriver                        0x00000001022e92b3 chromedriver + 910003
+10  chromedriver                        0x00000001022b5507 chromedriver + 697607
+11  chromedriver                        0x00000001022b6171 chromedriver + 700785
+12  chromedriver                        0x00000001027674d0 chromedriver + 5620944
+13  chromedriver                        0x000000010276b45f chromedriver + 5637215
+14  chromedriver                        0x00000001027428e2 chromedriver + 5470434
+15  chromedriver                        0x000000010276bdcf chromedriver + 5639631
+16  chromedriver                        0x00000001027310a4 chromedriver + 5398692
+17  chromedriver                        0x000000010278e688 chromedriver + 5781128
+18  chromedriver                        0x000000010278e850 chromedriver + 5781584
+19  chromedriver                        0x00000001027a0a41 chromedriver + 5855809
+20  libsystem_pthread.dylib             0x00007ff808612df1 _pthread_start + 99
+21  libsystem_pthread.dylib             0x00007ff80860e857 thread_start + 15
+
+2025-06-09 21:02:15,366 - INFO - Screenshot saved: crawler_screenshots/before_click__projects_tasks__1_20250609-210215.png
+2025-06-09 21:02:16,701 - INFO - Screenshot saved: crawler_screenshots/after_click__projects_tasks__1_20250609-210216.png
+2025-06-09 21:02:17,845 - WARNING - Could not click element 2 on http://localhost:49860/projects/tasks/: Message: stale element reference: stale element not found
+  (Session info: chrome=137.0.7151.69); For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#stale-element-reference-exception
+Stacktrace:
+0   chromedriver                        0x00000001027a9728 chromedriver + 5891880
+1   chromedriver                        0x00000001027a0e7a chromedriver + 5856890
+2   chromedriver                        0x0000000102271400 chromedriver + 418816
+3   chromedriver                        0x0000000102284c7b chromedriver + 498811
+4   chromedriver                        0x0000000102283a42 chromedriver + 494146
+5   chromedriver                        0x0000000102278b79 chromedriver + 449401
+6   chromedriver                        0x0000000102278ca5 chromedriver + 449701
+7   chromedriver                        0x0000000102276cc8 chromedriver + 441544
+8   chromedriver                        0x000000010227ae87 chromedriver + 458375
+9   chromedriver                        0x00000001023120a6 chromedriver + 1077414
+10  chromedriver                        0x00000001022e94e2 chromedriver + 910562
+11  chromedriver                        0x0000000102311073 chromedriver + 1073267
+12  chromedriver                        0x00000001022e92b3 chromedriver + 910003
+13  chromedriver                        0x00000001022b5507 chromedriver + 697607
+14  chromedriver                        0x00000001022b6171 chromedriver + 700785
+15  chromedriver                        0x00000001027674d0 chromedriver + 5620944
+16  chromedriver                        0x000000010276b45f chromedriver + 5637215
+17  chromedriver                        0x00000001027428e2 chromedriver + 5470434
+18  chromedriver                        0x000000010276bdcf chromedriver + 5639631
+19  chromedriver                        0x00000001027310a4 chromedriver + 5398692
+20  chromedriver                        0x000000010278e688 chromedriver + 5781128
+21  chromedriver                        0x000000010278e850 chromedriver + 5781584
+22  chromedriver                        0x00000001027a0a41 chromedriver + 5855809
+23  libsystem_pthread.dylib             0x00007ff808612df1 _pthread_start + 99
+24  libsystem_pthread.dylib             0x00007ff80860e857 thread_start + 15
+
+2025-06-09 21:02:17,853 - WARNING - Could not click element 3 on http://localhost:49860/projects/tasks/: Message: stale element reference: stale element not found
+  (Session info: chrome=137.0.7151.69); For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#stale-element-reference-exception
+Stacktrace:
+0   chromedriver                        0x00000001027a9728 chromedriver + 5891880
+1   chromedriver                        0x00000001027a0e7a chromedriver + 5856890
+2   chromedriver                        0x0000000102271400 chromedriver + 418816
+3   chromedriver                        0x0000000102284c7b chromedriver + 498811
+4   chromedriver                        0x0000000102283a42 chromedriver + 494146
+5   chromedriver                        0x0000000102278b79 chromedriver + 449401
+6   chromedriver                        0x0000000102278ca5 chromedriver + 449701
+7   chromedriver                        0x0000000102276cc8 chromedriver + 441544
+8   chromedriver                        0x000000010227ae87 chromedriver + 458375
+9   chromedriver                        0x00000001023120a6 chromedriver + 1077414
+10  chromedriver                        0x00000001022e94e2 chromedriver + 910562
+11  chromedriver                        0x0000000102311073 chromedriver + 1073267
+12  chromedriver                        0x00000001022e92b3 chromedriver + 910003
+13  chromedriver                        0x00000001022b5507 chromedriver + 697607
+14  chromedriver                        0x00000001022b6171 chromedriver + 700785
+15  chromedriver                        0x00000001027674d0 chromedriver + 5620944
+16  chromedriver                        0x000000010276b45f chromedriver + 5637215
+17  chromedriver                        0x00000001027428e2 chromedriver + 5470434
+18  chromedriver                        0x000000010276bdcf chromedriver + 5639631
+19  chromedriver                        0x00000001027310a4 chromedriver + 5398692
+20  chromedriver                        0x000000010278e688 chromedriver + 5781128
+21  chromedriver                        0x000000010278e850 chromedriver + 5781584
+22  chromedriver                        0x00000001027a0a41 chromedriver + 5855809
+23  libsystem_pthread.dylib             0x00007ff808612df1 _pthread_start + 99
+24  libsystem_pthread.dylib             0x00007ff80860e857 thread_start + 15
+
+2025-06-09 21:02:17,859 - WARNING - Could not click element 4 on http://localhost:49860/projects/tasks/: Message: stale element reference: stale element not found
+  (Session info: chrome=137.0.7151.69); For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#stale-element-reference-exception
+Stacktrace:
+0   chromedriver                        0x00000001027a9728 chromedriver + 5891880
+1   chromedriver                        0x00000001027a0e7a chromedriver + 5856890
+2   chromedriver                        0x0000000102271400 chromedriver + 418816
+3   chromedriver                        0x0000000102284c7b chromedriver + 498811
+4   chromedriver                        0x0000000102283a42 chromedriver + 494146
+5   chromedriver                        0x0000000102278b79 chromedriver + 449401
+6   chromedriver                        0x0000000102278ca5 chromedriver + 449701
+7   chromedriver                        0x0000000102276cc8 chromedriver + 441544
+8   chromedriver                        0x000000010227ae87 chromedriver + 458375
+9   chromedriver                        0x00000001023120a6 chromedriver + 1077414
+10  chromedriver                        0x00000001022e94e2 chromedriver + 910562
+11  chromedriver                        0x0000000102311073 chromedriver + 1073267
+12  chromedriver                        0x00000001022e92b3 chromedriver + 910003
+13  chromedriver                        0x00000001022b5507 chromedriver + 697607
+14  chromedriver                        0x00000001022b6171 chromedriver + 700785
+15  chromedriver                        0x00000001027674d0 chromedriver + 5620944
+16  chromedriver                        0x000000010276b45f chromedriver + 5637215
+17  chromedriver                        0x00000001027428e2 chromedriver + 5470434
+18  chromedriver                        0x000000010276bdcf chromedriver + 5639631
+19  chromedriver                        0x00000001027310a4 chromedriver + 5398692
+20  chromedriver                        0x000000010278e688 chromedriver + 5781128
+21  chromedriver                        0x000000010278e850 chromedriver + 5781584
+22  chromedriver                        0x00000001027a0a41 chromedriver + 5855809
+23  libsystem_pthread.dylib             0x00007ff808612df1 _pthread_start + 99
+24  libsystem_pthread.dylib             0x00007ff80860e857 thread_start + 15
+
+2025-06-09 21:02:17,993 - INFO - Found 19 links on http://localhost:49860/projects/tasks/
+2025-06-09 21:02:17,993 - INFO - Crawling: http://localhost:49860/teams/ (depth 2)
+2025-06-09 21:02:18,280 - INFO - Screenshot saved: crawler_screenshots/page__teams__20250609-210218.png
+2025-06-09 21:02:18,293 - INFO - Found 2 clickable elements on http://localhost:49860/teams/
+2025-06-09 21:02:18,917 - INFO - Screenshot saved: crawler_screenshots/before_click__teams__0_20250609-210218.png
+2025-06-09 21:02:18,925 - WARNING - Could not click element 0 on http://localhost:49860/teams/: Message: element not interactable
+  (Session info: chrome=137.0.7151.69)
+Stacktrace:
+0   chromedriver                        0x00000001027a9728 chromedriver + 5891880
+1   chromedriver                        0x00000001027a0e7a chromedriver + 5856890
+2   chromedriver                        0x0000000102271243 chromedriver + 418371
+3   chromedriver                        0x00000001022c443e chromedriver + 758846
+4   chromedriver                        0x00000001022b734d chromedriver + 705357
+5   chromedriver                        0x00000001022e94e2 chromedriver + 910562
+6   chromedriver                        0x00000001022b6cc8 chromedriver + 703688
+7   chromedriver                        0x00000001022e969e chromedriver + 911006
+8   chromedriver                        0x0000000102311073 chromedriver + 1073267
+9   chromedriver                        0x00000001022e92b3 chromedriver + 910003
+10  chromedriver                        0x00000001022b5507 chromedriver + 697607
+11  chromedriver                        0x00000001022b6171 chromedriver + 700785
+12  chromedriver                        0x00000001027674d0 chromedriver + 5620944
+13  chromedriver                        0x000000010276b45f chromedriver + 5637215
+14  chromedriver                        0x00000001027428e2 chromedriver + 5470434
+15  chromedriver                        0x000000010276bdcf chromedriver + 5639631
+16  chromedriver                        0x00000001027310a4 chromedriver + 5398692
+17  chromedriver                        0x000000010278e688 chromedriver + 5781128
+18  chromedriver                        0x000000010278e850 chromedriver + 5781584
+19  chromedriver                        0x00000001027a0a41 chromedriver + 5855809
+20  libsystem_pthread.dylib             0x00007ff808612df1 _pthread_start + 99
+21  libsystem_pthread.dylib             0x00007ff80860e857 thread_start + 15
+
+2025-06-09 21:02:19,549 - INFO - Screenshot saved: crawler_screenshots/before_click__teams__1_20250609-210219.png
+2025-06-09 21:02:21,103 - INFO - Screenshot saved: crawler_screenshots/after_click__teams__1_20250609-210220.png
+2025-06-09 21:02:22,326 - INFO - Found 19 links on http://localhost:49860/teams/
+2025-06-09 21:02:22,326 - INFO - Crawling: http://localhost:49860/workspaces/ (depth 2)
+2025-06-09 21:02:22,716 - INFO - Screenshot saved: crawler_screenshots/page__workspaces__20250609-210222.png
+2025-06-09 21:02:22,729 - INFO - Found 5 clickable elements on http://localhost:49860/workspaces/
+2025-06-09 21:02:23,372 - INFO - Screenshot saved: crawler_screenshots/before_click__workspaces__0_20250609-210223.png
+2025-06-09 21:02:23,380 - WARNING - Could not click element 0 on http://localhost:49860/workspaces/: Message: element not interactable
+  (Session info: chrome=137.0.7151.69)
+Stacktrace:
+0   chromedriver                        0x00000001027a9728 chromedriver + 5891880
+1   chromedriver                        0x00000001027a0e7a chromedriver + 5856890
+2   chromedriver                        0x0000000102271243 chromedriver + 418371
+3   chromedriver                        0x00000001022c443e chromedriver + 758846
+4   chromedriver                        0x00000001022b734d chromedriver + 705357
+5   chromedriver                        0x00000001022e94e2 chromedriver + 910562
+6   chromedriver                        0x00000001022b6cc8 chromedriver + 703688
+7   chromedriver                        0x00000001022e969e chromedriver + 911006
+8   chromedriver                        0x0000000102311073 chromedriver + 1073267
+9   chromedriver                        0x00000001022e92b3 chromedriver + 910003
+10  chromedriver                        0x00000001022b5507 chromedriver + 697607
+11  chromedriver                        0x00000001022b6171 chromedriver + 700785
+12  chromedriver                        0x00000001027674d0 chromedriver + 5620944
+13  chromedriver                        0x000000010276b45f chromedriver + 5637215
+14  chromedriver                        0x00000001027428e2 chromedriver + 5470434
+15  chromedriver                        0x000000010276bdcf chromedriver + 5639631
+16  chromedriver                        0x00000001027310a4 chromedriver + 5398692
+17  chromedriver                        0x000000010278e688 chromedriver + 5781128
+18  chromedriver                        0x000000010278e850 chromedriver + 5781584
+19  chromedriver                        0x00000001027a0a41 chromedriver + 5855809
+20  libsystem_pthread.dylib             0x00007ff808612df1 _pthread_start + 99
+21  libsystem_pthread.dylib             0x00007ff80860e857 thread_start + 15
+
+2025-06-09 21:02:24,012 - INFO - Screenshot saved: crawler_screenshots/before_click__workspaces__1_20250609-210223.png
+2025-06-09 21:02:25,184 - INFO - Screenshot saved: crawler_screenshots/after_click__workspaces__1_20250609-210225.png
+2025-06-09 21:02:26,299 - WARNING - Could not click element 2 on http://localhost:49860/workspaces/: Message: stale element reference: stale element not found
+  (Session info: chrome=137.0.7151.69); For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#stale-element-reference-exception
+Stacktrace:
+0   chromedriver                        0x00000001027a9728 chromedriver + 5891880
+1   chromedriver                        0x00000001027a0e7a chromedriver + 5856890
+2   chromedriver                        0x0000000102271400 chromedriver + 418816
+3   chromedriver                        0x0000000102284c7b chromedriver + 498811
+4   chromedriver                        0x0000000102283a42 chromedriver + 494146
+5   chromedriver                        0x0000000102278b79 chromedriver + 449401
+6   chromedriver                        0x0000000102278ca5 chromedriver + 449701
+7   chromedriver                        0x0000000102276cc8 chromedriver + 441544
+8   chromedriver                        0x000000010227ae87 chromedriver + 458375
+9   chromedriver                        0x00000001023120a6 chromedriver + 1077414
+10  chromedriver                        0x00000001022e94e2 chromedriver + 910562
+11  chromedriver                        0x0000000102311073 chromedriver + 1073267
+12  chromedriver                        0x00000001022e92b3 chromedriver + 910003
+13  chromedriver                        0x00000001022b5507 chromedriver + 697607
+14  chromedriver                        0x00000001022b6171 chromedriver + 700785
+15  chromedriver                        0x00000001027674d0 chromedriver + 5620944
+16  chromedriver                        0x000000010276b45f chromedriver + 5637215
+17  chromedriver                        0x00000001027428e2 chromedriver + 5470434
+18  chromedriver                        0x000000010276bdcf chromedriver + 5639631
+19  chromedriver                        0x00000001027310a4 chromedriver + 5398692
+20  chromedriver                        0x000000010278e688 chromedriver + 5781128
+21  chromedriver                        0x000000010278e850 chromedriver + 5781584
+22  chromedriver                        0x00000001027a0a41 chromedriver + 5855809
+23  libsystem_pthread.dylib             0x00007ff808612df1 _pthread_start + 99
+24  libsystem_pthread.dylib             0x00007ff80860e857 thread_start + 15
+
+2025-06-09 21:02:26,307 - WARNING - Could not click element 3 on http://localhost:49860/workspaces/: Message: stale element reference: stale element not found
+  (Session info: chrome=137.0.7151.69); For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#stale-element-reference-exception
+Stacktrace:
+0   chromedriver                        0x00000001027a9728 chromedriver + 5891880
+1   chromedriver                        0x00000001027a0e7a chromedriver + 5856890
+2   chromedriver                        0x0000000102271400 chromedriver + 418816
+3   chromedriver                        0x0000000102284c7b chromedriver + 498811
+4   chromedriver                        0x0000000102283a42 chromedriver + 494146
+5   chromedriver                        0x0000000102278b79 chromedriver + 449401
+6   chromedriver                        0x0000000102278ca5 chromedriver + 449701
+7   chromedriver                        0x0000000102276cc8 chromedriver + 441544
+8   chromedriver                        0x000000010227ae87 chromedriver + 458375
+9   chromedriver                        0x00000001023120a6 chromedriver + 1077414
+10  chromedriver                        0x00000001022e94e2 chromedriver + 910562
+11  chromedriver                        0x0000000102311073 chromedriver + 1073267
+12  chromedriver                        0x00000001022e92b3 chromedriver + 910003
+13  chromedriver                        0x00000001022b5507 chromedriver + 697607
+14  chromedriver                        0x00000001022b6171 chromedriver + 700785
+15  chromedriver                        0x00000001027674d0 chromedriver + 5620944
+16  chromedriver                        0x000000010276b45f chromedriver + 5637215
+17  chromedriver                        0x00000001027428e2 chromedriver + 5470434
+18  chromedriver                        0x000000010276bdcf chromedriver + 5639631
+19  chromedriver                        0x00000001027310a4 chromedriver + 5398692
+20  chromedriver                        0x000000010278e688 chromedriver + 5781128
+21  chromedriver                        0x000000010278e850 chromedriver + 5781584
+22  chromedriver                        0x00000001027a0a41 chromedriver + 5855809
+23  libsystem_pthread.dylib             0x00007ff808612df1 _pthread_start + 99
+24  libsystem_pthread.dylib             0x00007ff80860e857 thread_start + 15
+
+2025-06-09 21:02:26,313 - WARNING - Could not click element 4 on http://localhost:49860/workspaces/: Message: stale element reference: stale element not found
+  (Session info: chrome=137.0.7151.69); For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#stale-element-reference-exception
+Stacktrace:
+0   chromedriver                        0x00000001027a9728 chromedriver + 5891880
+1   chromedriver                        0x00000001027a0e7a chromedriver + 5856890
+2   chromedriver                        0x0000000102271400 chromedriver + 418816
+3   chromedriver                        0x0000000102284c7b chromedriver + 498811
+4   chromedriver                        0x0000000102283a42 chromedriver + 494146
+5   chromedriver                        0x0000000102278b79 chromedriver + 449401
+6   chromedriver                        0x0000000102278ca5 chromedriver + 449701
+7   chromedriver                        0x0000000102276cc8 chromedriver + 441544
+8   chromedriver                        0x000000010227ae87 chromedriver + 458375
+9   chromedriver                        0x00000001023120a6 chromedriver + 1077414
+10  chromedriver                        0x00000001022e94e2 chromedriver + 910562
+11  chromedriver                        0x0000000102311073 chromedriver + 1073267
+12  chromedriver                        0x00000001022e92b3 chromedriver + 910003
+13  chromedriver                        0x00000001022b5507 chromedriver + 697607
+14  chromedriver                        0x00000001022b6171 chromedriver + 700785
+15  chromedriver                        0x00000001027674d0 chromedriver + 5620944
+16  chromedriver                        0x000000010276b45f chromedriver + 5637215
+17  chromedriver                        0x00000001027428e2 chromedriver + 5470434
+18  chromedriver                        0x000000010276bdcf chromedriver + 5639631
+19  chromedriver                        0x00000001027310a4 chromedriver + 5398692
+20  chromedriver                        0x000000010278e688 chromedriver + 5781128
+21  chromedriver                        0x000000010278e850 chromedriver + 5781584
+22  chromedriver                        0x00000001027a0a41 chromedriver + 5855809
+23  libsystem_pthread.dylib             0x00007ff808612df1 _pthread_start + 99
+24  libsystem_pthread.dylib             0x00007ff80860e857 thread_start + 15
+
+2025-06-09 21:02:26,427 - INFO - Found 20 links on http://localhost:49860/workspaces/
+2025-06-09 21:02:26,427 - INFO - Crawling: http://localhost:49860/workspaces/create/ (depth 2)
+2025-06-09 21:02:26,639 - INFO - Screenshot saved: crawler_screenshots/page__workspaces_create__20250609-210226.png
+2025-06-09 21:02:26,671 - INFO - Found 5 clickable elements on http://localhost:49860/workspaces/create/
+2025-06-09 21:02:27,302 - INFO - Screenshot saved: crawler_screenshots/before_click__workspaces_create__0_20250609-210227.png
+2025-06-09 21:02:27,310 - WARNING - Could not click element 0 on http://localhost:49860/workspaces/create/: Message: element not interactable
+  (Session info: chrome=137.0.7151.69)
+Stacktrace:
+0   chromedriver                        0x00000001027a9728 chromedriver + 5891880
+1   chromedriver                        0x00000001027a0e7a chromedriver + 5856890
+2   chromedriver                        0x0000000102271243 chromedriver + 418371
+3   chromedriver                        0x00000001022c443e chromedriver + 758846
+4   chromedriver                        0x00000001022b734d chromedriver + 705357
+5   chromedriver                        0x00000001022e94e2 chromedriver + 910562
+6   chromedriver                        0x00000001022b6cc8 chromedriver + 703688
+7   chromedriver                        0x00000001022e969e chromedriver + 911006
+8   chromedriver                        0x0000000102311073 chromedriver + 1073267
+9   chromedriver                        0x00000001022e92b3 chromedriver + 910003
+10  chromedriver                        0x00000001022b5507 chromedriver + 697607
+11  chromedriver                        0x00000001022b6171 chromedriver + 700785
+12  chromedriver                        0x00000001027674d0 chromedriver + 5620944
+13  chromedriver                        0x000000010276b45f chromedriver + 5637215
+14  chromedriver                        0x00000001027428e2 chromedriver + 5470434
+15  chromedriver                        0x000000010276bdcf chromedriver + 5639631
+16  chromedriver                        0x00000001027310a4 chromedriver + 5398692
+17  chromedriver                        0x000000010278e688 chromedriver + 5781128
+18  chromedriver                        0x000000010278e850 chromedriver + 5781584
+19  chromedriver                        0x00000001027a0a41 chromedriver + 5855809
+20  libsystem_pthread.dylib             0x00007ff808612df1 _pthread_start + 99
+21  libsystem_pthread.dylib             0x00007ff80860e857 thread_start + 15
+
+2025-06-09 21:02:27,932 - INFO - Screenshot saved: crawler_screenshots/before_click__workspaces_create__1_20250609-210227.png
+2025-06-09 21:02:29,118 - INFO - Screenshot saved: crawler_screenshots/after_click__workspaces_create__1_20250609-210229.png
+2025-06-09 21:02:30,229 - WARNING - Could not click element 2 on http://localhost:49860/workspaces/create/: Message: stale element reference: stale element not found
+  (Session info: chrome=137.0.7151.69); For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#stale-element-reference-exception
+Stacktrace:
+0   chromedriver                        0x00000001027a9728 chromedriver + 5891880
+1   chromedriver                        0x00000001027a0e7a chromedriver + 5856890
+2   chromedriver                        0x0000000102271400 chromedriver + 418816
+3   chromedriver                        0x0000000102284c7b chromedriver + 498811
+4   chromedriver                        0x0000000102283a42 chromedriver + 494146
+5   chromedriver                        0x0000000102278b79 chromedriver + 449401
+6   chromedriver                        0x0000000102278ca5 chromedriver + 449701
+7   chromedriver                        0x0000000102276cc8 chromedriver + 441544
+8   chromedriver                        0x000000010227ae87 chromedriver + 458375
+9   chromedriver                        0x00000001023120a6 chromedriver + 1077414
+10  chromedriver                        0x00000001022e94e2 chromedriver + 910562
+11  chromedriver                        0x0000000102311073 chromedriver + 1073267
+12  chromedriver                        0x00000001022e92b3 chromedriver + 910003
+13  chromedriver                        0x00000001022b5507 chromedriver + 697607
+14  chromedriver                        0x00000001022b6171 chromedriver + 700785
+15  chromedriver                        0x00000001027674d0 chromedriver + 5620944
+16  chromedriver                        0x000000010276b45f chromedriver + 5637215
+17  chromedriver                        0x00000001027428e2 chromedriver + 5470434
+18  chromedriver                        0x000000010276bdcf chromedriver + 5639631
+19  chromedriver                        0x00000001027310a4 chromedriver + 5398692
+20  chromedriver                        0x000000010278e688 chromedriver + 5781128
+21  chromedriver                        0x000000010278e850 chromedriver + 5781584
+22  chromedriver                        0x00000001027a0a41 chromedriver + 5855809
+23  libsystem_pthread.dylib             0x00007ff808612df1 _pthread_start + 99
+24  libsystem_pthread.dylib             0x00007ff80860e857 thread_start + 15
+
+2025-06-09 21:02:30,237 - WARNING - Could not click element 3 on http://localhost:49860/workspaces/create/: Message: stale element reference: stale element not found
+  (Session info: chrome=137.0.7151.69); For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#stale-element-reference-exception
+Stacktrace:
+0   chromedriver                        0x00000001027a9728 chromedriver + 5891880
+1   chromedriver                        0x00000001027a0e7a chromedriver + 5856890
+2   chromedriver                        0x0000000102271400 chromedriver + 418816
+3   chromedriver                        0x0000000102284c7b chromedriver + 498811
+4   chromedriver                        0x0000000102283a42 chromedriver + 494146
+5   chromedriver                        0x0000000102278b79 chromedriver + 449401
+6   chromedriver                        0x0000000102278ca5 chromedriver + 449701
+7   chromedriver                        0x0000000102276cc8 chromedriver + 441544
+8   chromedriver                        0x000000010227ae87 chromedriver + 458375
+9   chromedriver                        0x00000001023120a6 chromedriver + 1077414
+10  chromedriver                        0x00000001022e94e2 chromedriver + 910562
+11  chromedriver                        0x0000000102311073 chromedriver + 1073267
+12  chromedriver                        0x00000001022e92b3 chromedriver + 910003
+13  chromedriver                        0x00000001022b5507 chromedriver + 697607
+14  chromedriver                        0x00000001022b6171 chromedriver + 700785
+15  chromedriver                        0x00000001027674d0 chromedriver + 5620944
+16  chromedriver                        0x000000010276b45f chromedriver + 5637215
+17  chromedriver                        0x00000001027428e2 chromedriver + 5470434
+18  chromedriver                        0x000000010276bdcf chromedriver + 5639631
+19  chromedriver                        0x00000001027310a4 chromedriver + 5398692
+20  chromedriver                        0x000000010278e688 chromedriver + 5781128
+21  chromedriver                        0x000000010278e850 chromedriver + 5781584
+22  chromedriver                        0x00000001027a0a41 chromedriver + 5855809
+23  libsystem_pthread.dylib             0x00007ff808612df1 _pthread_start + 99
+24  libsystem_pthread.dylib             0x00007ff80860e857 thread_start + 15
+
+2025-06-09 21:02:30,244 - WARNING - Could not click element 4 on http://localhost:49860/workspaces/create/: Message: stale element reference: stale element not found
+  (Session info: chrome=137.0.7151.69); For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#stale-element-reference-exception
+Stacktrace:
+0   chromedriver                        0x00000001027a9728 chromedriver + 5891880
+1   chromedriver                        0x00000001027a0e7a chromedriver + 5856890
+2   chromedriver                        0x0000000102271400 chromedriver + 418816
+3   chromedriver                        0x0000000102284c7b chromedriver + 498811
+4   chromedriver                        0x0000000102283a42 chromedriver + 494146
+5   chromedriver                        0x0000000102278b79 chromedriver + 449401
+6   chromedriver                        0x0000000102278ca5 chromedriver + 449701
+7   chromedriver                        0x0000000102276cc8 chromedriver + 441544
+8   chromedriver                        0x000000010227ae87 chromedriver + 458375
+9   chromedriver                        0x00000001023120a6 chromedriver + 1077414
+10  chromedriver                        0x00000001022e94e2 chromedriver + 910562
+11  chromedriver                        0x0000000102311073 chromedriver + 1073267
+12  chromedriver                        0x00000001022e92b3 chromedriver + 910003
+13  chromedriver                        0x00000001022b5507 chromedriver + 697607
+14  chromedriver                        0x00000001022b6171 chromedriver + 700785
+15  chromedriver                        0x00000001027674d0 chromedriver + 5620944
+16  chromedriver                        0x000000010276b45f chromedriver + 5637215
+17  chromedriver                        0x00000001027428e2 chromedriver + 5470434
+18  chromedriver                        0x000000010276bdcf chromedriver + 5639631
+19  chromedriver                        0x00000001027310a4 chromedriver + 5398692
+20  chromedriver                        0x000000010278e688 chromedriver + 5781128
+21  chromedriver                        0x000000010278e850 chromedriver + 5781584
+22  chromedriver                        0x00000001027a0a41 chromedriver + 5855809
+23  libsystem_pthread.dylib             0x00007ff808612df1 _pthread_start + 99
+24  libsystem_pthread.dylib             0x00007ff80860e857 thread_start + 15
+
+2025-06-09 21:02:30,357 - INFO - Found 20 links on http://localhost:49860/workspaces/create/
+2025-06-09 21:02:30,357 - INFO - Crawling: http://localhost:49860/projects/create/ (depth 2)
+2025-06-09 21:02:30,583 - INFO - Screenshot saved: crawler_screenshots/page__projects_create__20250609-210230.png
+2025-06-09 21:02:30,596 - INFO - Found 12 clickable elements on http://localhost:49860/projects/create/
+2025-06-09 21:02:31,234 - INFO - Screenshot saved: crawler_screenshots/before_click__projects_create__0_20250609-210231.png
+2025-06-09 21:02:31,242 - WARNING - Could not click element 0 on http://localhost:49860/projects/create/: Message: element not interactable
+  (Session info: chrome=137.0.7151.69)
+Stacktrace:
+0   chromedriver                        0x00000001027a9728 chromedriver + 5891880
+1   chromedriver                        0x00000001027a0e7a chromedriver + 5856890
+2   chromedriver                        0x0000000102271243 chromedriver + 418371
+3   chromedriver                        0x00000001022c443e chromedriver + 758846
+4   chromedriver                        0x00000001022b734d chromedriver + 705357
+5   chromedriver                        0x00000001022e94e2 chromedriver + 910562
+6   chromedriver                        0x00000001022b6cc8 chromedriver + 703688
+7   chromedriver                        0x00000001022e969e chromedriver + 911006
+8   chromedriver                        0x0000000102311073 chromedriver + 1073267
+9   chromedriver                        0x00000001022e92b3 chromedriver + 910003
+10  chromedriver                        0x00000001022b5507 chromedriver + 697607
+11  chromedriver                        0x00000001022b6171 chromedriver + 700785
+12  chromedriver                        0x00000001027674d0 chromedriver + 5620944
+13  chromedriver                        0x000000010276b45f chromedriver + 5637215
+14  chromedriver                        0x00000001027428e2 chromedriver + 5470434
+15  chromedriver                        0x000000010276bdcf chromedriver + 5639631
+16  chromedriver                        0x00000001027310a4 chromedriver + 5398692
+17  chromedriver                        0x000000010278e688 chromedriver + 5781128
+18  chromedriver                        0x000000010278e850 chromedriver + 5781584
+19  chromedriver                        0x00000001027a0a41 chromedriver + 5855809
+20  libsystem_pthread.dylib             0x00007ff808612df1 _pthread_start + 99
+21  libsystem_pthread.dylib             0x00007ff80860e857 thread_start + 15
+
+2025-06-09 21:02:31,864 - INFO - Screenshot saved: crawler_screenshots/before_click__projects_create__1_20250609-210231.png
+2025-06-09 21:02:33,033 - INFO - Screenshot saved: crawler_screenshots/after_click__projects_create__1_20250609-210232.png
+2025-06-09 21:02:34,142 - WARNING - Could not click element 2 on http://localhost:49860/projects/create/: Message: stale element reference: stale element not found
+  (Session info: chrome=137.0.7151.69); For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#stale-element-reference-exception
+Stacktrace:
+0   chromedriver                        0x00000001027a9728 chromedriver + 5891880
+1   chromedriver                        0x00000001027a0e7a chromedriver + 5856890
+2   chromedriver                        0x0000000102271400 chromedriver + 418816
+3   chromedriver                        0x0000000102284c7b chromedriver + 498811
+4   chromedriver                        0x0000000102283a42 chromedriver + 494146
+5   chromedriver                        0x0000000102278b79 chromedriver + 449401
+6   chromedriver                        0x0000000102278ca5 chromedriver + 449701
+7   chromedriver                        0x0000000102276cc8 chromedriver + 441544
+8   chromedriver                        0x000000010227ae87 chromedriver + 458375
+9   chromedriver                        0x00000001023120a6 chromedriver + 1077414
+10  chromedriver                        0x00000001022e94e2 chromedriver + 910562
+11  chromedriver                        0x0000000102311073 chromedriver + 1073267
+12  chromedriver                        0x00000001022e92b3 chromedriver + 910003
+13  chromedriver                        0x00000001022b5507 chromedriver + 697607
+14  chromedriver                        0x00000001022b6171 chromedriver + 700785
+15  chromedriver                        0x00000001027674d0 chromedriver + 5620944
+16  chromedriver                        0x000000010276b45f chromedriver + 5637215
+17  chromedriver                        0x00000001027428e2 chromedriver + 5470434
+18  chromedriver                        0x000000010276bdcf chromedriver + 5639631
+19  chromedriver                        0x00000001027310a4 chromedriver + 5398692
+20  chromedriver                        0x000000010278e688 chromedriver + 5781128
+21  chromedriver                        0x000000010278e850 chromedriver + 5781584
+22  chromedriver                        0x00000001027a0a41 chromedriver + 5855809
+23  libsystem_pthread.dylib             0x00007ff808612df1 _pthread_start + 99
+24  libsystem_pthread.dylib             0x00007ff80860e857 thread_start + 15
+
+2025-06-09 21:02:34,149 - WARNING - Could not click element 3 on http://localhost:49860/projects/create/: Message: stale element reference: stale element not found
+  (Session info: chrome=137.0.7151.69); For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#stale-element-reference-exception
+Stacktrace:
+0   chromedriver                        0x00000001027a9728 chromedriver + 5891880
+1   chromedriver                        0x00000001027a0e7a chromedriver + 5856890
+2   chromedriver                        0x0000000102271400 chromedriver + 418816
+3   chromedriver                        0x0000000102284c7b chromedriver + 498811
+4   chromedriver                        0x0000000102283a42 chromedriver + 494146
+5   chromedriver                        0x0000000102278b79 chromedriver + 449401
+6   chromedriver                        0x0000000102278ca5 chromedriver + 449701
+7   chromedriver                        0x0000000102276cc8 chromedriver + 441544
+8   chromedriver                        0x000000010227ae87 chromedriver + 458375
+9   chromedriver                        0x00000001023120a6 chromedriver + 1077414
+10  chromedriver                        0x00000001022e94e2 chromedriver + 910562
+11  chromedriver                        0x0000000102311073 chromedriver + 1073267
+12  chromedriver                        0x00000001022e92b3 chromedriver + 910003
+13  chromedriver                        0x00000001022b5507 chromedriver + 697607
+14  chromedriver                        0x00000001022b6171 chromedriver + 700785
+15  chromedriver                        0x00000001027674d0 chromedriver + 5620944
+16  chromedriver                        0x000000010276b45f chromedriver + 5637215
+17  chromedriver                        0x00000001027428e2 chromedriver + 5470434
+18  chromedriver                        0x000000010276bdcf chromedriver + 5639631
+19  chromedriver                        0x00000001027310a4 chromedriver + 5398692
+20  chromedriver                        0x000000010278e688 chromedriver + 5781128
+21  chromedriver                        0x000000010278e850 chromedriver + 5781584
+22  chromedriver                        0x00000001027a0a41 chromedriver + 5855809
+23  libsystem_pthread.dylib             0x00007ff808612df1 _pthread_start + 99
+24  libsystem_pthread.dylib             0x00007ff80860e857 thread_start + 15
+
+2025-06-09 21:02:34,156 - WARNING - Could not click element 4 on http://localhost:49860/projects/create/: Message: stale element reference: stale element not found
+  (Session info: chrome=137.0.7151.69); For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#stale-element-reference-exception
+Stacktrace:
+0   chromedriver                        0x00000001027a9728 chromedriver + 5891880
+1   chromedriver                        0x00000001027a0e7a chromedriver + 5856890
+2   chromedriver                        0x0000000102271400 chromedriver + 418816
+3   chromedriver                        0x0000000102284c7b chromedriver + 498811
+4   chromedriver                        0x0000000102283a42 chromedriver + 494146
+5   chromedriver                        0x0000000102278b79 chromedriver + 449401
+6   chromedriver                        0x0000000102278ca5 chromedriver + 449701
+7   chromedriver                        0x0000000102276cc8 chromedriver + 441544
+8   chromedriver                        0x000000010227ae87 chromedriver + 458375
+9   chromedriver                        0x00000001023120a6 chromedriver + 1077414
+10  chromedriver                        0x00000001022e94e2 chromedriver + 910562
+11  chromedriver                        0x0000000102311073 chromedriver + 1073267
+12  chromedriver                        0x00000001022e92b3 chromedriver + 910003
+13  chromedriver                        0x00000001022b5507 chromedriver + 697607
+14  chromedriver                        0x00000001022b6171 chromedriver + 700785
+15  chromedriver                        0x00000001027674d0 chromedriver + 5620944
+16  chromedriver                        0x000000010276b45f chromedriver + 5637215
+17  chromedriver                        0x00000001027428e2 chromedriver + 5470434
+18  chromedriver                        0x000000010276bdcf chromedriver + 5639631
+19  chromedriver                        0x00000001027310a4 chromedriver + 5398692
+20  chromedriver                        0x000000010278e688 chromedriver + 5781128
+21  chromedriver                        0x000000010278e850 chromedriver + 5781584
+22  chromedriver                        0x00000001027a0a41 chromedriver + 5855809
+23  libsystem_pthread.dylib             0x00007ff808612df1 _pthread_start + 99
+24  libsystem_pthread.dylib             0x00007ff80860e857 thread_start + 15
+
+2025-06-09 21:02:34,262 - INFO - Found 19 links on http://localhost:49860/projects/create/
+2025-06-09 21:02:34,262 - INFO - Crawling: http://localhost:49860/projects/roadmaps/ (depth 2)
+2025-06-09 21:02:34,472 - INFO - Screenshot saved: crawler_screenshots/page__projects_roadmaps__20250609-210234.png
+2025-06-09 21:02:34,485 - INFO - Found 2 clickable elements on http://localhost:49860/projects/roadmaps/
+2025-06-09 21:02:35,139 - INFO - Screenshot saved: crawler_screenshots/before_click__projects_roadmaps__0_20250609-210234.png
+2025-06-09 21:02:35,146 - WARNING - Could not click element 0 on http://localhost:49860/projects/roadmaps/: Message: element not interactable
+  (Session info: chrome=137.0.7151.69)
+Stacktrace:
+0   chromedriver                        0x00000001027a9728 chromedriver + 5891880
+1   chromedriver                        0x00000001027a0e7a chromedriver + 5856890
+2   chromedriver                        0x0000000102271243 chromedriver + 418371
+3   chromedriver                        0x00000001022c443e chromedriver + 758846
+4   chromedriver                        0x00000001022b734d chromedriver + 705357
+5   chromedriver                        0x00000001022e94e2 chromedriver + 910562
+6   chromedriver                        0x00000001022b6cc8 chromedriver + 703688
+7   chromedriver                        0x00000001022e969e chromedriver + 911006
+8   chromedriver                        0x0000000102311073 chromedriver + 1073267
+9   chromedriver                        0x00000001022e92b3 chromedriver + 910003
+10  chromedriver                        0x00000001022b5507 chromedriver + 697607
+11  chromedriver                        0x00000001022b6171 chromedriver + 700785
+12  chromedriver                        0x00000001027674d0 chromedriver + 5620944
+13  chromedriver                        0x000000010276b45f chromedriver + 5637215
+14  chromedriver                        0x00000001027428e2 chromedriver + 5470434
+15  chromedriver                        0x000000010276bdcf chromedriver + 5639631
+16  chromedriver                        0x00000001027310a4 chromedriver + 5398692
+17  chromedriver                        0x000000010278e688 chromedriver + 5781128
+18  chromedriver                        0x000000010278e850 chromedriver + 5781584
+19  chromedriver                        0x00000001027a0a41 chromedriver + 5855809
+20  libsystem_pthread.dylib             0x00007ff808612df1 _pthread_start + 99
+21  libsystem_pthread.dylib             0x00007ff80860e857 thread_start + 15
+
+2025-06-09 21:02:35,845 - INFO - Screenshot saved: crawler_screenshots/before_click__projects_roadmaps__1_20250609-210235.png
+2025-06-09 21:02:39,596 - INFO - Screenshot saved: crawler_screenshots/after_click__projects_roadmaps__1_20250609-210239.png
+2025-06-09 21:02:42,177 - INFO - Found 20 links on http://localhost:49860/projects/roadmaps/
+2025-06-09 21:02:42,177 - INFO - Crawling: http://localhost:49860/teams/create/ (depth 2)
+2025-06-09 21:02:42,845 - INFO - Screenshot saved: crawler_screenshots/page__teams_create__20250609-210242.png
+2025-06-09 21:02:43,030 - INFO - Found 2 clickable elements on http://localhost:49860/teams/create/
+2025-06-09 21:02:43,677 - INFO - Screenshot saved: crawler_screenshots/before_click__teams_create__0_20250609-210243.png
+2025-06-09 21:02:43,778 - WARNING - Could not click element 0 on http://localhost:49860/teams/create/: Message: element not interactable
+  (Session info: chrome=137.0.7151.69)
+Stacktrace:
+0   chromedriver                        0x00000001027a9728 chromedriver + 5891880
+1   chromedriver                        0x00000001027a0e7a chromedriver + 5856890
+2   chromedriver                        0x0000000102271243 chromedriver + 418371
+3   chromedriver                        0x00000001022c443e chromedriver + 758846
+4   chromedriver                        0x00000001022b734d chromedriver + 705357
+5   chromedriver                        0x00000001022e94e2 chromedriver + 910562
+6   chromedriver                        0x00000001022b6cc8 chromedriver + 703688
+7   chromedriver                        0x00000001022e969e chromedriver + 911006
+8   chromedriver                        0x0000000102311073 chromedriver + 1073267
+9   chromedriver                        0x00000001022e92b3 chromedriver + 910003
+10  chromedriver                        0x00000001022b5507 chromedriver + 697607
+11  chromedriver                        0x00000001022b6171 chromedriver + 700785
+12  chromedriver                        0x00000001027674d0 chromedriver + 5620944
+13  chromedriver                        0x000000010276b45f chromedriver + 5637215
+14  chromedriver                        0x00000001027428e2 chromedriver + 5470434
+15  chromedriver                        0x000000010276bdcf chromedriver + 5639631
+16  chromedriver                        0x00000001027310a4 chromedriver + 5398692
+17  chromedriver                        0x000000010278e688 chromedriver + 5781128
+18  chromedriver                        0x000000010278e850 chromedriver + 5781584
+19  chromedriver                        0x00000001027a0a41 chromedriver + 5855809
+20  libsystem_pthread.dylib             0x00007ff808612df1 _pthread_start + 99
+21  libsystem_pthread.dylib             0x00007ff80860e857 thread_start + 15
+
+2025-06-09 21:02:44,414 - INFO - Screenshot saved: crawler_screenshots/before_click__teams_create__1_20250609-210244.png
+2025-06-09 21:02:46,881 - INFO - Screenshot saved: crawler_screenshots/after_click__teams_create__1_20250609-210246.png
+2025-06-09 21:02:48,250 - INFO - Found 19 links on http://localhost:49860/teams/create/
+2025-06-09 21:02:48,251 - INFO - Crawling: http://localhost:49860/support/tickets/ (depth 2)
+2025-06-09 21:02:48,463 - INFO - Screenshot saved: crawler_screenshots/page__support_tickets__20250609-210248.png
+2025-06-09 21:02:48,481 - INFO - Found 5 clickable elements on http://localhost:49860/support/tickets/
+2025-06-09 21:02:49,117 - INFO - Screenshot saved: crawler_screenshots/before_click__support_tickets__0_20250609-210248.png
+2025-06-09 21:02:49,125 - WARNING - Could not click element 0 on http://localhost:49860/support/tickets/: Message: element not interactable
+  (Session info: chrome=137.0.7151.69)
+Stacktrace:
+0   chromedriver                        0x00000001027a9728 chromedriver + 5891880
+1   chromedriver                        0x00000001027a0e7a chromedriver + 5856890
+2   chromedriver                        0x0000000102271243 chromedriver + 418371
+3   chromedriver                        0x00000001022c443e chromedriver + 758846
+4   chromedriver                        0x00000001022b734d chromedriver + 705357
+5   chromedriver                        0x00000001022e94e2 chromedriver + 910562
+6   chromedriver                        0x00000001022b6cc8 chromedriver + 703688
+7   chromedriver                        0x00000001022e969e chromedriver + 911006
+8   chromedriver                        0x0000000102311073 chromedriver + 1073267
+9   chromedriver                        0x00000001022e92b3 chromedriver + 910003
+10  chromedriver                        0x00000001022b5507 chromedriver + 697607
+11  chromedriver                        0x00000001022b6171 chromedriver + 700785
+12  chromedriver                        0x00000001027674d0 chromedriver + 5620944
+13  chromedriver                        0x000000010276b45f chromedriver + 5637215
+14  chromedriver                        0x00000001027428e2 chromedriver + 5470434
+15  chromedriver                        0x000000010276bdcf chromedriver + 5639631
+16  chromedriver                        0x00000001027310a4 chromedriver + 5398692
+17  chromedriver                        0x000000010278e688 chromedriver + 5781128
+18  chromedriver                        0x000000010278e850 chromedriver + 5781584
+19  chromedriver                        0x00000001027a0a41 chromedriver + 5855809
+20  libsystem_pthread.dylib             0x00007ff808612df1 _pthread_start + 99
+21  libsystem_pthread.dylib             0x00007ff80860e857 thread_start + 15
+
+2025-06-09 21:02:49,764 - INFO - Screenshot saved: crawler_screenshots/before_click__support_tickets__1_20250609-210249.png
+2025-06-09 21:02:51,157 - INFO - Screenshot saved: crawler_screenshots/after_click__support_tickets__1_20250609-210251.png
+2025-06-09 21:02:52,263 - WARNING - Could not click element 2 on http://localhost:49860/support/tickets/: Message: stale element reference: stale element not found
+  (Session info: chrome=137.0.7151.69); For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#stale-element-reference-exception
+Stacktrace:
+0   chromedriver                        0x00000001027a9728 chromedriver + 5891880
+1   chromedriver                        0x00000001027a0e7a chromedriver + 5856890
+2   chromedriver                        0x0000000102271400 chromedriver + 418816
+3   chromedriver                        0x0000000102284c7b chromedriver + 498811
+4   chromedriver                        0x0000000102283a42 chromedriver + 494146
+5   chromedriver                        0x0000000102278b79 chromedriver + 449401
+6   chromedriver                        0x0000000102278ca5 chromedriver + 449701
+7   chromedriver                        0x0000000102276cc8 chromedriver + 441544
+8   chromedriver                        0x000000010227ae87 chromedriver + 458375
+9   chromedriver                        0x00000001023120a6 chromedriver + 1077414
+10  chromedriver                        0x00000001022e94e2 chromedriver + 910562
+11  chromedriver                        0x0000000102311073 chromedriver + 1073267
+12  chromedriver                        0x00000001022e92b3 chromedriver + 910003
+13  chromedriver                        0x00000001022b5507 chromedriver + 697607
+14  chromedriver                        0x00000001022b6171 chromedriver + 700785
+15  chromedriver                        0x00000001027674d0 chromedriver + 5620944
+16  chromedriver                        0x000000010276b45f chromedriver + 5637215
+17  chromedriver                        0x00000001027428e2 chromedriver + 5470434
+18  chromedriver                        0x000000010276bdcf chromedriver + 5639631
+19  chromedriver                        0x00000001027310a4 chromedriver + 5398692
+20  chromedriver                        0x000000010278e688 chromedriver + 5781128
+21  chromedriver                        0x000000010278e850 chromedriver + 5781584
+22  chromedriver                        0x00000001027a0a41 chromedriver + 5855809
+23  libsystem_pthread.dylib             0x00007ff808612df1 _pthread_start + 99
+24  libsystem_pthread.dylib             0x00007ff80860e857 thread_start + 15
+
+2025-06-09 21:02:52,271 - WARNING - Could not click element 3 on http://localhost:49860/support/tickets/: Message: stale element reference: stale element not found
+  (Session info: chrome=137.0.7151.69); For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#stale-element-reference-exception
+Stacktrace:
+0   chromedriver                        0x00000001027a9728 chromedriver + 5891880
+1   chromedriver                        0x00000001027a0e7a chromedriver + 5856890
+2   chromedriver                        0x0000000102271400 chromedriver + 418816
+3   chromedriver                        0x0000000102284c7b chromedriver + 498811
+4   chromedriver                        0x0000000102283a42 chromedriver + 494146
+5   chromedriver                        0x0000000102278b79 chromedriver + 449401
+6   chromedriver                        0x0000000102278ca5 chromedriver + 449701
+7   chromedriver                        0x0000000102276cc8 chromedriver + 441544
+8   chromedriver                        0x000000010227ae87 chromedriver + 458375
+9   chromedriver                        0x00000001023120a6 chromedriver + 1077414
+10  chromedriver                        0x00000001022e94e2 chromedriver + 910562
+11  chromedriver                        0x0000000102311073 chromedriver + 1073267
+12  chromedriver                        0x00000001022e92b3 chromedriver + 910003
+13  chromedriver                        0x00000001022b5507 chromedriver + 697607
+14  chromedriver                        0x00000001022b6171 chromedriver + 700785
+15  chromedriver                        0x00000001027674d0 chromedriver + 5620944
+16  chromedriver                        0x000000010276b45f chromedriver + 5637215
+17  chromedriver                        0x00000001027428e2 chromedriver + 5470434
+18  chromedriver                        0x000000010276bdcf chromedriver + 5639631
+19  chromedriver                        0x00000001027310a4 chromedriver + 5398692
+20  chromedriver                        0x000000010278e688 chromedriver + 5781128
+21  chromedriver                        0x000000010278e850 chromedriver + 5781584
+22  chromedriver                        0x00000001027a0a41 chromedriver + 5855809
+23  libsystem_pthread.dylib             0x00007ff808612df1 _pthread_start + 99
+24  libsystem_pthread.dylib             0x00007ff80860e857 thread_start + 15
+
+2025-06-09 21:02:52,278 - WARNING - Could not click element 4 on http://localhost:49860/support/tickets/: Message: stale element reference: stale element not found
+  (Session info: chrome=137.0.7151.69); For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#stale-element-reference-exception
+Stacktrace:
+0   chromedriver                        0x00000001027a9728 chromedriver + 5891880
+1   chromedriver                        0x00000001027a0e7a chromedriver + 5856890
+2   chromedriver                        0x0000000102271400 chromedriver + 418816
+3   chromedriver                        0x0000000102284c7b chromedriver + 498811
+4   chromedriver                        0x0000000102283a42 chromedriver + 494146
+5   chromedriver                        0x0000000102278b79 chromedriver + 449401
+6   chromedriver                        0x0000000102278ca5 chromedriver + 449701
+7   chromedriver                        0x0000000102276cc8 chromedriver + 441544
+8   chromedriver                        0x000000010227ae87 chromedriver + 458375
+9   chromedriver                        0x00000001023120a6 chromedriver + 1077414
+10  chromedriver                        0x00000001022e94e2 chromedriver + 910562
+11  chromedriver                        0x0000000102311073 chromedriver + 1073267
+12  chromedriver                        0x00000001022e92b3 chromedriver + 910003
+13  chromedriver                        0x00000001022b5507 chromedriver + 697607
+14  chromedriver                        0x00000001022b6171 chromedriver + 700785
+15  chromedriver                        0x00000001027674d0 chromedriver + 5620944
+16  chromedriver                        0x000000010276b45f chromedriver + 5637215
+17  chromedriver                        0x00000001027428e2 chromedriver + 5470434
+18  chromedriver                        0x000000010276bdcf chromedriver + 5639631
+19  chromedriver                        0x00000001027310a4 chromedriver + 5398692
+20  chromedriver                        0x000000010278e688 chromedriver + 5781128
+21  chromedriver                        0x000000010278e850 chromedriver + 5781584
+22  chromedriver                        0x00000001027a0a41 chromedriver + 5855809
+23  libsystem_pthread.dylib             0x00007ff808612df1 _pthread_start + 99
+24  libsystem_pthread.dylib             0x00007ff80860e857 thread_start + 15
+
+2025-06-09 21:02:52,390 - INFO - Found 20 links on http://localhost:49860/support/tickets/
+2025-06-09 21:02:52,390 - INFO - Crawling: http://localhost:49860/admin/ (depth 0)
+2025-06-09 21:02:53,184 - INFO - Screenshot saved: crawler_screenshots/page__admin__20250609-210253.png
+2025-06-09 21:02:53,203 - INFO - Found 2 clickable elements on http://localhost:49860/admin/
+2025-06-09 21:02:53,830 - INFO - Screenshot saved: crawler_screenshots/before_click__admin__0_20250609-210253.png
+2025-06-09 21:02:55,176 - INFO - Screenshot saved: crawler_screenshots/after_click__admin__0_20250609-210255.png
+2025-06-09 21:02:56,397 - WARNING - Could not click element 1 on http://localhost:49860/admin/: Message: stale element reference: stale element not found
+  (Session info: chrome=137.0.7151.69); For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#stale-element-reference-exception
+Stacktrace:
+0   chromedriver                        0x00000001027a9728 chromedriver + 5891880
+1   chromedriver                        0x00000001027a0e7a chromedriver + 5856890
+2   chromedriver                        0x0000000102271400 chromedriver + 418816
+3   chromedriver                        0x0000000102284c7b chromedriver + 498811
+4   chromedriver                        0x0000000102283a42 chromedriver + 494146
+5   chromedriver                        0x0000000102278b79 chromedriver + 449401
+6   chromedriver                        0x0000000102278ca5 chromedriver + 449701
+7   chromedriver                        0x0000000102276cc8 chromedriver + 441544
+8   chromedriver                        0x000000010227ae87 chromedriver + 458375
+9   chromedriver                        0x00000001023120a6 chromedriver + 1077414
+10  chromedriver                        0x00000001022e94e2 chromedriver + 910562
+11  chromedriver                        0x0000000102311073 chromedriver + 1073267
+12  chromedriver                        0x00000001022e92b3 chromedriver + 910003
+13  chromedriver                        0x00000001022b5507 chromedriver + 697607
+14  chromedriver                        0x00000001022b6171 chromedriver + 700785
+15  chromedriver                        0x00000001027674d0 chromedriver + 5620944
+16  chromedriver                        0x000000010276b45f chromedriver + 5637215
+17  chromedriver                        0x00000001027428e2 chromedriver + 5470434
+18  chromedriver                        0x000000010276bdcf chromedriver + 5639631
+19  chromedriver                        0x00000001027310a4 chromedriver + 5398692
+20  chromedriver                        0x000000010278e688 chromedriver + 5781128
+21  chromedriver                        0x000000010278e850 chromedriver + 5781584
+22  chromedriver                        0x00000001027a0a41 chromedriver + 5855809
+23  libsystem_pthread.dylib             0x00007ff808612df1 _pthread_start + 99
+24  libsystem_pthread.dylib             0x00007ff80860e857 thread_start + 15
+
+2025-06-09 21:02:56,418 - INFO - Found 2 links on http://localhost:49860/admin/
+2025-06-09 21:02:56,418 - INFO - Admin crawl with chrome complete
+2025-06-09 21:02:56,418 - INFO - Visited 13 pages
+2025-06-09 21:02:56,418 - INFO - Found 0 broken links
+2025-06-09 21:02:56,439 - INFO - Starting anonymous crawl with chrome
+2025-06-09 21:02:56,440 - INFO - Crawling: http://localhost:49860 (depth 0)
+2025-06-09 21:02:56,600 - INFO - Screenshot saved: crawler_screenshots/page_home_20250609-210256.png
+2025-06-09 21:02:56,613 - INFO - Found 2 clickable elements on http://localhost:49860
+2025-06-09 21:02:57,257 - INFO - Screenshot saved: crawler_screenshots/before_click_home_0_20250609-210257.png
+2025-06-09 21:02:58,588 - INFO - Screenshot saved: crawler_screenshots/after_click_home_0_20250609-210258.png
+2025-06-09 21:02:59,677 - WARNING - Could not click element 1 on http://localhost:49860: Message: stale element reference: stale element not found
+  (Session info: chrome=137.0.7151.69); For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#stale-element-reference-exception
+Stacktrace:
+0   chromedriver                        0x00000001027a9728 chromedriver + 5891880
+1   chromedriver                        0x00000001027a0e7a chromedriver + 5856890
+2   chromedriver                        0x0000000102271400 chromedriver + 418816
+3   chromedriver                        0x0000000102284c7b chromedriver + 498811
+4   chromedriver                        0x0000000102283a42 chromedriver + 494146
+5   chromedriver                        0x0000000102278b79 chromedriver + 449401
+6   chromedriver                        0x0000000102278ca5 chromedriver + 449701
+7   chromedriver                        0x0000000102276cc8 chromedriver + 441544
+8   chromedriver                        0x000000010227ae87 chromedriver + 458375
+9   chromedriver                        0x00000001023120a6 chromedriver + 1077414
+10  chromedriver                        0x00000001022e94e2 chromedriver + 910562
+11  chromedriver                        0x0000000102311073 chromedriver + 1073267
+12  chromedriver                        0x00000001022e92b3 chromedriver + 910003
+13  chromedriver                        0x00000001022b5507 chromedriver + 697607
+14  chromedriver                        0x00000001022b6171 chromedriver + 700785
+15  chromedriver                        0x00000001027674d0 chromedriver + 5620944
+16  chromedriver                        0x000000010276b45f chromedriver + 5637215
+17  chromedriver                        0x00000001027428e2 chromedriver + 5470434
+18  chromedriver                        0x000000010276bdcf chromedriver + 5639631
+19  chromedriver                        0x00000001027310a4 chromedriver + 5398692
+20  chromedriver                        0x000000010278e688 chromedriver + 5781128
+21  chromedriver                        0x000000010278e850 chromedriver + 5781584
+22  chromedriver                        0x00000001027a0a41 chromedriver + 5855809
+23  libsystem_pthread.dylib             0x00007ff808612df1 _pthread_start + 99
+24  libsystem_pthread.dylib             0x00007ff80860e857 thread_start + 15
+
+2025-06-09 21:02:59,709 - INFO - Found 3 links on http://localhost:49860
+2025-06-09 21:02:59,709 - INFO - Crawling: http://localhost:49860/ (depth 1)
+2025-06-09 21:02:59,873 - INFO - Screenshot saved: crawler_screenshots/page___20250609-210259.png
+2025-06-09 21:02:59,889 - INFO - Found 2 clickable elements on http://localhost:49860/
+2025-06-09 21:03:00,519 - INFO - Screenshot saved: crawler_screenshots/before_click___0_20250609-210300.png
+2025-06-09 21:03:01,696 - INFO - Screenshot saved: crawler_screenshots/after_click___0_20250609-210301.png
+2025-06-09 21:03:02,772 - WARNING - Could not click element 1 on http://localhost:49860/: Message: stale element reference: stale element not found
+  (Session info: chrome=137.0.7151.69); For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#stale-element-reference-exception
+Stacktrace:
+0   chromedriver                        0x00000001027a9728 chromedriver + 5891880
+1   chromedriver                        0x00000001027a0e7a chromedriver + 5856890
+2   chromedriver                        0x0000000102271400 chromedriver + 418816
+3   chromedriver                        0x0000000102284c7b chromedriver + 498811
+4   chromedriver                        0x0000000102283a42 chromedriver + 494146
+5   chromedriver                        0x0000000102278b79 chromedriver + 449401
+6   chromedriver                        0x0000000102278ca5 chromedriver + 449701
+7   chromedriver                        0x0000000102276cc8 chromedriver + 441544
+8   chromedriver                        0x000000010227ae87 chromedriver + 458375
+9   chromedriver                        0x00000001023120a6 chromedriver + 1077414
+10  chromedriver                        0x00000001022e94e2 chromedriver + 910562
+11  chromedriver                        0x0000000102311073 chromedriver + 1073267
+12  chromedriver                        0x00000001022e92b3 chromedriver + 910003
+13  chromedriver                        0x00000001022b5507 chromedriver + 697607
+14  chromedriver                        0x00000001022b6171 chromedriver + 700785
+15  chromedriver                        0x00000001027674d0 chromedriver + 5620944
+16  chromedriver                        0x000000010276b45f chromedriver + 5637215
+17  chromedriver                        0x00000001027428e2 chromedriver + 5470434
+18  chromedriver                        0x000000010276bdcf chromedriver + 5639631
+19  chromedriver                        0x00000001027310a4 chromedriver + 5398692
+20  chromedriver                        0x000000010278e688 chromedriver + 5781128
+21  chromedriver                        0x000000010278e850 chromedriver + 5781584
+22  chromedriver                        0x00000001027a0a41 chromedriver + 5855809
+23  libsystem_pthread.dylib             0x00007ff808612df1 _pthread_start + 99
+24  libsystem_pthread.dylib             0x00007ff80860e857 thread_start + 15
+
+2025-06-09 21:03:02,806 - INFO - Found 3 links on http://localhost:49860/
+2025-06-09 21:03:02,806 - INFO - Crawling: http://localhost:49860/accounts/password_reset/ (depth 2)
+2025-06-09 21:03:02,985 - INFO - Screenshot saved: crawler_screenshots/page__accounts_password_reset__20250609-210302.png
+2025-06-09 21:03:02,997 - INFO - Found 2 clickable elements on http://localhost:49860/accounts/password_reset/
+2025-06-09 21:03:03,643 - INFO - Screenshot saved: crawler_screenshots/before_click__accounts_password_reset__0_20250609-210303.png
+2025-06-09 21:03:04,833 - INFO - Screenshot saved: crawler_screenshots/after_click__accounts_password_reset__0_20250609-210304.png
+2025-06-09 21:03:05,910 - WARNING - Could not click element 1 on http://localhost:49860/accounts/password_reset/: Message: stale element reference: stale element not found
+  (Session info: chrome=137.0.7151.69); For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#stale-element-reference-exception
+Stacktrace:
+0   chromedriver                        0x00000001027a9728 chromedriver + 5891880
+1   chromedriver                        0x00000001027a0e7a chromedriver + 5856890
+2   chromedriver                        0x0000000102271400 chromedriver + 418816
+3   chromedriver                        0x0000000102284c7b chromedriver + 498811
+4   chromedriver                        0x0000000102283a42 chromedriver + 494146
+5   chromedriver                        0x0000000102278b79 chromedriver + 449401
+6   chromedriver                        0x0000000102278ca5 chromedriver + 449701
+7   chromedriver                        0x0000000102276cc8 chromedriver + 441544
+8   chromedriver                        0x000000010227ae87 chromedriver + 458375
+9   chromedriver                        0x00000001023120a6 chromedriver + 1077414
+10  chromedriver                        0x00000001022e94e2 chromedriver + 910562
+11  chromedriver                        0x0000000102311073 chromedriver + 1073267
+12  chromedriver                        0x00000001022e92b3 chromedriver + 910003
+13  chromedriver                        0x00000001022b5507 chromedriver + 697607
+14  chromedriver                        0x00000001022b6171 chromedriver + 700785
+15  chromedriver                        0x00000001027674d0 chromedriver + 5620944
+16  chromedriver                        0x000000010276b45f chromedriver + 5637215
+17  chromedriver                        0x00000001027428e2 chromedriver + 5470434
+18  chromedriver                        0x000000010276bdcf chromedriver + 5639631
+19  chromedriver                        0x00000001027310a4 chromedriver + 5398692
+20  chromedriver                        0x000000010278e688 chromedriver + 5781128
+21  chromedriver                        0x000000010278e850 chromedriver + 5781584
+22  chromedriver                        0x00000001027a0a41 chromedriver + 5855809
+23  libsystem_pthread.dylib             0x00007ff808612df1 _pthread_start + 99
+24  libsystem_pthread.dylib             0x00007ff80860e857 thread_start + 15
+
+2025-06-09 21:03:05,945 - INFO - Found 2 links on http://localhost:49860/accounts/password_reset/
+2025-06-09 21:03:05,945 - INFO - Crawling: http://localhost:49860/accounts/signup/ (depth 2)
+2025-06-09 21:03:06,259 - INFO - Screenshot saved: crawler_screenshots/page__accounts_signup__20250609-210306.png
+2025-06-09 21:03:06,272 - INFO - Found 2 clickable elements on http://localhost:49860/accounts/signup/
+2025-06-09 21:03:06,877 - INFO - Screenshot saved: crawler_screenshots/before_click__accounts_signup__0_20250609-210306.png
+2025-06-09 21:03:08,206 - INFO - Screenshot saved: crawler_screenshots/after_click__accounts_signup__0_20250609-210308.png
+2025-06-09 21:03:09,283 - WARNING - Could not click element 1 on http://localhost:49860/accounts/signup/: Message: stale element reference: stale element not found
+  (Session info: chrome=137.0.7151.69); For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#stale-element-reference-exception
+Stacktrace:
+0   chromedriver                        0x00000001027a9728 chromedriver + 5891880
+1   chromedriver                        0x00000001027a0e7a chromedriver + 5856890
+2   chromedriver                        0x0000000102271400 chromedriver + 418816
+3   chromedriver                        0x0000000102284c7b chromedriver + 498811
+4   chromedriver                        0x0000000102283a42 chromedriver + 494146
+5   chromedriver                        0x0000000102278b79 chromedriver + 449401
+6   chromedriver                        0x0000000102278ca5 chromedriver + 449701
+7   chromedriver                        0x0000000102276cc8 chromedriver + 441544
+8   chromedriver                        0x000000010227ae87 chromedriver + 458375
+9   chromedriver                        0x00000001023120a6 chromedriver + 1077414
+10  chromedriver                        0x00000001022e94e2 chromedriver + 910562
+11  chromedriver                        0x0000000102311073 chromedriver + 1073267
+12  chromedriver                        0x00000001022e92b3 chromedriver + 910003
+13  chromedriver                        0x00000001022b5507 chromedriver + 697607
+14  chromedriver                        0x00000001022b6171 chromedriver + 700785
+15  chromedriver                        0x00000001027674d0 chromedriver + 5620944
+16  chromedriver                        0x000000010276b45f chromedriver + 5637215
+17  chromedriver                        0x00000001027428e2 chromedriver + 5470434
+18  chromedriver                        0x000000010276bdcf chromedriver + 5639631
+19  chromedriver                        0x00000001027310a4 chromedriver + 5398692
+20  chromedriver                        0x000000010278e688 chromedriver + 5781128
+21  chromedriver                        0x000000010278e850 chromedriver + 5781584
+22  chromedriver                        0x00000001027a0a41 chromedriver + 5855809
+23  libsystem_pthread.dylib             0x00007ff808612df1 _pthread_start + 99
+24  libsystem_pthread.dylib             0x00007ff80860e857 thread_start + 15
+
+2025-06-09 21:03:09,317 - INFO - Found 3 links on http://localhost:49860/accounts/signup/
+2025-06-09 21:03:09,317 - INFO - Anonymous crawl with chrome complete
+2025-06-09 21:03:09,317 - INFO - Visited 4 pages
+2025-06-09 21:03:09,317 - INFO - Found 0 broken links
+2025-06-09 21:03:09,343 - INFO - Starting user crawl with chrome
+2025-06-09 21:03:10,160 - INFO - Screenshot saved: crawler_screenshots/before_login_user_crawler_20250609-210310.png
+2025-06-09 21:03:12,432 - INFO - Screenshot saved: crawler_screenshots/after_login_user_crawler_20250609-210312.png
+2025-06-09 21:03:12,435 - WARNING - Login may have failed for user_crawler, still on login page
+2025-06-09 21:03:12,435 - ERROR - Login failed for user_crawler with chrome, skipping crawl
+2025-06-09 21:03:12,554 - INFO - Total links visited: 0
+2025-06-09 21:03:12,554 - INFO - Total broken links: 0
+2025-06-09 21:03:12,554 - INFO - Total skipped links: 0

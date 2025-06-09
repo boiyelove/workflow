@@ -1,0 +1,263 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+
+{% block title %}{% if form.instance.pk %}Edit Task{% else %}Create Task{% endif %}{% endblock %}
+
+{% block extra_css %}
+<style>
+    .select2-container--bootstrap-5 .select2-selection {
+        min-height: 38px;
+    }
+    .select2-container--bootstrap-5 .select2-selection--multiple .select2-selection__rendered {
+        display: flex;
+        flex-wrap: wrap;
+    }
+    .select2-container--bootstrap-5 .select2-selection--multiple .select2-selection__choice {
+        background-color: #0d6efd;
+        color: #fff;
+        border: none;
+        border-radius: 4px;
+        padding: 2px 8px;
+        margin: 2px;
+    }
+    .select2-container--bootstrap-5 .select2-selection--multiple .select2-selection__choice__remove {
+        color: #fff;
+        margin-right: 5px;
+    }
+    .select2-container--bootstrap-5 .select2-dropdown .select2-results__option--highlighted {
+        background-color: #0d6efd;
+    }
+    .select2-container--bootstrap-5 .select2-dropdown .select2-results__option {
+        padding: 8px 12px;
+    }
+    .select2-results__option {
+        display: flex;
+        align-items: center;
+    }
+    .select2-results__option img {
+        width: 24px;
+        height: 24px;
+        border-radius: 50%;
+        margin-right: 8px;
+    }
+    .user-avatar {
+        width: 24px;
+        height: 24px;
+        border-radius: 50%;
+        margin-right: 5px;
+        object-fit: cover;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <div class="row">
+        <div class="col-md-8 offset-md-2">
+            <div class="card shadow">
+                <div class="card-header bg-primary text-white">
+                    <h3>{% if form.instance.pk %}Edit Task{% else %}Create Task{% endif %}</h3>
+                </div>
+                <div class="card-body">
+                    <form method="post">
+                        {% csrf_token %}
+                        
+                        <div class="row">
+                            <div class="col-md-8">
+                                {{ form.name|as_crispy_field }}
+                            </div>
+                            <div class="col-md-4">
+                                {{ form.status|as_crispy_field }}
+                            </div>
+                        </div>
+                        
+                        {{ form.description|as_crispy_field }}
+                        {{ form.project|as_crispy_field }}
+                        
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group mb-3">
+                                    <label for="{{ form.team_member.id_for_label }}">Team Members</label>
+                                    {{ form.team_member }}
+                                    <small class="form-text text-muted">
+                                        Select team members to assign to this task
+                                    </small>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group mb-3">
+                                    <label for="{{ form.assigned_users.id_for_label }}">Assigned Users</label>
+                                    {{ form.assigned_users }}
+                                    <small class="form-text text-muted">
+                                        Select users to assign to this task
+                                    </small>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group mb-3">
+                                    <label for="{{ form.assigned_teams.id_for_label }}">Assigned Teams</label>
+                                    {{ form.assigned_teams }}
+                                    <small class="form-text text-muted">
+                                        Select teams to assign to this task
+                                    </small>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group mt-4">
+                            <button type="submit" class="btn btn-primary">
+                                <i class="fas fa-save me-1"></i> 
+                                {% if form.instance.pk %}Save Changes{% else %}Create Task{% endif %}
+                            </button>
+                            <a href="{% if request.GET.next %}{{ request.GET.next }}{% else %}{% url 'projectflow:task-list' %}{% endif %}" class="btn btn-secondary">
+                                <i class="fas fa-times me-1"></i> Cancel
+                            </a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    $(document).ready(function() {
+        // Initialize Select2 for team members
+        $('.select2-team-members').select2({
+            theme: 'bootstrap-5',
+            width: '100%',
+            placeholder: $(this).data('placeholder'),
+            allowClear: true,
+            closeOnSelect: false,
+            templateResult: formatTeamMember,
+            templateSelection: formatTeamMemberSelection
+        });
+        
+        // Initialize Select2 for users
+        $('.select2-users').select2({
+            theme: 'bootstrap-5',
+            width: '100%',
+            placeholder: $(this).data('placeholder'),
+            allowClear: true,
+            closeOnSelect: false,
+            templateResult: formatUser,
+            templateSelection: formatUserSelection,
+            ajax: {
+                url: '{% url "projectflow:user-search" %}',
+                dataType: 'json',
+                delay: 250,
+                data: function(params) {
+                    return {
+                        q: params.term,
+                        page: params.page || 1
+                    };
+                },
+                processResults: function(data, params) {
+                    params.page = params.page || 1;
+                    return {
+                        results: data.results,
+                        pagination: {
+                            more: data.pagination.more
+                        }
+                    };
+                },
+                cache: true
+            }
+        });
+        
+        // Initialize Select2 for teams
+        $('.select2-teams').select2({
+            theme: 'bootstrap-5',
+            width: '100%',
+            placeholder: $(this).data('placeholder'),
+            allowClear: true,
+            closeOnSelect: false,
+            templateResult: formatTeam,
+            templateSelection: formatTeamSelection,
+            ajax: {
+                url: '{% url "projectflow:team-search" %}',
+                dataType: 'json',
+                delay: 250,
+                data: function(params) {
+                    return {
+                        q: params.term,
+                        page: params.page || 1
+                    };
+                },
+                processResults: function(data, params) {
+                    params.page = params.page || 1;
+                    return {
+                        results: data.results,
+                        pagination: {
+                            more: data.pagination.more
+                        }
+                    };
+                },
+                cache: true
+            }
+        });
+        
+        // Format functions for team members
+        function formatTeamMember(teamMember) {
+            if (!teamMember.id) return teamMember.text;
+            
+            var $container = $(
+                '<div class="d-flex align-items-center">' +
+                    '<div class="me-2"><i class="fas fa-user"></i></div>' +
+                    '<div>' +
+                        '<div>' + teamMember.text + '</div>' +
+                        '<small class="text-muted">' + (teamMember.designation || '') + '</small>' +
+                    '</div>' +
+                '</div>'
+            );
+            
+            return $container;
+        }
+        
+        function formatTeamMemberSelection(teamMember) {
+            return teamMember.text;
+        }
+        
+        // Format functions for users
+        function formatUser(user) {
+            if (!user.id) return user.text;
+            
+            var $container = $(
+                '<div class="d-flex align-items-center">' +
+                    '<div class="me-2"><i class="fas fa-user"></i></div>' +
+                    '<div>' + user.text + '</div>' +
+                '</div>'
+            );
+            
+            return $container;
+        }
+        
+        function formatUserSelection(user) {
+            return user.text;
+        }
+        
+        // Format functions for teams
+        function formatTeam(team) {
+            if (!team.id) return team.text;
+            
+            var $container = $(
+                '<div class="d-flex align-items-center">' +
+                    '<div class="me-2"><i class="fas fa-users"></i></div>' +
+                    '<div>' + team.text + '</div>' +
+                '</div>'
+            );
+            
+            return $container;
+        }
+        
+        function formatTeamSelection(team) {
+            return team.text;
+        }
+    });
+</script>
+{% endblock %}

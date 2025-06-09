@@ -1,0 +1,149 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Login - Workflow</title>
+
+    <!-- Prevent the demo from appearing in search engines -->
+    <meta name="robots" content="noindex">
+
+    <!-- Perfect Scrollbar -->
+    <link type="text/css" href="{% static 'vendor/perfect-scrollbar.css' %}" rel="stylesheet">
+
+    <!-- App CSS -->
+    <link type="text/css" href="{% static 'css/app.css' %}" rel="stylesheet">
+    <link type="text/css" href="{% static 'css/app.rtl.css' %}" rel="stylesheet">
+
+    <!-- Material Design Icons -->
+    <link type="text/css" href="{% static 'css/vendor-material-icons.css' %}" rel="stylesheet">
+    <link type="text/css" href="{% static 'css/vendor-material-icons.rtl.css' %}" rel="stylesheet">
+
+    <!-- Font Awesome FREE Icons -->
+    <link type="text/css" href="{% static 'css/vendor-fontawesome-free.css' %}" rel="stylesheet">
+    <link type="text/css" href="{% static 'css/vendor-fontawesome-free.rtl.css' %}" rel="stylesheet">
+
+    <style>
+        /* Fix for missing font files */
+        @font-face {
+            font-family: 'Material Icons';
+            font-style: normal;
+            font-weight: 400;
+            src: url({% static 'fonts/material-icons/MaterialIcons-Regular.woff2' %}) format('woff2'),
+                 url({% static 'fonts/material-icons/MaterialIcons-Regular.woff' %}) format('woff'),
+                 url({% static 'fonts/material-icons/MaterialIcons-Regular.ttf' %}) format('truetype');
+        }
+
+        @font-face {
+            font-family: 'Font Awesome 5 Free';
+            font-style: normal;
+            font-weight: 900;
+            font-display: auto;
+            src: url({% static 'fonts/fontawesome-free/fa-solid-900.woff2' %}) format('woff2'),
+                 url({% static 'fonts/fontawesome-free/fa-solid-900.woff' %}) format('woff'),
+                 url({% static 'fonts/fontawesome-free/fa-solid-900.ttf' %}) format('truetype');
+        }
+    </style>
+</head>
+
+<body class="layout-login-centered-boxed">
+    <div class="layout-login-centered-boxed__form card">
+        <div class="d-flex flex-column justify-content-center align-items-center mt-2 mb-5 navbar-light">
+            <a href="/" class="navbar-brand flex-column mb-2 align-items-center mr-0" style="min-width: 0">
+                <img class="navbar-brand-icon mr-0 mb-2" src="{% static 'images/stack-logo-blue.svg' %}" width="25" alt="Workflow">
+                <span>Workflow</span>
+            </a>
+            <p class="m-0">Login to access your Workflow Account</p>
+        </div>
+
+        {% if messages %}
+            {% for message in messages %}
+                <div class="alert alert-soft-{{ message.tags }} d-flex" role="alert">
+                    <i class="material-icons mr-3">{% if message.tags == 'success' %}check_circle{% else %}error{% endif %}</i>
+                    <div class="text-body">{{ message }}</div>
+                </div>
+            {% endfor %}
+        {% endif %}
+
+        <div class="page-separator">
+            <div class="page-separator__text">Login with Email</div>
+        </div>
+
+        <form method="post" novalidate>
+            {% csrf_token %}
+            <div class="form-group">
+                <label class="text-label" for="id_username">Username:</label>
+                <div class="input-group input-group-merge">
+                    <input id="id_username" name="username" type="text" required class="form-control form-control-prepended" placeholder="Enter your username">
+                    <div class="input-group-prepend">
+                        <div class="input-group-text">
+                            <span class="far fa-user"></span>
+                        </div>
+                    </div>
+                </div>
+                {% if form.username.errors %}
+                    <div class="invalid-feedback d-block">
+                        {% for error in form.username.errors %}
+                            {{ error }}
+                        {% endfor %}
+                    </div>
+                {% endif %}
+            </div>
+            <div class="form-group">
+                <label class="text-label" for="id_password">Password:</label>
+                <div class="input-group input-group-merge">
+                    <input id="id_password" name="password" type="password" required class="form-control form-control-prepended" placeholder="Enter your password">
+                    <div class="input-group-prepend">
+                        <div class="input-group-text">
+                            <span class="fa fa-key"></span>
+                        </div>
+                    </div>
+                </div>
+                {% if form.password.errors %}
+                    <div class="invalid-feedback d-block">
+                        {% for error in form.password.errors %}
+                            {{ error }}
+                        {% endfor %}
+                    </div>
+                {% endif %}
+            </div>
+            <div class="form-group">
+                <button class="btn btn-block btn-primary" type="submit">Login</button>
+            </div>
+            <div class="form-group text-center">
+                <div class="custom-control custom-checkbox">
+                    <input type="checkbox" class="custom-control-input" id="remember" name="remember">
+                    <label class="custom-control-label" for="remember">Remember me</label>
+                </div>
+            </div>
+            <div class="form-group text-center">
+                <a href="{% url 'accounts:password_reset' %}">Forgot password?</a> <br>
+                Don't have an account? <a class="text-body text-underline" href="{% url 'accounts:signup' %}">Sign up!</a>
+            </div>
+        </form>
+    </div>
+
+    <!-- jQuery -->
+    <script src="{% static 'vendor/jquery.min.js' %}"></script>
+
+    <!-- Bootstrap -->
+    <script src="{% static 'vendor/popper.min.js' %}"></script>
+    <script src="{% static 'vendor/bootstrap.min.js' %}"></script>
+
+    <!-- Perfect Scrollbar -->
+    <script src="{% static 'vendor/perfect-scrollbar.min.js' %}"></script>
+
+    <!-- DOM Factory -->
+    <script src="{% static 'vendor/dom-factory.js' %}"></script>
+
+    <!-- MDK -->
+    <script src="{% static 'vendor/material-design-kit.js' %}"></script>
+
+    <!-- App -->
+    <script src="{% static 'js/app.js' %}"></script>
+</body>
+
+</html>

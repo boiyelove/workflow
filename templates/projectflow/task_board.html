@@ -1,0 +1,422 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Task Board - {{ project.name }}{% endblock %}
+{% block page_title %}Task Board - {{ project.name }}{% endblock %}
+
+{% block breadcrumb_items %}
+<li class="breadcrumb-item"><a href="{% url 'projectflow:project-list' %}">Projects</a></li>
+<li class="breadcrumb-item"><a href="{% url 'projectflow:project-detail' project.slug %}">{{ project.name }}</a></li>
+<li class="breadcrumb-item active" aria-current="page">Task Board</li>
+{% endblock %}
+
+{% block page_actions %}
+<a href="{% url 'projectflow:task-create-for-project' project.id %}" class="btn btn-success">
+    <i class="material-icons">add</i> Add Task
+</a>
+{% endblock %}
+
+{% block extra_css %}
+<link type="text/css" href="{% static 'vendor/dragula/dragula.min.css' %}" rel="stylesheet">
+<style>
+    .trello-board {
+        white-space: nowrap;
+        overflow-x: auto;
+        overflow-y: hidden;
+        padding-bottom: 8px;
+        margin-bottom: -8px;
+        position: absolute;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+    }
+    
+    .trello-board__tasks {
+        height: 100%;
+        display: inline-block;
+        width: 20rem;
+        margin-right: 1rem;
+        vertical-align: top;
+    }
+    
+    .trello-board__tasks:last-child {
+        margin-right: 0;
+    }
+    
+    .trello-board__tasks-list {
+        overflow-y: auto;
+        max-height: calc(100% - 50px);
+    }
+    
+    .trello-board__task {
+        margin-bottom: 0.5rem;
+    }
+    
+    .trello-board__task-wrapper {
+        padding: 1rem;
+        background-color: white;
+        border-radius: 4px;
+        box-shadow: 0 2px 4px rgba(0,0,0,.05);
+        position: relative;
+        cursor: pointer;
+    }
+    
+    .trello-board__task-wrapper:hover {
+        box-shadow: 0 3px 6px rgba(0,0,0,.1);
+    }
+    
+    .trello-board__task-title {
+        font-weight: 500;
+        margin-bottom: 0.5rem;
+    }
+    
+    .trello-board__task-description {
+        font-size: 0.875rem;
+        color: #555;
+        margin-bottom: 0.5rem;
+    }
+    
+    .trello-board__task-meta {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        font-size: 0.75rem;
+        color: #888;
+    }
+    
+    .trello-board__task-due {
+        display: flex;
+        align-items: center;
+    }
+    
+    .trello-board__task-due i {
+        font-size: 0.875rem;
+        margin-right: 0.25rem;
+    }
+    
+    .trello-board__task-members {
+        display: flex;
+    }
+    
+    .trello-board__task-member {
+        width: 24px;
+        height: 24px;
+        border-radius: 50%;
+        margin-left: -8px;
+        border: 2px solid white;
+        background-color: #e9ecef;
+        color: #495057;
+        font-size: 0.75rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    
+    .trello-board__task-member:first-child {
+        margin-left: 0;
+    }
+    
+    .milestone-flag {
+        position: absolute;
+        top: 0;
+        right: 0;
+        background-color: #17a2b8;
+        color: white;
+        padding: 0.25rem;
+        border-radius: 0 4px 0 4px;
+        font-size: 0.75rem;
+    }
+    
+    .overdue {
+        border-left: 3px solid #dc3545;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="card">
+    <div class="card-header bg-white">
+        <div class="d-flex align-items-center">
+            <div class="flex">
+                <h4 class="card-title">{{ project.name }} - Tasks</h4>
+                <p class="card-subtitle">Drag and drop tasks between columns to update their status</p>
+            </div>
+            <div class="ml-auto">
+                <div class="dropdown">
+                    <a href="#" class="dropdown-toggle text-muted" data-toggle="dropdown" data-caret="false">
+                        <i class="material-icons">more_vert</i>
+                    </a>
+                    <div class="dropdown-menu dropdown-menu-right">
+                        <a href="{% url 'projectflow:project-detail' project.slug %}" class="dropdown-item">View Project Details</a>
+                        <a href="{% url 'projectflow:project-timeline' project.slug %}" class="dropdown-item">View Timeline</a>
+                        <div class="dropdown-divider"></div>
+                        <a href="{% url 'projectflow:task-create-for-project' project.id %}" class="dropdown-item">Add New Task</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="card-body p-0">
+        <div class="trello-container">
+            <div class="trello-board" data-project-id="{{ project.id }}">
+                <!-- Todo Column -->
+                <div class="trello-board__tasks">
+                    <div class="card m-0">
+                        <div class="card-header bg-light d-flex align-items-center">
+                            <h4 class="card-header__title flex m-0">Todo</h4>
+                            <div class="dropdown">
+                                <a href="#" class="dropdown-toggle text-muted" data-toggle="dropdown" data-caret="false">
+                                    <i class="material-icons">more_vert</i>
+                                </a>
+                                <div class="dropdown-menu dropdown-menu-right">
+                                    <a href="{% url 'projectflow:task-create-for-project' project.id %}" class="dropdown-item">Add Task</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-body p-2">
+                            <div class="trello-board__tasks-list" id="todo-tasks">
+                                {% for task in todo_tasks %}
+                                <div class="trello-board__task" data-task-id="{{ task.id }}">
+                                    <div class="trello-board__task-wrapper {% if task.is_overdue %}overdue{% endif %}">
+                                        {% if task.is_milestone %}
+                                        <div class="milestone-flag">
+                                            <i class="material-icons icon-16pt">flag</i> Milestone
+                                        </div>
+                                        {% endif %}
+                                        <div class="trello-board__task-title">{{ task.name }}</div>
+                                        <div class="trello-board__task-description">{{ task.description|truncatechars:100 }}</div>
+                                        <div class="trello-board__task-meta">
+                                            {% if task.due_date %}
+                                            <div class="trello-board__task-due {% if task.is_overdue %}text-danger{% endif %}">
+                                                <i class="material-icons icon-16pt">event</i>
+                                                {{ task.due_date|date:"M d" }}
+                                            </div>
+                                            {% endif %}
+                                            <div class="trello-board__task-members">
+                                                {% for member in task.team_member.all|slice:":3" %}
+                                                <div class="trello-board__task-member" title="{{ member.user.username }}">
+                                                    {{ member.user.username|first }}
+                                                </div>
+                                                {% endfor %}
+                                                {% if task.team_member.count > 3 %}
+                                                <div class="trello-board__task-member">
+                                                    +{{ task.team_member.count|add:"-3" }}
+                                                </div>
+                                                {% endif %}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                {% empty %}
+                                <div class="text-center p-3 text-muted">
+                                    No tasks in this column
+                                </div>
+                                {% endfor %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Doing Column -->
+                <div class="trello-board__tasks">
+                    <div class="card m-0">
+                        <div class="card-header bg-primary text-white d-flex align-items-center">
+                            <h4 class="card-header__title flex m-0">In Progress</h4>
+                            <div class="dropdown">
+                                <a href="#" class="dropdown-toggle text-white" data-toggle="dropdown" data-caret="false">
+                                    <i class="material-icons">more_vert</i>
+                                </a>
+                                <div class="dropdown-menu dropdown-menu-right">
+                                    <a href="{% url 'projectflow:task-create-for-project' project.id %}" class="dropdown-item">Add Task</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-body p-2">
+                            <div class="trello-board__tasks-list" id="doing-tasks">
+                                {% for task in doing_tasks %}
+                                <div class="trello-board__task" data-task-id="{{ task.id }}">
+                                    <div class="trello-board__task-wrapper {% if task.is_overdue %}overdue{% endif %}">
+                                        {% if task.is_milestone %}
+                                        <div class="milestone-flag">
+                                            <i class="material-icons icon-16pt">flag</i> Milestone
+                                        </div>
+                                        {% endif %}
+                                        <div class="trello-board__task-title">{{ task.name }}</div>
+                                        <div class="trello-board__task-description">{{ task.description|truncatechars:100 }}</div>
+                                        <div class="trello-board__task-meta">
+                                            {% if task.due_date %}
+                                            <div class="trello-board__task-due {% if task.is_overdue %}text-danger{% endif %}">
+                                                <i class="material-icons icon-16pt">event</i>
+                                                {{ task.due_date|date:"M d" }}
+                                            </div>
+                                            {% endif %}
+                                            <div class="trello-board__task-members">
+                                                {% for member in task.team_member.all|slice:":3" %}
+                                                <div class="trello-board__task-member" title="{{ member.user.username }}">
+                                                    {{ member.user.username|first }}
+                                                </div>
+                                                {% endfor %}
+                                                {% if task.team_member.count > 3 %}
+                                                <div class="trello-board__task-member">
+                                                    +{{ task.team_member.count|add:"-3" }}
+                                                </div>
+                                                {% endif %}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                {% empty %}
+                                <div class="text-center p-3 text-muted">
+                                    No tasks in this column
+                                </div>
+                                {% endfor %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Done Column -->
+                <div class="trello-board__tasks">
+                    <div class="card m-0">
+                        <div class="card-header bg-success text-white d-flex align-items-center">
+                            <h4 class="card-header__title flex m-0">Completed</h4>
+                            <div class="dropdown">
+                                <a href="#" class="dropdown-toggle text-white" data-toggle="dropdown" data-caret="false">
+                                    <i class="material-icons">more_vert</i>
+                                </a>
+                                <div class="dropdown-menu dropdown-menu-right">
+                                    <a href="{% url 'projectflow:task-create-for-project' project.id %}" class="dropdown-item">Add Task</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-body p-2">
+                            <div class="trello-board__tasks-list" id="done-tasks">
+                                {% for task in done_tasks %}
+                                <div class="trello-board__task" data-task-id="{{ task.id }}">
+                                    <div class="trello-board__task-wrapper">
+                                        {% if task.is_milestone %}
+                                        <div class="milestone-flag">
+                                            <i class="material-icons icon-16pt">flag</i> Milestone
+                                        </div>
+                                        {% endif %}
+                                        <div class="trello-board__task-title">{{ task.name }}</div>
+                                        <div class="trello-board__task-description">{{ task.description|truncatechars:100 }}</div>
+                                        <div class="trello-board__task-meta">
+                                            {% if task.due_date %}
+                                            <div class="trello-board__task-due">
+                                                <i class="material-icons icon-16pt">event</i>
+                                                {{ task.due_date|date:"M d" }}
+                                            </div>
+                                            {% endif %}
+                                            <div class="trello-board__task-members">
+                                                {% for member in task.team_member.all|slice:":3" %}
+                                                <div class="trello-board__task-member" title="{{ member.user.username }}">
+                                                    {{ member.user.username|first }}
+                                                </div>
+                                                {% endfor %}
+                                                {% if task.team_member.count > 3 %}
+                                                <div class="trello-board__task-member">
+                                                    +{{ task.team_member.count|add:"-3" }}
+                                                </div>
+                                                {% endif %}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                {% empty %}
+                                <div class="text-center p-3 text-muted">
+                                    No tasks in this column
+                                </div>
+                                {% endfor %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script src="{% static 'vendor/dragula/dragula.min.js' %}"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Initialize Dragula
+        var drake = dragula([
+            document.getElementById('todo-tasks'),
+            document.getElementById('doing-tasks'),
+            document.getElementById('done-tasks')
+        ]);
+        
+        // Handle drop event
+        drake.on('drop', function(el, target, source) {
+            var taskId = el.dataset.taskId;
+            var newStatus;
+            
+            // Determine the new status based on the target container
+            if (target.id === 'todo-tasks') {
+                newStatus = 'Todo';
+            } else if (target.id === 'doing-tasks') {
+                newStatus = 'Doing';
+            } else if (target.id === 'done-tasks') {
+                newStatus = 'Done';
+            }
+            
+            // Update the task status via API
+            if (taskId && newStatus) {
+                updateTaskStatus(taskId, newStatus);
+            }
+        });
+        
+        // Function to update task status
+        function updateTaskStatus(taskId, status) {
+            fetch('{% url "projectflow:task-update-status" 0 %}'.replace('0', taskId), {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                    'X-CSRFToken': getCookie('csrftoken')
+                },
+                body: 'status=' + status
+            })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return response.text();
+            })
+            .then(data => {
+                console.log('Task status updated successfully');
+            })
+            .catch(error => {
+                console.error('Error updating task status:', error);
+            });
+        }
+        
+        // Helper function to get CSRF token
+        function getCookie(name) {
+            let cookieValue = null;
+            if (document.cookie && document.cookie !== '') {
+                const cookies = document.cookie.split(';');
+                for (let i = 0; i < cookies.length; i++) {
+                    const cookie = cookies[i].trim();
+                    if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                        break;
+                    }
+                }
+            }
+            return cookieValue;
+        }
+        
+        // Make task cards clickable to view details
+        document.querySelectorAll('.trello-board__task-wrapper').forEach(function(task) {
+            task.addEventListener('click', function() {
+                const taskId = this.parentElement.dataset.taskId;
+                window.location.href = '{% url "projectflow:task-detail" 0 %}'.replace('0', taskId);
+            });
+        });
+    });
+</script>
+{% endblock %}

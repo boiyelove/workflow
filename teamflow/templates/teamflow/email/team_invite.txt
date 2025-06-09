@@ -1,0 +1,11 @@
+Hello,
+
+You have been invited to join the team "{{ team.name }}" on {{ site_name }} by {{ sender.username }}.
+
+To accept this invitation, please click on the following link:
+{{ site_url }}/team/invite/accept/{{ token }}/
+
+If you did not request this invitation, you can safely ignore this email.
+
+Best regards,
+The {{ site_name }} Team

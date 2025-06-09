@@ -1,21 +1,18 @@
-from django.conf.urls import url
+from django.urls import path
+from django.contrib.auth import views as auth_views
 from . import views
 
-
-app_name="accounts"
-
+app_name = 'accounts'
 urlpatterns = [
-	url(r'^login/$', views.LoginView.as_view(), name="login"),
-	url(r'^logout/$', views.LogoutView.as_view(), name="logout"),
-	url(r'^register/$', views.RegisterView.as_view(), name='register'),
-	url(r'^ref/(?P<username>[\w-]+)/$', views.GetRef.as_view(), name='get-referral'),
-	url(r'^dashboard/$', views.DashboardView.as_view(), name='dashboard'),
-	url(r'^profile/$', views.UserProfileView.as_view(), name='userprofile'),
-	url(r'^profile/payment/$', views.DonateMethodListView.as_view(), name='donatemethod-list'),
-	url(r'^profile/payment/new/$', views.DonateMethodCreateView.as_view(), name="donatemethod-create"),
-	url(r'^profile/payment/(?P<pk>\d+)/edit/$', views.DonateMethodUpdateView.as_view(), name='donatemethod-edit'),
-	url(r'^profile/payment/(?P<pk>\d+)/delete/$', views.DonateMethodDeleteView.as_view(), name='donatemethod-delete'),
-	url(r'^verify_email/(?P<verification_key>[\w-]+)/$', views.EmailVerificationView.as_view(), name='verify-email'),
-	url(r'^request_new_password/$', views.PasswordChangeRequestView.as_view(), name='password-request'),
-	url(r'^change_password/$', views.PasswordChangeView.as_view(), name='password-change'),
+    path('login/', views.login_view, name='login'),
+    path('logout/', auth_views.LogoutView.as_view(), name='logout'),
+    path('signup/', views.signup_view, name='signup'),
+    path('invite/', views.invite_code_view, name='invite_code'),
+    path('invite/create/', views.invite_create_view, name='invite_create'),
+    path('invite/list/', views.invite_list_view, name='invite_list'),
+    path('register/<uuid:invite_code>/', views.register_view, name='register'),
+    path('password_reset/', auth_views.PasswordResetView.as_view(template_name='accounts/password_reset.html'), name='password_reset'),
+    path('password_reset/done/', auth_views.PasswordResetDoneView.as_view(template_name='accounts/password_reset_done.html'), name='password_reset_done'),
+    path('reset/<uidb64>/<token>/', auth_views.PasswordResetConfirmView.as_view(template_name='accounts/password_reset_confirm.html'), name='password_reset_confirm'),
+    path('reset/done/', auth_views.PasswordResetCompleteView.as_view(template_name='accounts/password_reset_complete.html'), name='password_reset_complete'),
 ]

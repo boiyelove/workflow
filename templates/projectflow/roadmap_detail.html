@@ -1,0 +1,241 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}{{ roadmap.name }} - Roadmap{% endblock %}
+{% block page_title %}{{ roadmap.name }} - Roadmap{% endblock %}
+
+{% block breadcrumb_items %}
+<li class="breadcrumb-item"><a href="{% url 'projectflow:project-list' %}">Projects</a></li>
+<li class="breadcrumb-item"><a href="{% url 'projectflow:roadmap-list' %}">Roadmaps</a></li>
+<li class="breadcrumb-item active" aria-current="page">{{ roadmap.name }}</li>
+{% endblock %}
+
+{% block page_actions %}
+<a href="{% url 'projectflow:project-detail' roadmap.slug %}" class="btn btn-light">
+    <i class="material-icons">settings</i> Manage Roadmap
+</a>
+<a href="{% url 'projectflow:project-create' %}" class="btn btn-success ml-2">
+    <i class="material-icons">add</i> Add Feature
+</a>
+{% endblock %}
+
+{% block extra_css %}
+<style>
+    .roadmap-container {
+        position: relative;
+        padding: 20px 0;
+    }
+    
+    .roadmap-timeline {
+        position: relative;
+        max-width: 1200px;
+        margin: 0 auto;
+    }
+    
+    .roadmap-timeline::after {
+        content: '';
+        position: absolute;
+        width: 6px;
+        background-color: #e9ecef;
+        top: 0;
+        bottom: 0;
+        left: 120px;
+        margin-left: -3px;
+        border-radius: 3px;
+    }
+    
+    .quarter {
+        position: relative;
+        margin-bottom: 50px;
+    }
+    
+    .quarter-label {
+        position: absolute;
+        width: 100px;
+        text-align: right;
+        font-weight: bold;
+        font-size: 1.1rem;
+        color: #495057;
+        padding-right: 20px;
+    }
+    
+    .feature-container {
+        margin-left: 150px;
+    }
+    
+    .feature-item {
+        background-color: #f8f9fa;
+        border-radius: 6px;
+        padding: 15px;
+        margin-bottom: 20px;
+        box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        border-left: 4px solid #6c757d;
+    }
+    
+    .feature-item.Todo {
+        border-left-color: #6c757d;
+    }
+    
+    .feature-item.Doing {
+        border-left-color: #007bff;
+    }
+    
+    .feature-item.Done {
+        border-left-color: #28a745;
+    }
+    
+    .feature-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 10px;
+    }
+    
+    .feature-title {
+        margin: 0;
+        font-size: 1.25rem;
+    }
+    
+    .feature-status {
+        padding: 4px 8px;
+        border-radius: 4px;
+        font-size: 0.8rem;
+        font-weight: bold;
+        text-transform: uppercase;
+    }
+    
+    .status-Done {
+        background-color: #d4edda;
+        color: #155724;
+    }
+    
+    .status-Doing {
+        background-color: #cce5ff;
+        color: #004085;
+    }
+    
+    .status-Todo {
+        background-color: #e2e3e5;
+        color: #383d41;
+    }
+    
+    .feature-progress {
+        margin: 15px 0;
+    }
+    
+    .feature-dates {
+        display: flex;
+        justify-content: space-between;
+        font-size: 0.9rem;
+        color: #6c757d;
+    }
+    
+    /* Responsive styles */
+    @media screen and (max-width: 768px) {
+        .roadmap-timeline::after {
+            left: 60px;
+        }
+        
+        .quarter-label {
+            width: 50px;
+            font-size: 0.9rem;
+        }
+        
+        .feature-container {
+            margin-left: 80px;
+        }
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="card">
+    <div class="card-header">
+        <h4 class="card-title">Roadmap Progress</h4>
+    </div>
+    <div class="card-body">
+        <div class="progress" style="height: 8px;">
+            <div class="progress-bar bg-success" role="progressbar" 
+                 style="width: {{ roadmap.get_completion_percentage }}%;" 
+                 aria-valuenow="{{ roadmap.get_completion_percentage }}" 
+                 aria-valuemin="0" aria-valuemax="100">
+            </div>
+        </div>
+        <div class="d-flex justify-content-between mt-1">
+            <small>{{ roadmap.get_completion_percentage }}% Complete</small>
+            <small>{{ features|length }} Features</small>
+        </div>
+    </div>
+</div>
+
+<div class="card">
+    <div class="card-header">
+        <h4 class="card-title">Feature Timeline</h4>
+    </div>
+    <div class="card-body">
+        <div class="roadmap-container">
+            <div class="roadmap-timeline">
+                {% regroup features by due_date|date:"Y-m" as feature_groups %}
+                
+                {% for group in feature_groups %}
+                    <div class="quarter">
+                        <div class="quarter-label">
+                            {{ group.grouper|date:"M Y" }}
+                        </div>
+                        <div class="feature-container">
+                            {% for feature in group.list %}
+                                <div class="feature-item {{ feature.status }}">
+                                    <div class="feature-header">
+                                        <h3 class="feature-title">
+                                            <a href="{% url 'projectflow:project-detail' feature.slug %}">{{ feature.name }}</a>
+                                        </h3>
+                                        <span class="feature-status status-{{ feature.status }}">
+                                            {{ feature.status }}
+                                        </span>
+                                    </div>
+                                    
+                                    <p>{{ feature.description|truncatechars:200 }}</p>
+                                    
+                                    <div class="feature-progress">
+                                        <div class="progress" style="height: 5px;">
+                                            <div class="progress-bar bg-success" role="progressbar" 
+                                                 style="width: {{ feature.get_completion_percentage }}%;" 
+                                                 aria-valuenow="{{ feature.get_completion_percentage }}" 
+                                                 aria-valuemin="0" aria-valuemax="100">
+                                            </div>
+                                        </div>
+                                        <div class="text-right mt-1">
+                                            <small>{{ feature.get_completion_percentage }}% complete</small>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="feature-dates">
+                                        <span><i class="material-icons icon-16pt">calendar_today</i> Created: {{ feature.created_at|date:"M d, Y" }}</span>
+                                        {% if feature.due_date %}
+                                            <span class="{% if feature.is_overdue %}text-danger font-weight-bold{% endif %}">
+                                                <i class="material-icons icon-16pt">event</i> Due: {{ feature.due_date|date:"M d, Y" }}
+                                                {% if feature.is_overdue %}
+                                                    <i class="material-icons icon-16pt">warning</i>
+                                                {% endif %}
+                                            </span>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                {% empty %}
+                    <div class="alert alert-soft-warning">
+                        <div class="d-flex flex-wrap align-items-center">
+                            <div class="mr-8pt">
+                                <i class="material-icons">info</i>
+                            </div>
+                            <div class="flex">No features found for this roadmap. Add your first feature to get started!</div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

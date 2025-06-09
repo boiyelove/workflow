@@ -1,0 +1,152 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+
+{% block title %}{% if form.instance.pk %}Edit Project{% else %}Create Project{% endif %}{% endblock %}
+
+{% block extra_css %}
+<style>
+    .select2-container--bootstrap-5 .select2-selection {
+        min-height: 38px;
+    }
+    .select2-container--bootstrap-5 .select2-selection--multiple .select2-selection__rendered {
+        display: flex;
+        flex-wrap: wrap;
+    }
+    .select2-container--bootstrap-5 .select2-selection--multiple .select2-selection__choice {
+        background-color: #0d6efd;
+        color: #fff;
+        border: none;
+        border-radius: 4px;
+        padding: 2px 8px;
+        margin: 2px;
+    }
+    .select2-container--bootstrap-5 .select2-selection--multiple .select2-selection__choice__remove {
+        color: #fff;
+        margin-right: 5px;
+    }
+    .select2-container--bootstrap-5 .select2-dropdown .select2-results__option--highlighted {
+        background-color: #0d6efd;
+    }
+    .select2-container--bootstrap-5 .select2-dropdown .select2-results__option {
+        padding: 8px 12px;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <div class="row">
+        <div class="col-md-8 offset-md-2">
+            <div class="card shadow">
+                <div class="card-header bg-primary text-white">
+                    <h3>{% if form.instance.pk %}Edit Project{% else %}Create Project{% endif %}</h3>
+                </div>
+                <div class="card-body">
+                    <form method="post">
+                        {% csrf_token %}
+                        
+                        <div class="row">
+                            <div class="col-md-8">
+                                {{ form.name|as_crispy_field }}
+                            </div>
+                            <div class="col-md-4">
+                                {{ form.status|as_crispy_field }}
+                            </div>
+                        </div>
+                        
+                        {{ form.description|as_crispy_field }}
+                        
+                        <div class="row">
+                            <div class="col-md-6">
+                                {{ form.team|as_crispy_field }}
+                            </div>
+                            <div class="col-md-6">
+                                {{ form.parent|as_crispy_field }}
+                            </div>
+                        </div>
+                        
+                        <div class="form-check mb-3">
+                            {{ form.is_public }}
+                            <label class="form-check-label" for="{{ form.is_public.id_for_label }}">
+                                Make this project public (visible to all users)
+                            </label>
+                            <small class="form-text text-muted d-block">
+                                Public projects are visible to all users, even if they're not part of the team.
+                            </small>
+                        </div>
+                        
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group mb-3">
+                                    <label for="{{ form.assigned_users.id_for_label }}">Assigned Users</label>
+                                    {{ form.assigned_users }}
+                                    <small class="form-text text-muted">
+                                        Select users to assign to this project
+                                    </small>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group mb-3">
+                                    <label for="{{ form.assigned_teams.id_for_label }}">Assigned Teams</label>
+                                    {{ form.assigned_teams }}
+                                    <small class="form-text text-muted">
+                                        Select teams to assign to this project
+                                    </small>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group mt-4">
+                            <button type="submit" class="btn btn-primary">
+                                <i class="fas fa-save me-1"></i> 
+                                {% if form.instance.pk %}Save Changes{% else %}Create Project{% endif %}
+                            </button>
+                            <a href="{% url 'projectflow:project-list' %}" class="btn btn-secondary">
+                                <i class="fas fa-times me-1"></i> Cancel
+                            </a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    $(document).ready(function() {
+        // Initialize Select2 for users with search and tags
+        $('.select2-users').select2({
+            theme: 'bootstrap-5',
+            width: '100%',
+            placeholder: $(this).data('placeholder'),
+            allowClear: true,
+            closeOnSelect: false
+        });
+        
+        // Initialize Select2 for teams with search
+        $('.select2-teams').select2({
+            theme: 'bootstrap-5',
+            width: '100%',
+            placeholder: $(this).data('placeholder'),
+            allowClear: true,
+            closeOnSelect: false
+        });
+        
+        // Format the selected items
+        $('.select2-users, .select2-teams').on('select2:select', function(e) {
+            var data = e.params.data;
+            var $element = $(data.element);
+            
+            // You can customize the appearance of selected items here
+            var $badge = $('<span class="badge bg-primary me-1"></span>');
+            $badge.text(data.text);
+            
+            // Add the badge to the selection
+            var $selection = $('.select2-selection__choice[data-select2-id="' + data.id + '"]');
+            $selection.html($badge);
+        });
+    });
+</script>
+{% endblock %}

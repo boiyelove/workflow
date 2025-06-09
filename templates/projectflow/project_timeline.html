@@ -1,0 +1,431 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}{{ project.name }} - Timeline{% endblock %}
+{% block page_title %}{{ project.name }} - Timeline{% endblock %}
+
+{% block breadcrumb_items %}
+<li class="breadcrumb-item"><a href="{% url 'projectflow:project-list' %}">Projects</a></li>
+<li class="breadcrumb-item"><a href="{% url 'projectflow:project-detail' project.slug %}">{{ project.name }}</a></li>
+<li class="breadcrumb-item active" aria-current="page">Timeline</li>
+{% endblock %}
+
+{% block page_actions %}
+<a href="{% url 'projectflow:project-detail' project.slug %}" class="btn btn-light">
+    <i class="material-icons">arrow_back</i> Back to Project
+</a>
+<a href="{% url 'projectflow:task-create-for-project' project.id %}" class="btn btn-success ml-2">
+    <i class="material-icons">add</i> Add Task
+</a>
+{% endblock %}
+
+{% block extra_css %}
+<link type="text/css" href="{% static 'vendor/fullcalendar/fullcalendar.min.css' %}" rel="stylesheet">
+<style>
+    /* Timeline CSS */
+    .timeline {
+        position: relative;
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 20px 0;
+    }
+    
+    .timeline::after {
+        content: '';
+        position: absolute;
+        width: 6px;
+        background-color: #e9ecef;
+        top: 0;
+        bottom: 0;
+        left: 50%;
+        margin-left: -3px;
+        border-radius: 3px;
+    }
+    
+    .timeline-item {
+        padding: 10px 40px;
+        position: relative;
+        background-color: inherit;
+        width: 50%;
+        margin-bottom: 30px;
+    }
+    
+    .timeline-item::after {
+        content: '';
+        position: absolute;
+        width: 25px;
+        height: 25px;
+        right: -13px;
+        background-color: white;
+        border: 4px solid #dee2e6;
+        top: 15px;
+        border-radius: 50%;
+        z-index: 1;
+    }
+    
+    .left {
+        left: 0;
+    }
+    
+    .right {
+        left: 50%;
+    }
+    
+    .left::before {
+        content: " ";
+        height: 0;
+        position: absolute;
+        top: 22px;
+        width: 0;
+        z-index: 1;
+        right: 30px;
+        border: medium solid #f8f9fa;
+        border-width: 10px 0 10px 10px;
+        border-color: transparent transparent transparent #f8f9fa;
+    }
+    
+    .right::before {
+        content: " ";
+        height: 0;
+        position: absolute;
+        top: 22px;
+        width: 0;
+        z-index: 1;
+        left: 30px;
+        border: medium solid #f8f9fa;
+        border-width: 10px 10px 10px 0;
+        border-color: transparent #f8f9fa transparent transparent;
+    }
+    
+    .right::after {
+        left: -12px;
+    }
+    
+    .timeline-content {
+        padding: 20px;
+        background-color: #f8f9fa;
+        position: relative;
+        border-radius: 6px;
+        box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    }
+    
+    /* Status-specific styles */
+    .timeline-item.Done::after {
+        background-color: #28a745;
+        border-color: #28a745;
+    }
+    
+    .timeline-item.Doing::after {
+        background-color: #007bff;
+        border-color: #007bff;
+    }
+    
+    .timeline-item.Todo::after {
+        background-color: #6c757d;
+        border-color: #6c757d;
+    }
+    
+    .timeline-item.milestone::after {
+        background-color: #17a2b8;
+        border-color: #17a2b8;
+        width: 30px;
+        height: 30px;
+        right: -15px;
+    }
+    
+    .timeline-item.milestone.right::after {
+        left: -15px;
+    }
+    
+    .timeline-item.milestone .timeline-content {
+        border-left: 4px solid #17a2b8;
+        background-color: #e3f2fd;
+    }
+    
+    .timeline-item.Done .timeline-content {
+        border-left: 4px solid #28a745;
+    }
+    
+    .timeline-item.Doing .timeline-content {
+        border-left: 4px solid #007bff;
+    }
+    
+    .timeline-item.Todo .timeline-content {
+        border-left: 4px solid #6c757d;
+        opacity: 0.9;
+    }
+    
+    .timeline-item.overdue .timeline-content {
+        border-left: 4px solid #dc3545;
+    }
+    
+    .timeline-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 10px;
+    }
+    
+    .timeline-title {
+        margin: 0;
+        font-size: 1.25rem;
+    }
+    
+    .timeline-status {
+        padding: 4px 8px;
+        border-radius: 4px;
+        font-size: 0.8rem;
+        font-weight: bold;
+        text-transform: uppercase;
+    }
+    
+    .status-Done {
+        background-color: #d4edda;
+        color: #155724;
+    }
+    
+    .status-Doing {
+        background-color: #cce5ff;
+        color: #004085;
+    }
+    
+    .status-Todo {
+        background-color: #e2e3e5;
+        color: #383d41;
+    }
+    
+    .timeline-dates {
+        display: flex;
+        justify-content: space-between;
+        margin-top: 10px;
+        font-size: 0.9rem;
+        color: #6c757d;
+    }
+    
+    .timeline-item.draggable {
+        cursor: move;
+    }
+    
+    .timeline-item.dragging {
+        opacity: 0.5;
+    }
+    
+    .timeline-item.drag-over .timeline-content {
+        border: 2px dashed #007bff;
+    }
+    
+    /* Responsive styles */
+    @media screen and (max-width: 768px) {
+        .timeline::after {
+            left: 31px;
+        }
+        
+        .timeline-item {
+            width: 100%;
+            padding-left: 70px;
+            padding-right: 25px;
+        }
+        
+        .timeline-item::before {
+            left: 60px;
+            border: medium solid #f8f9fa;
+            border-width: 10px 10px 10px 0;
+            border-color: transparent #f8f9fa transparent transparent;
+        }
+        
+        .left::after, .right::after {
+            left: 18px;
+        }
+        
+        .right {
+            left: 0%;
+        }
+        
+        .timeline-item.milestone::after {
+            left: 16px;
+        }
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="card">
+    <div class="card-header">
+        <h4 class="card-title">Project Progress</h4>
+    </div>
+    <div class="card-body">
+        <div class="progress" style="height: 8px;">
+            <div class="progress-bar bg-success" role="progressbar" style="width: {{ project.get_completion_percentage }}%;" 
+                 aria-valuenow="{{ project.get_completion_percentage }}" aria-valuemin="0" aria-valuemax="100"></div>
+        </div>
+        <div class="d-flex justify-content-between mt-1">
+            <small>{{ project.get_completion_percentage }}% Complete</small>
+            <small>{{ project.tasks.count }} Tasks</small>
+        </div>
+    </div>
+</div>
+
+<div class="card">
+    <div class="card-header">
+        <h4 class="card-title">Timeline</h4>
+    </div>
+    <div class="card-body">
+        <div class="timeline" id="project-timeline">
+            {% for task in tasks %}
+                <div class="timeline-item {% cycle 'left' 'right' %} {{ task.status }} {% if task.is_milestone %}milestone{% endif %} {% if task.is_overdue %}overdue{% endif %} draggable" data-task-id="{{ task.id }}">
+                    <div class="timeline-content">
+                        <div class="timeline-header">
+                            <h3 class="timeline-title">
+                                {% if task.is_milestone %}
+                                    <i class="material-icons text-info">flag</i>
+                                {% endif %}
+                                {{ task.name }}
+                            </h3>
+                            <span class="timeline-status status-{{ task.status }}">
+                                {{ task.status }}
+                            </span>
+                        </div>
+                        
+                        <p>{{ task.description }}</p>
+                        
+                        <div class="timeline-dates">
+                            <span><i class="material-icons icon-16pt">calendar_today</i> Created: {{ task.created_at|date:"M d, Y" }}</span>
+                            {% if task.due_date %}
+                                <span class="{% if task.is_overdue %}text-danger font-weight-bold{% endif %}">
+                                    <i class="material-icons icon-16pt">event</i> Due: {{ task.due_date|date:"M d, Y" }}
+                                    {% if task.is_overdue %}
+                                        <i class="material-icons icon-16pt">warning</i>
+                                    {% endif %}
+                                </span>
+                            {% endif %}
+                        </div>
+                        
+                        <div class="mt-3">
+                            <div class="d-flex justify-content-between align-items-center">
+                                <div class="avatar-group">
+                                    {% for member in task.team_member.all %}
+                                        <div class="avatar avatar-xs" data-toggle="tooltip" title="{{ member.user.username }}">
+                                            <span class="avatar-title rounded-circle">{{ member.user.username|first }}</span>
+                                        </div>
+                                    {% endfor %}
+                                </div>
+                                <div class="dropdown">
+                                    <button class="btn btn-sm btn-outline-secondary dropdown-toggle" type="button" id="task-{{ task.id }}-actions" data-toggle="dropdown" aria-expanded="false">
+                                        Actions
+                                    </button>
+                                    <div class="dropdown-menu dropdown-menu-right" aria-labelledby="task-{{ task.id }}-actions">
+                                        <a class="dropdown-item" href="{% url 'projectflow:task-detail' task.id %}">View Details</a>
+                                        <a class="dropdown-item" href="{% url 'projectflow:task-update' task.id %}">Edit</a>
+                                        <a class="dropdown-item" href="{% url 'projectflow:subtask-create-for-task' task.id %}">Add Subtask</a>
+                                        <div class="dropdown-divider"></div>
+                                        <form method="post" action="{% url 'projectflow:task-update-status' task.id %}" class="px-2">
+                                            {% csrf_token %}
+                                            <div class="mb-2">Change Status:</div>
+                                            <div class="btn-group-vertical btn-group-sm w-100">
+                                                <button type="submit" name="status" value="Todo" class="btn btn-sm btn-outline-secondary">Todo</button>
+                                                <button type="submit" name="status" value="Doing" class="btn btn-sm btn-outline-primary">Doing</button>
+                                                <button type="submit" name="status" value="Done" class="btn btn-sm btn-outline-success">Done</button>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {% empty %}
+                <div class="alert alert-soft-warning">
+                    <div class="d-flex flex-wrap align-items-center">
+                        <div class="mr-8pt">
+                            <i class="material-icons">info</i>
+                        </div>
+                        <div class="flex">No tasks found for this project. Add your first task to get started!</div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script src="{% static 'vendor/dragula/dragula.min.js' %}"></script>
+{% endblock %}
+
+{% block inline_js %}
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const timeline = document.getElementById('project-timeline');
+        
+        if (timeline) {
+            // Initialize Dragula for drag-and-drop
+            const drake = dragula([timeline], {
+                moves: function(el, container, handle) {
+                    return el.classList.contains('draggable');
+                },
+                direction: 'vertical'
+            });
+            
+            drake.on('drop', function(el) {
+                // Get the new order of tasks
+                const taskElements = document.querySelectorAll('.timeline-item');
+                const taskOrder = Array.from(taskElements).map(item => item.dataset.taskId);
+                
+                // Update the left/right classes for visual layout
+                taskElements.forEach((item, index) => {
+                    item.classList.remove('left', 'right');
+                    if (index % 2 === 0) {
+                        item.classList.add('left');
+                    } else {
+                        item.classList.add('right');
+                    }
+                });
+                
+                // Send the new order to the server
+                updateTaskOrder(taskOrder);
+            });
+            
+            // Function to update task order via API
+            function updateTaskOrder(taskOrder) {
+                fetch('{% url "projectflow:reorder-tasks" project.slug %}', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRFToken': getCookie('csrftoken')
+                    },
+                    body: JSON.stringify({
+                        taskOrder: taskOrder
+                    })
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.status === 'success') {
+                        console.log('Task order updated successfully');
+                    } else {
+                        console.error('Error updating task order:', data.message);
+                    }
+                })
+                .catch(error => {
+                    console.error('Error updating task order:', error);
+                });
+            }
+            
+            // Helper function to get CSRF token
+            function getCookie(name) {
+                let cookieValue = null;
+                if (document.cookie && document.cookie !== '') {
+                    const cookies = document.cookie.split(';');
+                    for (let i = 0; i < cookies.length; i++) {
+                        const cookie = cookies[i].trim();
+                        if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                            cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                            break;
+                        }
+                    }
+                }
+                return cookieValue;
+            }
+        }
+    });
+</script>
+{% endblock %}

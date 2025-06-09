@@ -1,0 +1,216 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}{{ team.name }} - Team{% endblock %}
+{% block page_title %}{{ team.name }}{% endblock %}
+
+{% block breadcrumb_items %}
+<li class="breadcrumb-item"><a href="{% url 'teamflow:team-list' %}">Teams</a></li>
+<li class="breadcrumb-item active" aria-current="page">{{ team.name }}</li>
+{% endblock %}
+
+{% block page_actions %}
+<a href="{% url 'invites:send' 'team' team.id %}" class="btn btn-success">
+    <i class="material-icons">person_add</i> Invite Members
+</a>
+<a href="{% url 'teamflow:team-update' team.url %}" class="btn btn-light ml-2">
+    <i class="material-icons">edit</i> Edit
+</a>
+{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-lg-4">
+        <div class="card">
+            <div class="card-header">
+                <h4 class="card-title">Team Information</h4>
+            </div>
+            <div class="card-body">
+                <p class="text-muted">{{ team.description }}</p>
+                
+                <div class="d-flex align-items-center mb-3">
+                    <i class="material-icons text-50 mr-8pt">calendar_today</i>
+                    <div class="flex">
+                        <strong>Created</strong><br>
+                        <small class="text-50">{{ team.created_at|date:"F j, Y" }}</small>
+                    </div>
+                </div>
+                
+                <div class="d-flex align-items-center mb-3">
+                    <i class="material-icons text-50 mr-8pt">person</i>
+                    <div class="flex">
+                        <strong>Author</strong><br>
+                        <small class="text-50">{{ team.teamAuthor.username }}</small>
+                    </div>
+                </div>
+                
+                <div class="d-flex align-items-center">
+                    <i class="material-icons text-50 mr-8pt">link</i>
+                    <div class="flex">
+                        <strong>URL</strong><br>
+                        <small class="text-50">{{ team.url }}</small>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-lg-8">
+        <div class="card">
+            <div class="card-header card-header-tabs-basic nav" role="tablist">
+                <a href="#team_members" class="active" data-toggle="tab" role="tab" aria-controls="team_members" aria-selected="true">Team Members</a>
+                <a href="#team_projects" data-toggle="tab" role="tab" aria-controls="team_projects" aria-selected="false">Projects</a>
+            </div>
+            <div class="card-body tab-content">
+                <div class="tab-pane active show fade" id="team_members">
+                    <div class="table-responsive" data-toggle="lists" data-lists-values='["js-lists-values-employee-name"]'>
+                        <div class="search-form search-form--light mb-3">
+                            <input type="text" class="form-control search" placeholder="Search members" id="search-members">
+                            <button class="btn" type="button"><i class="material-icons">search</i></button>
+                        </div>
+
+                        <table class="table table-flush">
+                            <thead>
+                                <tr>
+                                    <th>Member</th>
+                                    <th>Role</th>
+                                    <th>Joined</th>
+                                    <th class="text-right">Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody class="list">
+                                {% for member in team.members.all %}
+                                    <tr>
+                                        <td>
+                                            <div class="d-flex align-items-center">
+                                                <div class="avatar avatar-sm mr-3">
+                                                    <span class="avatar-title rounded-circle">{{ member.user.username|first }}</span>
+                                                </div>
+                                                <div class="d-flex flex-column">
+                                                    <strong class="js-lists-values-employee-name">{{ member.user.username }}</strong>
+                                                    {% if member.handle %}
+                                                        <small class="text-muted">@{{ member.handle }}</small>
+                                                    {% endif %}
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            {% if member.is_manager %}
+                                                <span class="badge badge-primary">Manager</span>
+                                            {% endif %}
+                                            {% if member.designation %}
+                                                <span class="badge badge-info">{{ member.designation }}</span>
+                                            {% endif %}
+                                        </td>
+                                        <td>{{ member.joined_at|date:"M d, Y" }}</td>
+                                        <td class="text-right">
+                                            <div class="dropdown">
+                                                <a href="#" class="dropdown-toggle text-muted" data-toggle="dropdown" data-caret="false">
+                                                    <i class="material-icons">more_vert</i>
+                                                </a>
+                                                <div class="dropdown-menu dropdown-menu-right">
+                                                    <a href="#" class="dropdown-item">View Profile</a>
+                                                    <a href="#" class="dropdown-item">Edit Role</a>
+                                                    <div class="dropdown-divider"></div>
+                                                    <a href="#" class="dropdown-item text-danger">Remove</a>
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                {% empty %}
+                                    <tr>
+                                        <td colspan="4" class="text-center">No members yet</td>
+                                    </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                
+                <div class="tab-pane fade" id="team_projects">
+                    {% if team.projects.exists %}
+                        <div class="row card-group-row">
+                            {% for project in team.projects.all %}
+                                <div class="col-md-6 col-lg-4 card-group-row__col">
+                                    <div class="card card-group-row__card card-sm">
+                                        <div class="card-body d-flex flex-column">
+                                            <div class="d-flex align-items-center mb-2">
+                                                <div class="flex">
+                                                    <a href="{% url 'projectflow:project-detail' project.slug %}" class="card-title">{{ project.name }}</a>
+                                                    <span class="badge badge-{% if project.status == 'Todo' %}secondary{% elif project.status == 'Doing' %}primary{% else %}success{% endif %} ml-2">
+                                                        {{ project.status }}
+                                                    </span>
+                                                </div>
+                                                <div class="dropdown">
+                                                    <a href="#" class="dropdown-toggle text-muted" data-toggle="dropdown" data-caret="false">
+                                                        <i class="material-icons">more_vert</i>
+                                                    </a>
+                                                    <div class="dropdown-menu dropdown-menu-right">
+                                                        <a href="{% url 'projectflow:project-detail' project.slug %}" class="dropdown-item">View</a>
+                                                        <a href="{% url 'projectflow:project-update' project.slug %}" class="dropdown-item">Edit</a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            
+                                            <div class="flex">
+                                                <p class="text-muted mb-2">{{ project.description|truncatechars:100 }}</p>
+                                            </div>
+                                            
+                                            <div class="d-flex align-items-center">
+                                                <div class="progress" style="width: 100%;">
+                                                    <div class="progress-bar bg-success" role="progressbar" style="width: {{ project.get_completion_percentage }}%;" 
+                                                        aria-valuenow="{{ project.get_completion_percentage }}" aria-valuemin="0" aria-valuemax="100"></div>
+                                                </div>
+                                                <small class="text-muted ml-2">{{ project.get_completion_percentage }}%</small>
+                                            </div>
+                                            
+                                            <div class="d-flex align-items-center mt-2">
+                                                <small class="text-muted mr-2">{{ project.tasks.count }} tasks</small>
+                                                {% if project.due_date %}
+                                                    <small class="{% if project.is_overdue %}text-danger{% else %}text-muted{% endif %}">
+                                                        Due: {{ project.due_date|date:"M d, Y" }}
+                                                    </small>
+                                                {% endif %}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            {% endfor %}
+                        </div>
+                    {% else %}
+                        <div class="alert alert-soft-warning">
+                            <div class="d-flex flex-wrap align-items-center">
+                                <div class="mr-8pt">
+                                    <i class="material-icons">info</i>
+                                </div>
+                                <div class="flex">No projects assigned to this team yet.</div>
+                            </div>
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script src="{% static 'vendor/list.min.js' %}"></script>
+{% endblock %}
+
+{% block inline_js %}
+<script>
+    $(document).ready(function() {
+        // Member search
+        var searchInput = document.getElementById('search-members');
+        if (searchInput) {
+            searchInput.addEventListener('keyup', function() {
+                var value = this.value.toLowerCase();
+                $('.list tr').filter(function() {
+                    $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+                });
+            });
+        }
+    });
+</script>
+{% endblock %}
