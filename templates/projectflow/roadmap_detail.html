@@ -1,0 +1,230 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ roadmap.name }} - Roadmap{% endblock %}
+
+{% block extra_css %}
+<style>
+    .roadmap-container {
+        position: relative;
+        padding: 20px 0;
+    }
+    
+    .roadmap-timeline {
+        position: relative;
+        max-width: 1200px;
+        margin: 0 auto;
+    }
+    
+    .roadmap-timeline::after {
+        content: '';
+        position: absolute;
+        width: 6px;
+        background-color: #e9ecef;
+        top: 0;
+        bottom: 0;
+        left: 120px;
+        margin-left: -3px;
+        border-radius: 3px;
+    }
+    
+    .quarter {
+        position: relative;
+        margin-bottom: 50px;
+    }
+    
+    .quarter-label {
+        position: absolute;
+        width: 100px;
+        text-align: right;
+        font-weight: bold;
+        font-size: 1.1rem;
+        color: #495057;
+        padding-right: 20px;
+    }
+    
+    .feature-container {
+        margin-left: 150px;
+    }
+    
+    .feature-item {
+        background-color: #f8f9fa;
+        border-radius: 6px;
+        padding: 15px;
+        margin-bottom: 20px;
+        box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        border-left: 4px solid #6c757d;
+    }
+    
+    .feature-item.Todo {
+        border-left-color: #6c757d;
+    }
+    
+    .feature-item.Doing {
+        border-left-color: #007bff;
+    }
+    
+    .feature-item.Done {
+        border-left-color: #28a745;
+    }
+    
+    .feature-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 10px;
+    }
+    
+    .feature-title {
+        margin: 0;
+        font-size: 1.25rem;
+    }
+    
+    .feature-status {
+        padding: 4px 8px;
+        border-radius: 4px;
+        font-size: 0.8rem;
+        font-weight: bold;
+        text-transform: uppercase;
+    }
+    
+    .status-Done {
+        background-color: #d4edda;
+        color: #155724;
+    }
+    
+    .status-Doing {
+        background-color: #cce5ff;
+        color: #004085;
+    }
+    
+    .status-Todo {
+        background-color: #e2e3e5;
+        color: #383d41;
+    }
+    
+    .feature-progress {
+        margin: 15px 0;
+    }
+    
+    .feature-dates {
+        display: flex;
+        justify-content: space-between;
+        font-size: 0.9rem;
+        color: #6c757d;
+    }
+    
+    /* Responsive styles */
+    @media screen and (max-width: 768px) {
+        .roadmap-timeline::after {
+            left: 60px;
+        }
+        
+        .quarter-label {
+            width: 50px;
+            font-size: 0.9rem;
+        }
+        
+        .feature-container {
+            margin-left: 80px;
+        }
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <div class="row mb-4">
+        <div class="col-md-8">
+            <h1>{{ roadmap.name }}</h1>
+            <p class="lead">{{ roadmap.description }}</p>
+        </div>
+        <div class="col-md-4 text-end">
+            <a href="{% url 'projectflow:project-detail' roadmap.slug %}" class="btn btn-outline-primary">
+                <i class="fas fa-tasks"></i> Manage Roadmap
+            </a>
+            <a href="{% url 'projectflow:project-create' %}" class="btn btn-primary">
+                <i class="fas fa-plus"></i> Add Feature
+            </a>
+        </div>
+    </div>
+    
+    <div class="row mb-4">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="card-title mb-0">Roadmap Progress</h5>
+                </div>
+                <div class="card-body">
+                    <div class="progress">
+                        <div class="progress-bar bg-success" role="progressbar" 
+                             style="width: {{ roadmap.get_completion_percentage }}%;" 
+                             aria-valuenow="{{ roadmap.get_completion_percentage }}" 
+                             aria-valuemin="0" aria-valuemax="100">
+                            {{ roadmap.get_completion_percentage }}%
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="roadmap-container">
+        <div class="roadmap-timeline">
+            {% regroup features by due_date|date:"Y-m" as feature_groups %}
+            
+            {% for group in feature_groups %}
+                <div class="quarter">
+                    <div class="quarter-label">
+                        {{ group.grouper|date:"M Y" }}
+                    </div>
+                    <div class="feature-container">
+                        {% for feature in group.list %}
+                            <div class="feature-item {{ feature.status }}">
+                                <div class="feature-header">
+                                    <h3 class="feature-title">
+                                        <a href="{% url 'projectflow:project-detail' feature.slug %}">{{ feature.name }}</a>
+                                    </h3>
+                                    <span class="feature-status status-{{ feature.status }}">
+                                        {{ feature.status }}
+                                    </span>
+                                </div>
+                                
+                                <p>{{ feature.description|truncatechars:200 }}</p>
+                                
+                                <div class="feature-progress">
+                                    <div class="progress" style="height: 5px;">
+                                        <div class="progress-bar bg-success" role="progressbar" 
+                                             style="width: {{ feature.get_completion_percentage }}%;" 
+                                             aria-valuenow="{{ feature.get_completion_percentage }}" 
+                                             aria-valuemin="0" aria-valuemax="100">
+                                        </div>
+                                    </div>
+                                    <div class="text-end mt-1">
+                                        <small>{{ feature.get_completion_percentage }}% complete</small>
+                                    </div>
+                                </div>
+                                
+                                <div class="feature-dates">
+                                    <span><i class="far fa-calendar-alt"></i> Created: {{ feature.created_at|date:"M d, Y" }}</span>
+                                    {% if feature.due_date %}
+                                        <span class="{% if feature.is_overdue %}text-danger fw-bold{% endif %}">
+                                            <i class="far fa-calendar-check"></i> Due: {{ feature.due_date|date:"M d, Y" }}
+                                            {% if feature.is_overdue %}
+                                                <i class="fas fa-exclamation-circle ms-1"></i>
+                                            {% endif %}
+                                        </span>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            {% empty %}
+                <div class="alert alert-info">
+                    <i class="fas fa-info-circle me-2"></i> No features found for this roadmap. Add your first feature to get started!
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+{% endblock %}

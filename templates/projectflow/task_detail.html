@@ -1,63 +1,139 @@
 {% extends 'base.html' %}
 
-{% block title %}{{ task.name }}{% endblock %}
+{% block title %}{{ task.name }} - Task{% endblock %}
 
 {% block content %}
 <div class="container mt-4">
     <div class="row mb-4">
         <div class="col-md-8">
-            <h1>{{ task.name }}</h1>
-            <p class="lead">{{ task.description }}</p>
-            <p>
-                <strong>Project:</strong> 
+            <h1>
+                {% if task.is_milestone %}
+                    <i class="fas fa-flag text-info me-2" title="Milestone"></i>
+                {% endif %}
+                {{ task.name }}
+            </h1>
+            <p class="text-muted">
                 <a href="{% url 'projectflow:project-detail' task.project.slug %}">{{ task.project.name }}</a>
-            </p>
-            <p>
-                <strong>Status:</strong>
-                <div class="dropdown d-inline-block">
-                    <button class="btn btn-sm dropdown-toggle badge badge-{% if task.status == 'Todo' %}secondary{% elif task.status == 'Doing' %}primary{% else %}success{% endif %}" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        {{ task.status }}
-                    </button>
-                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                        <form method="post" action="{% url 'projectflow:task-update-status' task.id %}">
-                            {% csrf_token %}
-                            <button type="submit" name="status" value="Todo" class="dropdown-item">Todo</button>
-                            <button type="submit" name="status" value="Doing" class="dropdown-item">Doing</button>
-                            <button type="submit" name="status" value="Done" class="dropdown-item">Done</button>
-                        </form>
-                    </div>
-                </div>
-            </p>
-            <p>
-                <strong>Assigned To:</strong><br>
-                {% for member in task.team_member.all %}
-                    <span class="badge badge-info">{{ member.handle }}</span>
-                {% empty %}
-                    <span class="text-muted">Unassigned</span>
-                {% endfor %}
+                <i class="fas fa-angle-right mx-2"></i>
+                {{ task.name }}
             </p>
         </div>
-        <div class="col-md-4 text-right">
-            <a href="{% url 'projectflow:subtask-create-for-task' task.id %}" class="btn btn-primary">Add Subtask</a>
-            <a href="{% url 'projectflow:task-update' task.id %}" class="btn btn-outline-secondary">Edit Task</a>
-            <a href="{% url 'projectflow:task-delete' task.id %}" class="btn btn-outline-danger">Delete</a>
+        <div class="col-md-4 text-end">
+            <div class="btn-group" role="group">
+                <a href="{% url 'projectflow:subtask-create-for-task' task.id %}" class="btn btn-outline-primary">
+                    <i class="fas fa-plus"></i> Add Subtask
+                </a>
+                <a href="{% url 'projectflow:task-update' task.id %}" class="btn btn-outline-secondary">
+                    <i class="fas fa-edit"></i> Edit
+                </a>
+                <a href="{% url 'projectflow:task-delete' task.id %}" class="btn btn-outline-danger">
+                    <i class="fas fa-trash"></i> Delete
+                </a>
+            </div>
         </div>
     </div>
 
     <div class="row">
-        <div class="col-md-12">
-            <div class="card">
-                <div class="card-header d-flex justify-content-between align-items-center">
-                    <h5>Subtasks</h5>
-                    <div class="btn-group btn-group-sm" role="group">
-                        <button type="button" class="btn btn-outline-secondary active" data-filter="all">All</button>
-                        <button type="button" class="btn btn-outline-secondary" data-filter="Todo">Todo</button>
-                        <button type="button" class="btn btn-outline-secondary" data-filter="Doing">Doing</button>
-                        <button type="button" class="btn btn-outline-secondary" data-filter="Done">Done</button>
-                    </div>
+        <div class="col-md-4">
+            <div class="card shadow-sm mb-4">
+                <div class="card-header">
+                    <h5 class="mb-0">Task Details</h5>
                 </div>
                 <div class="card-body">
-                    {% if subtasks %}
+                    <div class="row mb-3">
+                        <div class="col-md-4 fw-bold">Status:</div>
+                        <div class="col-md-8">
+                            <div class="dropdown">
+                                <button class="btn btn-sm dropdown-toggle badge bg-{% if task.status == 'Todo' %}secondary{% elif task.status == 'Doing' %}primary{% else %}success{% endif %}" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
+                                    {{ task.status }}
+                                </button>
+                                <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                    <form method="post" action="{% url 'projectflow:task-update-status' task.id %}">
+                                        {% csrf_token %}
+                                        <li><button type="submit" name="status" value="Todo" class="dropdown-item">Todo</button></li>
+                                        <li><button type="submit" name="status" value="Doing" class="dropdown-item">Doing</button></li>
+                                        <li><button type="submit" name="status" value="Done" class="dropdown-item">Done</button></li>
+                                    </form>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col-md-4 fw-bold">Project:</div>
+                        <div class="col-md-8">
+                            <a href="{% url 'projectflow:project-detail' task.project.slug %}">{{ task.project.name }}</a>
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col-md-4 fw-bold">Description:</div>
+                        <div class="col-md-8">{{ task.description|linebreaks }}</div>
+                    </div>
+                    {% if task.due_date %}
+                    <div class="row mb-3">
+                        <div class="col-md-4 fw-bold">Due Date:</div>
+                        <div class="col-md-8">
+                            {{ task.due_date|date:"F j, Y" }}
+                            {% if task.due_time %}
+                                at {{ task.due_time|time:"H:i" }}
+                            {% endif %}
+                            {% if task.is_overdue %}
+                                <span class="badge bg-danger ms-2">Overdue</span>
+                            {% endif %}
+                        </div>
+                    </div>
+                    {% endif %}
+                    <div class="row mb-3">
+                        <div class="col-md-4 fw-bold">Created:</div>
+                        <div class="col-md-8">{{ task.created_at|date:"F j, Y" }}</div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4 fw-bold">Updated:</div>
+                        <div class="col-md-8">{{ task.updated_at|date:"F j, Y" }}</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card shadow-sm">
+                <div class="card-header">
+                    <h5 class="mb-0">Assigned To</h5>
+                </div>
+                <div class="card-body">
+                    <h6>Team Members</h6>
+                    <ul class="list-group list-group-flush mb-3">
+                        {% for member in task.team_member.all %}
+                            <li class="list-group-item d-flex justify-content-between align-items-center">
+                                {{ member.user.username }}
+                                {% if member.handle %}
+                                    <span class="text-muted">({{ member.handle }})</span>
+                                {% endif %}
+                            </li>
+                        {% empty %}
+                            <li class="list-group-item text-center text-muted">No team members assigned</li>
+                        {% endfor %}
+                    </ul>
+                    
+                    <h6>Users</h6>
+                    <ul class="list-group list-group-flush">
+                        {% for user in task.assigned_users.all %}
+                            <li class="list-group-item">{{ user.username }}</li>
+                        {% empty %}
+                            <li class="list-group-item text-center text-muted">No users assigned</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-8">
+            <div class="card shadow-sm">
+                <div class="card-header d-flex justify-content-between align-items-center">
+                    <h5 class="mb-0">Subtasks</h5>
+                    <a href="{% url 'projectflow:subtask-create-for-task' task.id %}" class="btn btn-sm btn-primary">
+                        <i class="fas fa-plus"></i> Add Subtask
+                    </a>
+                </div>
+                <div class="card-body">
+                    {% if task.subtasks.exists %}
                         <div class="table-responsive">
                             <table class="table table-hover">
                                 <thead>
@@ -65,40 +141,49 @@
                                         <th>Name</th>
                                         <th>Description</th>
                                         <th>Status</th>
-                                        <th>Assigned To</th>
+                                        <th>Due Date</th>
                                         <th>Actions</th>
                                     </tr>
                                 </thead>
-                                <tbody>
-                                    {% for subtask in subtasks %}
-                                        <tr class="subtask-row" data-status="{{ subtask.status }}">
+                                <tbody id="subtask-list">
+                                    {% for subtask in task.subtasks.all %}
+                                        <tr class="subtask-row" data-subtask-id="{{ subtask.id }}">
                                             <td>{{ subtask.name }}</td>
-                                            <td>{{ subtask.description }}</td>
+                                            <td>{{ subtask.description|truncatechars:50 }}</td>
                                             <td>
                                                 <div class="dropdown">
-                                                    <button class="btn btn-sm dropdown-toggle badge badge-{% if subtask.status == 'Todo' %}secondary{% elif subtask.status == 'Doing' %}primary{% else %}success{% endif %}" type="button" id="dropdownMenuButton-{{ subtask.id }}" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                    <button class="btn btn-sm dropdown-toggle badge bg-{% if subtask.status == 'Todo' %}secondary{% elif subtask.status == 'Doing' %}primary{% else %}success{% endif %}" type="button" id="dropdownMenuButton-{{ subtask.id }}" data-bs-toggle="dropdown" aria-expanded="false">
                                                         {{ subtask.status }}
                                                     </button>
-                                                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton-{{ subtask.id }}">
+                                                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton-{{ subtask.id }}">
                                                         <form method="post" action="{% url 'projectflow:subtask-update-status' subtask.id %}">
                                                             {% csrf_token %}
-                                                            <button type="submit" name="status" value="Todo" class="dropdown-item">Todo</button>
-                                                            <button type="submit" name="status" value="Doing" class="dropdown-item">Doing</button>
-                                                            <button type="submit" name="status" value="Done" class="dropdown-item">Done</button>
+                                                            <li><button type="submit" name="status" value="Todo" class="dropdown-item">Todo</button></li>
+                                                            <li><button type="submit" name="status" value="Doing" class="dropdown-item">Doing</button></li>
+                                                            <li><button type="submit" name="status" value="Done" class="dropdown-item">Done</button></li>
                                                         </form>
-                                                    </div>
+                                                    </ul>
                                                 </div>
                                             </td>
                                             <td>
-                                                {% if subtask.team_member %}
-                                                    <span class="badge badge-info">{{ subtask.team_member.handle }}</span>
+                                                {% if subtask.due_date %}
+                                                    {{ subtask.due_date|date:"M d, Y" }}
+                                                    {% if subtask.is_overdue %}
+                                                        <span class="badge bg-danger ms-1">Overdue</span>
+                                                    {% endif %}
                                                 {% else %}
-                                                    <span class="text-muted">Unassigned</span>
+                                                    <span class="text-muted">Not set</span>
                                                 {% endif %}
                                             </td>
                                             <td>
-                                                <a href="{% url 'projectflow:subtask-update' subtask.id %}" class="btn btn-sm btn-outline-secondary">Edit</a>
-                                                <a href="{% url 'projectflow:subtask-delete' subtask.id %}" class="btn btn-sm btn-outline-danger">Delete</a>
+                                                <div class="btn-group" role="group" aria-label="Subtask actions">
+                                                    <a href="{% url 'projectflow:subtask-update' subtask.id %}" class="btn btn-sm btn-outline-secondary">
+                                                        <i class="fas fa-edit"></i>
+                                                    </a>
+                                                    <a href="{% url 'projectflow:subtask-delete' subtask.id %}" class="btn btn-sm btn-outline-danger">
+                                                        <i class="fas fa-trash"></i>
+                                                    </a>
+                                                </div>
                                             </td>
                                         </tr>
                                     {% endfor %}
@@ -107,7 +192,7 @@
                         </div>
                     {% else %}
                         <div class="alert alert-info">
-                            No subtasks found for this task. Add your first subtask to get started!
+                            <i class="fas fa-info-circle me-2"></i> No subtasks found. Add your first subtask to get started!
                         </div>
                     {% endif %}
                 </div>
@@ -115,23 +200,73 @@
         </div>
     </div>
 </div>
+{% endblock %}
 
 {% block extra_js %}
+<script src="https://cdn.jsdelivr.net/npm/sortablejs@1.14.0/Sortable.min.js"></script>
+{% endblock %}
+
+{% block inline_js %}
 <script>
-    $(document).ready(function() {
-        // Subtask filtering
-        $('[data-filter]').click(function() {
-            $(this).addClass('active').siblings().removeClass('active');
-            var filterValue = $(this).data('filter');
+    document.addEventListener('DOMContentLoaded', function() {
+        const subtaskList = document.getElementById('subtask-list');
+        
+        if (subtaskList) {
+            // Initialize Sortable
+            const sortable = new Sortable(subtaskList, {
+                animation: 150,
+                handle: '.subtask-row',
+                onEnd: function(evt) {
+                    // Get the new order of subtasks
+                    const subtaskElements = document.querySelectorAll('.subtask-row');
+                    const subtaskOrder = Array.from(subtaskElements).map(item => item.dataset.subtaskId);
+                    
+                    // Send the new order to the server
+                    updateSubtaskOrder(subtaskOrder);
+                }
+            });
             
-            if (filterValue === 'all') {
-                $('.subtask-row').show();
-            } else {
-                $('.subtask-row').hide();
-                $('.subtask-row[data-status="' + filterValue + '"]').show();
+            // Function to update subtask order via API
+            function updateSubtaskOrder(subtaskOrder) {
+                fetch('{% url "projectflow:reorder-subtasks" task.id %}', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRFToken': getCookie('csrftoken')
+                    },
+                    body: JSON.stringify({
+                        subtaskOrder: subtaskOrder
+                    })
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.status === 'success') {
+                        console.log('Subtask order updated successfully');
+                    } else {
+                        console.error('Error updating subtask order:', data.message);
+                    }
+                })
+                .catch(error => {
+                    console.error('Error updating subtask order:', error);
+                });
             }
-        });
+            
+            // Helper function to get CSRF token
+            function getCookie(name) {
+                let cookieValue = null;
+                if (document.cookie && document.cookie !== '') {
+                    const cookies = document.cookie.split(';');
+                    for (let i = 0; i < cookies.length; i++) {
+                        const cookie = cookies[i].trim();
+                        if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                            cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                            break;
+                        }
+                    }
+                }
+                return cookieValue;
+            }
+        }
     });
 </script>
-{% endblock %}
 {% endblock %}

@@ -1,0 +1,73 @@
+{% extends 'base.html' %}
+
+{% block title %}Feature Roadmaps{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <div class="row mb-4">
+        <div class="col-md-8">
+            <h1>Feature Roadmaps</h1>
+            <p class="lead">Plan and track your product features and releases</p>
+        </div>
+        <div class="col-md-4 text-end">
+            <a href="{% url 'projectflow:project-create' %}" class="btn btn-primary">
+                <i class="fas fa-plus"></i> Create Roadmap
+            </a>
+        </div>
+    </div>
+
+    <div class="row row-cols-1 row-cols-md-3 g-4">
+        {% for roadmap in roadmaps %}
+            <div class="col">
+                <div class="card h-100 shadow-sm">
+                    <div class="card-header d-flex justify-content-between align-items-center">
+                        <h5 class="mb-0">{{ roadmap.name }}</h5>
+                        <span class="badge bg-warning">Roadmap</span>
+                    </div>
+                    <div class="card-body">
+                        <p class="card-text">{{ roadmap.description|truncatechars:100 }}</p>
+                        
+                        <div class="mb-3">
+                            <span class="badge bg-info">{{ roadmap.subprojects.count }} features</span>
+                            {% if roadmap.team %}
+                                <span class="badge bg-secondary ms-1">Team: {{ roadmap.team.name }}</span>
+                            {% endif %}
+                        </div>
+                        
+                        <div class="progress mb-3">
+                            <div class="progress-bar bg-success" role="progressbar" 
+                                 style="width: {{ roadmap.get_completion_percentage }}%;" 
+                                 aria-valuenow="{{ roadmap.get_completion_percentage }}" 
+                                 aria-valuemin="0" aria-valuemax="100">
+                                {{ roadmap.get_completion_percentage }}%
+                            </div>
+                        </div>
+                        
+                        {% if roadmap.due_date %}
+                            <p class="text-muted">
+                                <i class="far fa-calendar-alt"></i> Target completion: {{ roadmap.due_date|date:"M d, Y" }}
+                            </p>
+                        {% endif %}
+                    </div>
+                    <div class="card-footer bg-transparent">
+                        <div class="btn-group w-100" role="group">
+                            <a href="{% url 'projectflow:roadmap-detail' roadmap.slug %}" class="btn btn-outline-primary">
+                                <i class="fas fa-eye"></i> View Roadmap
+                            </a>
+                            <a href="{% url 'projectflow:project-detail' roadmap.slug %}" class="btn btn-outline-secondary">
+                                <i class="fas fa-tasks"></i> Manage
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {% empty %}
+            <div class="col-12">
+                <div class="alert alert-info">
+                    <i class="fas fa-info-circle me-2"></i> No roadmaps found. Create your first roadmap to start planning your features!
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

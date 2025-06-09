@@ -7,41 +7,116 @@
     <div class="row mb-4">
         <div class="col-md-8">
             <h1>Projects</h1>
+            <p class="lead">Manage your projects and their tasks</p>
         </div>
-        <div class="col-md-4 text-right">
-            <a href="{% url 'projectflow:project-create' %}" class="btn btn-primary">Create New Project</a>
+        <div class="col-md-4 text-end">
+            <a href="{% url 'projectflow:project-create' %}" class="btn btn-primary">
+                <i class="fas fa-plus"></i> Create Project
+            </a>
         </div>
     </div>
 
-    <div class="row">
-        {% if projects %}
-            {% for project in projects %}
-                <div class="col-md-4 mb-4">
-                    <div class="card h-100">
-                        <div class="card-body">
-                            <h5 class="card-title">{{ project.name }}</h5>
-                            <p class="card-text">{{ project.description }}</p>
-                            <div class="d-flex justify-content-between align-items-center">
-                                <span class="badge badge-{% if project.status == 'Todo' %}secondary{% elif project.status == 'Doing' %}primary{% else %}success{% endif %}">
-                                    {{ project.status }}
-                                </span>
-                                <small class="text-muted">Updated: {{ project.updated_at|date:"M d, Y" }}</small>
+    <div class="row mb-4">
+        <div class="col-12">
+            <div class="card shadow-sm">
+                <div class="card-header">
+                    <ul class="nav nav-pills card-header-pills">
+                        <li class="nav-item">
+                            <button class="nav-link active" data-filter="all">All</button>
+                        </li>
+                        <li class="nav-item">
+                            <button class="nav-link" data-filter="Todo">Todo</button>
+                        </li>
+                        <li class="nav-item">
+                            <button class="nav-link" data-filter="Doing">In Progress</button>
+                        </li>
+                        <li class="nav-item">
+                            <button class="nav-link" data-filter="Done">Completed</button>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row row-cols-1 row-cols-md-3 g-4">
+        {% for project in projects %}
+            <div class="col project-card" data-status="{{ project.status }}">
+                <div class="card h-100 shadow-sm">
+                    <div class="card-header d-flex justify-content-between align-items-center">
+                        <h5 class="mb-0">{{ project.name }}</h5>
+                        <span class="badge bg-{% if project.status == 'Todo' %}secondary{% elif project.status == 'Doing' %}primary{% else %}success{% endif %}">
+                            {{ project.status }}
+                        </span>
+                    </div>
+                    <div class="card-body">
+                        <p class="card-text">{{ project.description|truncatechars:100 }}</p>
+                        
+                        <div class="mb-3">
+                            {% if project.team %}
+                                <span class="badge bg-info">Team: {{ project.team.name }}</span>
+                            {% endif %}
+                            {% if project.project_type == 'roadmap' %}
+                                <span class="badge bg-warning">Feature Roadmap</span>
+                            {% endif %}
+                        </div>
+                        
+                        <div class="progress mb-3">
+                            <div class="progress-bar bg-success" role="progressbar" 
+                                 style="width: {{ project.get_completion_percentage }}%;" 
+                                 aria-valuenow="{{ project.get_completion_percentage }}" 
+                                 aria-valuemin="0" aria-valuemax="100">
+                                {{ project.get_completion_percentage }}%
                             </div>
                         </div>
-                        <div class="card-footer bg-transparent">
-                            <a href="{% url 'projectflow:project-detail' project.slug %}" class="btn btn-sm btn-outline-primary">View Details</a>
-                            <a href="{% url 'projectflow:project-update' project.slug %}" class="btn btn-sm btn-outline-secondary">Edit</a>
+                        
+                        <div class="d-flex justify-content-between align-items-center">
+                            <small class="text-muted">{{ project.tasks.count }} tasks</small>
+                            {% if project.due_date %}
+                                <small class="{% if project.is_overdue %}text-danger{% else %}text-muted{% endif %}">
+                                    Due: {{ project.due_date|date:"M d, Y" }}
+                                </small>
+                            {% endif %}
+                        </div>
+                    </div>
+                    <div class="card-footer bg-transparent">
+                        <div class="btn-group w-100" role="group">
+                            <a href="{% url 'projectflow:project-detail' project.slug %}" class="btn btn-outline-primary">
+                                <i class="fas fa-eye"></i> View
+                            </a>
+                            <a href="{% url 'projectflow:project-update' project.slug %}" class="btn btn-outline-secondary">
+                                <i class="fas fa-edit"></i> Edit
+                            </a>
                         </div>
                     </div>
                 </div>
-            {% endfor %}
-        {% else %}
+            </div>
+        {% empty %}
             <div class="col-12">
                 <div class="alert alert-info">
-                    No projects found. Create your first project to get started!
+                    <i class="fas fa-info-circle me-2"></i> You don't have any projects yet. Create your first project to get started!
                 </div>
             </div>
-        {% endif %}
+        {% endfor %}
     </div>
 </div>
+{% endblock %}
+
+{% block inline_js %}
+<script>
+    $(document).ready(function() {
+        // Project filtering
+        $('[data-filter]').click(function() {
+            $(this).addClass('active').siblings().removeClass('active');
+            var filterValue = $(this).data('filter');
+            
+            if (filterValue === 'all') {
+                $('.project-card').show();
+            } else {
+                $('.project-card').hide();
+                $('.project-card[data-status="' + filterValue + '"]').show();
+            }
+        });
+    });
+</script>
 {% endblock %}

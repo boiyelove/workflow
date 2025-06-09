@@ -1,0 +1,121 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ workspace.name }} - Workspace{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <div class="row mb-4">
+        <div class="col-md-8">
+            <h1>{{ workspace.name }}</h1>
+            <p class="lead">{{ workspace.description }}</p>
+        </div>
+        <div class="col-md-4 text-end">
+            <div class="btn-group" role="group">
+                <a href="{% url 'invites:send' 'workspace' workspace.id %}" class="btn btn-outline-primary">
+                    <i class="fas fa-user-plus"></i> Invite Users
+                </a>
+                <a href="{% url 'workspace:update' workspace.id %}" class="btn btn-outline-secondary">
+                    <i class="fas fa-edit"></i> Edit
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-4">
+            <div class="card shadow-sm mb-4">
+                <div class="card-header d-flex justify-content-between align-items-center">
+                    <h5 class="mb-0">Members</h5>
+                    <a href="{% url 'invites:send' 'workspace' workspace.id %}" class="btn btn-sm btn-outline-primary">
+                        <i class="fas fa-plus"></i> Add
+                    </a>
+                </div>
+                <div class="card-body">
+                    <ul class="list-group list-group-flush">
+                        {% for workspace_user in workspace.workspaceuser_set.all %}
+                            <li class="list-group-item d-flex justify-content-between align-items-center">
+                                <div>
+                                    <strong>{{ workspace_user.user.username }}</strong>
+                                    <span class="badge bg-info ms-2">{{ workspace_user.get_role_display }}</span>
+                                </div>
+                                <div>
+                                    <small class="text-muted">Joined: {{ workspace_user.joined_at|date:"M d, Y" }}</small>
+                                </div>
+                            </li>
+                        {% empty %}
+                            <li class="list-group-item text-center text-muted">No members yet</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+
+            <div class="card shadow-sm">
+                <div class="card-header d-flex justify-content-between align-items-center">
+                    <h5 class="mb-0">Teams</h5>
+                    <a href="#" class="btn btn-sm btn-outline-primary">
+                        <i class="fas fa-plus"></i> Add
+                    </a>
+                </div>
+                <div class="card-body">
+                    <ul class="list-group list-group-flush">
+                        {% for team in workspace.teams.all %}
+                            <li class="list-group-item d-flex justify-content-between align-items-center">
+                                <a href="{% url 'teamflow:team-detail' team.url %}">{{ team.name }}</a>
+                                <span class="badge bg-secondary">{{ team.members.count }} members</span>
+                            </li>
+                        {% empty %}
+                            <li class="list-group-item text-center text-muted">No teams yet</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-8">
+            <div class="card shadow-sm">
+                <div class="card-header d-flex justify-content-between align-items-center">
+                    <h5 class="mb-0">Projects</h5>
+                    <a href="{% url 'projectflow:project-create' %}" class="btn btn-sm btn-outline-primary">
+                        <i class="fas fa-plus"></i> Create Project
+                    </a>
+                </div>
+                <div class="card-body">
+                    {% if workspace.projects.exists %}
+                        <div class="row row-cols-1 row-cols-md-2 g-4">
+                            {% for project in workspace.projects.all %}
+                                <div class="col">
+                                    <div class="card h-100">
+                                        <div class="card-body">
+                                            <h5 class="card-title">
+                                                <a href="{% url 'projectflow:project-detail' project.slug %}">{{ project.name }}</a>
+                                            </h5>
+                                            <p class="card-text">{{ project.description|truncatechars:100 }}</p>
+                                            <div class="d-flex justify-content-between align-items-center">
+                                                <span class="badge bg-{% if project.status == 'Todo' %}secondary{% elif project.status == 'Doing' %}primary{% else %}success{% endif %}">
+                                                    {{ project.status }}
+                                                </span>
+                                                <small class="text-muted">{{ project.tasks.count }} tasks</small>
+                                            </div>
+                                        </div>
+                                        <div class="card-footer bg-transparent">
+                                            <div class="progress" style="height: 5px;">
+                                                <div class="progress-bar bg-success" role="progressbar" style="width: {{ project.get_completion_percentage }}%;" 
+                                                    aria-valuenow="{{ project.get_completion_percentage }}" aria-valuemin="0" aria-valuemax="100">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            {% endfor %}
+                        </div>
+                    {% else %}
+                        <div class="alert alert-info">
+                            <i class="fas fa-info-circle me-2"></i> No projects yet. Create your first project to get started!
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
