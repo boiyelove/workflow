@@ -39,6 +39,28 @@
     <!-- Vector Maps -->
     <link type="text/css" href="{% static 'vendor/jqvmap/jqvmap.min.css' %}" rel="stylesheet">
 
+    <style>
+        /* Fix for missing font files */
+        @font-face {
+            font-family: 'Material Icons';
+            font-style: normal;
+            font-weight: 400;
+            src: url({% static 'fonts/material-icons/MaterialIcons-Regular.woff2' %}) format('woff2'),
+                 url({% static 'fonts/material-icons/MaterialIcons-Regular.woff' %}) format('woff'),
+                 url({% static 'fonts/material-icons/MaterialIcons-Regular.ttf' %}) format('truetype');
+        }
+
+        @font-face {
+            font-family: 'Font Awesome 5 Free';
+            font-style: normal;
+            font-weight: 900;
+            font-display: auto;
+            src: url({% static 'fonts/fontawesome-free/fa-solid-900.woff2' %}) format('woff2'),
+                 url({% static 'fonts/fontawesome-free/fa-solid-900.woff' %}) format('woff'),
+                 url({% static 'fonts/fontawesome-free/fa-solid-900.ttf' %}) format('truetype');
+        }
+    </style>
+
     {% block extra_css %}{% endblock %}
 </head>
 
