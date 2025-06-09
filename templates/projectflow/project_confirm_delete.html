@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+
+{% block title %}Delete Project{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <div class="row">
+        <div class="col-md-6 offset-md-3">
+            <div class="card">
+                <div class="card-header bg-danger text-white">
+                    <h3>Delete Project</h3>
+                </div>
+                <div class="card-body">
+                    <p>Are you sure you want to delete the project "{{ object.name }}"?</p>
+                    <p class="text-danger">This action cannot be undone and will delete all tasks and subtasks associated with this project.</p>
+                    
+                    <form method="post">
+                        {% csrf_token %}
+                        <div class="form-group">
+                            <button type="submit" class="btn btn-danger">Delete</button>
+                            <a href="{% url 'projectflow:project-detail' object.slug %}" class="btn btn-secondary">Cancel</a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

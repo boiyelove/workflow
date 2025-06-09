@@ -1,0 +1,120 @@
+{% extends 'base.html' %}
+
+{% block title %}Tasks{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <div class="row mb-4">
+        <div class="col-md-8">
+            <h1>All Tasks</h1>
+        </div>
+        <div class="col-md-4 text-right">
+            <a href="{% url 'projectflow:task-create' %}" class="btn btn-primary">Create New Task</a>
+        </div>
+    </div>
+
+    <div class="row mb-4">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header d-flex justify-content-between align-items-center">
+                    <h5>Filter Tasks</h5>
+                    <div class="btn-group btn-group-sm" role="group">
+                        <button type="button" class="btn btn-outline-secondary active" data-filter="all">All</button>
+                        <button type="button" class="btn btn-outline-secondary" data-filter="Todo">Todo</button>
+                        <button type="button" class="btn btn-outline-secondary" data-filter="Doing">Doing</button>
+                        <button type="button" class="btn btn-outline-secondary" data-filter="Done">Done</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-body">
+                    {% if tasks %}
+                        <div class="table-responsive">
+                            <table class="table table-hover">
+                                <thead>
+                                    <tr>
+                                        <th>Name</th>
+                                        <th>Project</th>
+                                        <th>Description</th>
+                                        <th>Status</th>
+                                        <th>Assigned To</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for task in tasks %}
+                                        <tr class="task-row" data-status="{{ task.status }}">
+                                            <td>{{ task.name }}</td>
+                                            <td>
+                                                <a href="{% url 'projectflow:project-detail' task.project.slug %}">
+                                                    {{ task.project.name }}
+                                                </a>
+                                            </td>
+                                            <td>{{ task.description }}</td>
+                                            <td>
+                                                <div class="dropdown">
+                                                    <button class="btn btn-sm dropdown-toggle badge badge-{% if task.status == 'Todo' %}secondary{% elif task.status == 'Doing' %}primary{% else %}success{% endif %}" type="button" id="dropdownMenuButton-{{ task.id }}" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                        {{ task.status }}
+                                                    </button>
+                                                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton-{{ task.id }}">
+                                                        <form method="post" action="{% url 'projectflow:task-update-status' task.id %}">
+                                                            {% csrf_token %}
+                                                            <button type="submit" name="status" value="Todo" class="dropdown-item">Todo</button>
+                                                            <button type="submit" name="status" value="Doing" class="dropdown-item">Doing</button>
+                                                            <button type="submit" name="status" value="Done" class="dropdown-item">Done</button>
+                                                        </form>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                {% for member in task.team_member.all %}
+                                                    <span class="badge badge-info">{{ member.handle }}</span>
+                                                {% empty %}
+                                                    <span class="text-muted">Unassigned</span>
+                                                {% endfor %}
+                                            </td>
+                                            <td>
+                                                <a href="{% url 'projectflow:task-detail' task.id %}" class="btn btn-sm btn-outline-primary">View</a>
+                                                <a href="{% url 'projectflow:task-update' task.id %}" class="btn btn-sm btn-outline-secondary">Edit</a>
+                                                <a href="{% url 'projectflow:task-delete' task.id %}" class="btn btn-sm btn-outline-danger">Delete</a>
+                                            </td>
+                                        </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    {% else %}
+                        <div class="alert alert-info">
+                            No tasks found. Create your first task to get started!
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% block extra_js %}
+<script>
+    $(document).ready(function() {
+        // Task filtering
+        $('[data-filter]').click(function() {
+            $(this).addClass('active').siblings().removeClass('active');
+            var filterValue = $(this).data('filter');
+            
+            if (filterValue === 'all') {
+                $('.task-row').show();
+            } else {
+                $('.task-row').hide();
+                $('.task-row[data-status="' + filterValue + '"]').show();
+            }
+        });
+    });
+</script>
+{% endblock %}
+{% endblock %}
