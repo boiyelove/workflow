@@ -4,6 +4,11 @@
 {% block title %}{{ team.name }} - Team{% endblock %}
 {% block page_title %}{{ team.name }}{% endblock %}
 
+{% block breadcrumb_items %}
+<li class="breadcrumb-item"><a href="{% url 'teamflow:team-list' %}">Teams</a></li>
+<li class="breadcrumb-item active" aria-current="page">{{ team.name }}</li>
+{% endblock %}
+
 {% block page_actions %}
 <a href="{% url 'invites:send' 'team' team.id %}" class="btn btn-success">
     <i class="material-icons">person_add</i> Invite Members

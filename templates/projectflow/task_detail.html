@@ -1,6 +1,14 @@
 {% extends 'base.html' %}
+{% load static %}
 
 {% block title %}{{ task.name }} - Task{% endblock %}
+{% block page_title %}{{ task.name }}{% endblock %}
+
+{% block breadcrumb_items %}
+<li class="breadcrumb-item"><a href="{% url 'projectflow:project-list' %}">Projects</a></li>
+<li class="breadcrumb-item"><a href="{% url 'projectflow:project-detail' task.project.slug %}">{{ task.project.name }}</a></li>
+<li class="breadcrumb-item active" aria-current="page">{{ task.name }}</li>
+{% endblock %}
 
 {% block content %}
 <div class="container mt-4">

@@ -4,6 +4,10 @@
 {% block title %}Projects{% endblock %}
 {% block page_title %}Projects{% endblock %}
 
+{% block breadcrumb_items %}
+<li class="breadcrumb-item active" aria-current="page">Projects</li>
+{% endblock %}
+
 {% block page_actions %}
 <a href="{% url 'projectflow:project-create' %}" class="btn btn-success">
     <i class="material-icons">add</i> Create Project

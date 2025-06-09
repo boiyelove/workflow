@@ -4,6 +4,12 @@
 {% block title %}{{ project.name }} - Timeline{% endblock %}
 {% block page_title %}{{ project.name }} - Timeline{% endblock %}
 
+{% block breadcrumb_items %}
+<li class="breadcrumb-item"><a href="{% url 'projectflow:project-list' %}">Projects</a></li>
+<li class="breadcrumb-item"><a href="{% url 'projectflow:project-detail' project.slug %}">{{ project.name }}</a></li>
+<li class="breadcrumb-item active" aria-current="page">Timeline</li>
+{% endblock %}
+
 {% block page_actions %}
 <a href="{% url 'projectflow:project-detail' project.slug %}" class="btn btn-light">
     <i class="material-icons">arrow_back</i> Back to Project

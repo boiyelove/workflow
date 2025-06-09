@@ -1,6 +1,12 @@
 {% extends 'base.html' %}
+{% load static %}
 
 {% block title %}Workspaces{% endblock %}
+{% block page_title %}Workspaces{% endblock %}
+
+{% block breadcrumb_items %}
+<li class="breadcrumb-item active" aria-current="page">Workspaces</li>
+{% endblock %}
 
 {% block content %}
 <div class="container mt-4">

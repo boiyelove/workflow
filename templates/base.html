@@ -140,6 +140,14 @@
                     <div class="container-fluid page__heading-container">
                         <div class="page__heading d-flex align-items-center">
                             <div class="flex">
+                                {% block breadcrumbs %}
+                                <nav aria-label="breadcrumb">
+                                    <ol class="breadcrumb mb-0">
+                                        <li class="breadcrumb-item"><a href="/"><i class="material-icons icon-20pt">home</i></a></li>
+                                        {% block breadcrumb_items %}{% endblock %}
+                                    </ol>
+                                </nav>
+                                {% endblock %}
                                 <h1 class="m-0">{% block page_title %}Workflow{% endblock %}</h1>
                             </div>
                             {% block page_actions %}{% endblock %}
