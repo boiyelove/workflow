@@ -2,6 +2,26 @@
 
 {% block title %}Tasks{% endblock %}
 
+{% block extra_css %}
+<style>
+    .search-container {
+        position: relative;
+    }
+    .search-container .fa-search {
+        position: absolute;
+        top: 12px;
+        left: 12px;
+        color: #6c757d;
+    }
+    .search-input {
+        padding-left: 35px;
+    }
+    .dropdown-menu form {
+        min-width: 100%;
+    }
+</style>
+{% endblock %}
+
 {% block content %}
 <div class="container mt-4">
     <div class="row mb-4">
@@ -16,15 +36,25 @@
     </div>
 
     <div class="row mb-4">
-        <div class="col-md-12">
+        <div class="col-md-6">
+            <div class="search-container">
+                <i class="fas fa-search"></i>
+                <input type="text" id="taskSearch" class="form-control search-input" placeholder="Search tasks...">
+            </div>
+        </div>
+        <div class="col-md-6">
             <div class="card">
-                <div class="card-header d-flex justify-content-between align-items-center">
-                    <h5 class="mb-0">Filter Tasks</h5>
+                <div class="card-header d-flex justify-content-between align-items-center p-2">
                     <div class="btn-group btn-group-sm" role="group">
                         <button type="button" class="btn btn-outline-secondary active" data-filter="all">All</button>
                         <button type="button" class="btn btn-outline-secondary" data-filter="Todo">Todo</button>
                         <button type="button" class="btn btn-outline-secondary" data-filter="Doing">Doing</button>
                         <button type="button" class="btn btn-outline-secondary" data-filter="Done">Done</button>
+                    </div>
+                    <div class="btn-group btn-group-sm ms-2" role="group">
+                        <button type="button" class="btn btn-outline-secondary" data-visibility="all">All Projects</button>
+                        <button type="button" class="btn btn-outline-secondary" data-visibility="public">Public</button>
+                        <button type="button" class="btn btn-outline-secondary" data-visibility="private">Private</button>
                     </div>
                 </div>
             </div>
@@ -33,11 +63,11 @@
 
     <div class="row">
         <div class="col-md-12">
-            <div class="card">
+            <div class="card shadow-sm">
                 <div class="card-body">
                     {% if tasks %}
                         <div class="table-responsive">
-                            <table class="table table-hover">
+                            <table class="table table-hover" id="tasksTable">
                                 <thead>
                                     <tr>
                                         <th>Name</th>
@@ -50,11 +80,21 @@
                                 </thead>
                                 <tbody>
                                     {% for task in tasks %}
-                                        <tr class="task-row" data-status="{{ task.status }}">
+                                        <tr class="task-row" 
+                                            data-status="{{ task.status }}" 
+                                            data-visibility="{% if task.project.is_public %}public{% else %}private{% endif %}"
+                                            data-name="{{ task.name|lower }}"
+                                            data-description="{{ task.description|lower }}"
+                                            data-project="{{ task.project.name|lower }}">
                                             <td>{{ task.name }}</td>
                                             <td>
                                                 <a href="{% url 'projectflow:project-detail' task.project.slug %}">
                                                     {{ task.project.name }}
+                                                    {% if task.project.is_public %}
+                                                        <i class="fas fa-globe text-success" title="Public project"></i>
+                                                    {% else %}
+                                                        <i class="fas fa-lock text-secondary" title="Private project"></i>
+                                                    {% endif %}
                                                 </a>
                                             </td>
                                             <td>{{ task.description|truncatechars:50 }}</td>
@@ -81,16 +121,25 @@
                                                 {% endfor %}
                                             </td>
                                             <td>
-                                                <div class="btn-group btn-group-sm" role="group">
-                                                    <a href="{% url 'projectflow:task-detail' task.id %}" class="btn btn-outline-primary">
+                                                <div class="btn-group">
+                                                    <a href="{% url 'projectflow:task-detail' task.id %}" class="btn btn-sm btn-outline-primary">
                                                         <i class="fas fa-eye"></i>
                                                     </a>
-                                                    <a href="{% url 'projectflow:task-update' task.id %}" class="btn btn-outline-secondary">
-                                                        <i class="fas fa-edit"></i>
-                                                    </a>
-                                                    <a href="{% url 'projectflow:task-delete' task.id %}" class="btn btn-outline-danger">
-                                                        <i class="fas fa-trash"></i>
-                                                    </a>
+                                                    <button type="button" class="btn btn-sm btn-outline-primary dropdown-toggle dropdown-toggle-split" data-bs-toggle="dropdown" aria-expanded="false">
+                                                        <span class="visually-hidden">Toggle Dropdown</span>
+                                                    </button>
+                                                    <ul class="dropdown-menu">
+                                                        <li><a class="dropdown-item" href="{% url 'projectflow:task-update' task.id %}">
+                                                            <i class="fas fa-edit"></i> Edit
+                                                        </a></li>
+                                                        <li><a class="dropdown-item" href="{% url 'projectflow:subtask-create-for-task' task.id %}">
+                                                            <i class="fas fa-tasks"></i> Add Subtask
+                                                        </a></li>
+                                                        <li><hr class="dropdown-divider"></li>
+                                                        <li><a class="dropdown-item text-danger" href="{% url 'projectflow:task-delete' task.id %}">
+                                                            <i class="fas fa-trash"></i> Delete
+                                                        </a></li>
+                                                    </ul>
                                                 </div>
                                             </td>
                                         </tr>
@@ -98,9 +147,12 @@
                                 </tbody>
                             </table>
                         </div>
+                        <div id="noResults" class="alert alert-info mt-3 d-none">
+                            <i class="fas fa-search me-2"></i> No tasks match your search criteria.
+                        </div>
                     {% else %}
                         <div class="alert alert-info">
-                            No tasks found. Create your first task to get started!
+                            <i class="fas fa-info-circle me-2"></i> No tasks found. Create your first task to get started!
                         </div>
                     {% endif %}
                 </div>
@@ -109,39 +161,86 @@
     </div>
 </div>
 
+{% endblock %}
+
 {% block extra_js %}
 <script>
-    document.addEventListener('DOMContentLoaded', function() {
-        // Task filtering
-        document.querySelectorAll('[data-filter]').forEach(function(button) {
-            button.addEventListener('click', function() {
-                // Remove active class from all buttons
-                document.querySelectorAll('[data-filter]').forEach(function(btn) {
-                    btn.classList.remove('active');
-                });
-                
-                // Add active class to clicked button
-                this.classList.add('active');
-                
-                var filterValue = this.getAttribute('data-filter');
-                var taskRows = document.querySelectorAll('.task-row');
-                
-                if (filterValue === 'all') {
-                    taskRows.forEach(function(row) {
-                        row.style.display = '';
-                    });
-                } else {
-                    taskRows.forEach(function(row) {
-                        if (row.getAttribute('data-status') === filterValue) {
-                            row.style.display = '';
-                        } else {
-                            row.style.display = 'none';
-                        }
-                    });
-                }
+document.addEventListener('DOMContentLoaded', function() {
+    // Task filtering by status
+    document.querySelectorAll('[data-filter]').forEach(function(button) {
+        button.addEventListener('click', function() {
+            // Remove active class from all buttons in this group
+            document.querySelectorAll('[data-filter]').forEach(function(btn) {
+                btn.classList.remove('active');
             });
+            
+            // Add active class to clicked button
+            this.classList.add('active');
+            
+            applyFilters();
         });
     });
+    
+    // Task filtering by project visibility
+    document.querySelectorAll('[data-visibility]').forEach(function(button) {
+        button.addEventListener('click', function() {
+            // Remove active class from all buttons in this group
+            document.querySelectorAll('[data-visibility]').forEach(function(btn) {
+                btn.classList.remove('active');
+            });
+            
+            // Add active class to clicked button
+            this.classList.add('active');
+            
+            applyFilters();
+        });
+    });
+    
+    // Live search
+    const searchInput = document.getElementById('taskSearch');
+    searchInput.addEventListener('input', function() {
+        applyFilters();
+    });
+    
+    function applyFilters() {
+        const statusFilter = document.querySelector('[data-filter].active').getAttribute('data-filter');
+        const visibilityFilter = document.querySelector('[data-visibility].active')?.getAttribute('data-visibility') || 'all';
+        const searchTerm = searchInput.value.toLowerCase().trim();
+        
+        let visibleCount = 0;
+        const taskRows = document.querySelectorAll('.task-row');
+        
+        taskRows.forEach(function(row) {
+            const taskStatus = row.getAttribute('data-status');
+            const taskVisibility = row.getAttribute('data-visibility');
+            const taskName = row.getAttribute('data-name');
+            const taskDescription = row.getAttribute('data-description');
+            const taskProject = row.getAttribute('data-project');
+            
+            // Check if task matches all active filters
+            const matchesStatus = statusFilter === 'all' || taskStatus === statusFilter;
+            const matchesVisibility = visibilityFilter === 'all' || taskVisibility === visibilityFilter;
+            const matchesSearch = searchTerm === '' || 
+                                 taskName.includes(searchTerm) || 
+                                 taskDescription.includes(searchTerm) ||
+                                 taskProject.includes(searchTerm);
+            
+            if (matchesStatus && matchesVisibility && matchesSearch) {
+                row.style.display = '';
+                visibleCount++;
+            } else {
+                row.style.display = 'none';
+            }
+        });
+        
+        // Show/hide no results message
+        const noResultsElement = document.getElementById('noResults');
+        if (visibleCount === 0 && taskRows.length > 0) {
+            noResultsElement.classList.remove('d-none');
+        } else {
+            noResultsElement.classList.add('d-none');
+        }
+    }
+});
 </script>
-{% endblock %}
 {% endblock %}

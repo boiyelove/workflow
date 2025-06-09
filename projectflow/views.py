@@ -4,6 +4,7 @@ from django.urls import reverse_lazy, reverse
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseRedirect
+from django.db.models import Q
 from .models import Project, Task, SubTask, JOB_STATUS
 from .forms import ProjectForm, TaskForm, SubTaskForm
 from teamflow.models import Team, TeamMember
@@ -17,6 +18,15 @@ class ProjectDetail(LoginRequiredMixin, DetailView):
         context = super().get_context_data(**kwargs)
         context['tasks'] = self.object.tasks.all()
         return context
+    
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        user = self.request.user
+        # Show public projects or projects where user is a team member
+        return queryset.filter(
+            Q(is_public=True) | 
+            Q(team__teammember__user=user)
+        ).distinct()
 
 class ProjectList(LoginRequiredMixin, ListView):
     model = Project
@@ -25,8 +35,11 @@ class ProjectList(LoginRequiredMixin, ListView):
     
     def get_queryset(self):
         user = self.request.user
-        teams = Team.objects.filter(teammember__user=user)
-        return Project.objects.filter(team__in=teams)
+        # Show public projects or projects where user is a team member
+        return Project.objects.filter(
+            Q(is_public=True) | 
+            Q(team__teammember__user=user)
+        ).distinct()
 
 class ProjectCreate(LoginRequiredMixin, CreateView):
     model = Project
@@ -86,6 +99,15 @@ class TaskDetail(LoginRequiredMixin, DetailView):
         context = super().get_context_data(**kwargs)
         context['subtasks'] = self.object.subtasks.all()
         return context
+    
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        user = self.request.user
+        # Show tasks from public projects or projects where user is a team member
+        return queryset.filter(
+            Q(project__is_public=True) | 
+            Q(project__team__teammember__user=user)
+        ).distinct()
 
 class TaskList(LoginRequiredMixin, ListView):
     model = Task
@@ -94,7 +116,11 @@ class TaskList(LoginRequiredMixin, ListView):
     
     def get_queryset(self):
         user = self.request.user
-        return Task.objects.filter(team_member__user=user)
+        # Show tasks from public projects or projects where user is a team member
+        return Task.objects.filter(
+            Q(project__is_public=True) | 
+            Q(project__team__teammember__user=user)
+        ).distinct()
 
 class TaskCreate(LoginRequiredMixin, CreateView):
     model = Task
@@ -105,7 +131,10 @@ class TaskCreate(LoginRequiredMixin, CreateView):
         form = super().get_form(form_class)
         user = self.request.user
         teams = Team.objects.filter(teammember__user=user)
-        form.fields['project'].queryset = Project.objects.filter(team__in=teams)
+        form.fields['project'].queryset = Project.objects.filter(
+            Q(is_public=True) | 
+            Q(team__in=teams)
+        ).distinct()
         form.fields['team_member'].queryset = TeamMember.objects.filter(team__in=teams)
         
         # Pre-select project if provided in URL
@@ -134,7 +163,10 @@ class TaskUpdate(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
         form = super().get_form(form_class)
         user = self.request.user
         teams = Team.objects.filter(teammember__user=user)
-        form.fields['project'].queryset = Project.objects.filter(team__in=teams)
+        form.fields['project'].queryset = Project.objects.filter(
+            Q(is_public=True) | 
+            Q(team__in=teams)
+        ).distinct()
         form.fields['team_member'].queryset = TeamMember.objects.filter(team__in=teams)
         return form
     
@@ -171,10 +203,16 @@ class SubTaskCreate(LoginRequiredMixin, CreateView):
         if task_id:
             task = get_object_or_404(Task, id=task_id)
             form.initial['task'] = task
-            form.fields['task'].queryset = Task.objects.filter(project__team__in=teams)
+            form.fields['task'].queryset = Task.objects.filter(
+                Q(project__is_public=True) | 
+                Q(project__team__in=teams)
+            ).distinct()
             form.fields['team_member'].queryset = TeamMember.objects.filter(team=task.project.team)
         else:
-            form.fields['task'].queryset = Task.objects.filter(project__team__in=teams)
+            form.fields['task'].queryset = Task.objects.filter(
+                Q(project__is_public=True) | 
+                Q(project__team__in=teams)
+            ).distinct()
             form.fields['team_member'].queryset = TeamMember.objects.filter(team__in=teams)
         
         return form
@@ -198,7 +236,10 @@ class SubTaskUpdate(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
         form = super().get_form(form_class)
         user = self.request.user
         teams = Team.objects.filter(teammember__user=user)
-        form.fields['task'].queryset = Task.objects.filter(project__team__in=teams)
+        form.fields['task'].queryset = Task.objects.filter(
+            Q(project__is_public=True) | 
+            Q(project__team__in=teams)
+        ).distinct()
         form.fields['team_member'].queryset = TeamMember.objects.filter(team__in=teams)
         return form
     

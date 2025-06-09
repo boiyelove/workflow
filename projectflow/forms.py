@@ -4,12 +4,13 @@ from .models import Project, Task, SubTask
 class ProjectForm(forms.ModelForm):
     class Meta:
         model = Project
-        fields = ['name', 'description', 'status', 'team']
+        fields = ['name', 'description', 'status', 'team', 'is_public']
         widgets = {
             'name': forms.TextInput(attrs={'class': 'form-control'}),
             'description': forms.Textarea(attrs={'class': 'form-control', 'rows': 4}),
             'status': forms.Select(attrs={'class': 'form-control'}),
             'team': forms.Select(attrs={'class': 'form-control'}),
+            'is_public': forms.CheckboxInput(attrs={'class': 'form-check-input'}),
         }
 
 class TaskForm(forms.ModelForm):

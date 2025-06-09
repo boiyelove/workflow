@@ -1,0 +1,55 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+
+{% block title %}{% if form.instance.pk %}Edit Project{% else %}Create Project{% endif %}{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <div class="row">
+        <div class="col-md-8 offset-md-2">
+            <div class="card shadow">
+                <div class="card-header bg-primary text-white">
+                    <h3>{% if form.instance.pk %}Edit Project{% else %}Create Project{% endif %}</h3>
+                </div>
+                <div class="card-body">
+                    <form method="post">
+                        {% csrf_token %}
+                        
+                        <div class="row">
+                            <div class="col-md-8">
+                                {{ form.name|as_crispy_field }}
+                            </div>
+                            <div class="col-md-4">
+                                {{ form.status|as_crispy_field }}
+                            </div>
+                        </div>
+                        
+                        {{ form.description|as_crispy_field }}
+                        {{ form.team|as_crispy_field }}
+                        
+                        <div class="form-check mb-3">
+                            {{ form.is_public }}
+                            <label class="form-check-label" for="{{ form.is_public.id_for_label }}">
+                                Make this project public (visible to all users)
+                            </label>
+                            <small class="form-text text-muted d-block">
+                                Public projects are visible to all users, even if they're not part of the team.
+                            </small>
+                        </div>
+                        
+                        <div class="form-group mt-4">
+                            <button type="submit" class="btn btn-primary">
+                                <i class="fas fa-save me-1"></i> 
+                                {% if form.instance.pk %}Save Changes{% else %}Create Project{% endif %}
+                            </button>
+                            <a href="{% url 'projectflow:project-list' %}" class="btn btn-secondary">
+                                <i class="fas fa-times me-1"></i> Cancel
+                            </a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
