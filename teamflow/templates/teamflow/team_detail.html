@@ -1,0 +1,65 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ team.name }}{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <div class="row mb-4">
+        <div class="col-md-8">
+            <h1>{{ team.name }}</h1>
+            <p class="lead">{{ team.description|default:"No description provided." }}</p>
+        </div>
+        <div class="col-md-4 text-right">
+            {% if is_manager %}
+                <a href="{% url 'team_invite' team.id %}" class="btn btn-primary">Invite Member</a>
+            {% endif %}
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header">
+                    <h5>Team Members</h5>
+                </div>
+                <div class="card-body">
+                    {% if members %}
+                        <div class="table-responsive">
+                            <table class="table table-hover">
+                                <thead>
+                                    <tr>
+                                        <th>Username</th>
+                                        <th>Handle</th>
+                                        <th>Designation</th>
+                                        <th>Role</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for member in members %}
+                                        <tr>
+                                            <td>{{ member.user.username }}</td>
+                                            <td>{{ member.handle }}</td>
+                                            <td>{{ member.designation }}</td>
+                                            <td>
+                                                {% if member.is_manager %}
+                                                    <span class="badge badge-primary">Manager</span>
+                                                {% else %}
+                                                    <span class="badge badge-secondary">Member</span>
+                                                {% endif %}
+                                            </td>
+                                        </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    {% else %}
+                        <div class="alert alert-info">
+                            No members found in this team.
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
