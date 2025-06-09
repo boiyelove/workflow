@@ -64,6 +64,7 @@ INSTALLED_APPS = [
     'webcore.apps.WebcoreConfig',
     'teamflow.apps.TeamflowConfig',
     'projectflow.apps.ProjectflowConfig',
+    'accounts.apps.AccountsConfig',  # Added accounts app
 ]
 
 MIDDLEWARE = [
@@ -140,3 +141,20 @@ STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'pstatic'),
 ]
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+
+# Media files
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
+# Site settings
+SITE_NAME = 'Workflow'
+SITE_URL = 'http://localhost:8000'
+
+# Email settings
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+DEFAULT_FROM_EMAIL = 'noreply@workflow.com'
+
+# Authentication settings
+LOGIN_URL = 'accounts:login'
+LOGIN_REDIRECT_URL = 'webcore:home'
+LOGOUT_REDIRECT_URL = 'accounts:login'

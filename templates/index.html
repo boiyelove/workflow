@@ -1,66 +1,177 @@
-{% load static %}
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="utf-8">
-<meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
-<meta property="og:url"                content="http://localhost:8000/" />
-<meta property="og:type"               content="article" />
-<meta property="og:title"              content="Check out this forecast on CASSIE: {{ poll.question }}"/>
-<meta property="og:description"        content="Join Cassie to forecast this and more! See how accurate you are at \
-                                                predicting the future!" />
-<meta property="og:image"              content="{{MEDIA_URL }}/social/logo_words.png" />
+{% extends 'base.html' %}
 
-
-<title>{% block head_title %} {{ page_title }} {% endblock %} |Team Work Flow</title>
-<!-- Style Sheets -->
-<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
-<link href="{% static 'font-awesome/css/font-awesome.min.css' %}" rel="stylesheet">
-<link href="https://fonts.googleapis.com/css?family=Lato|Roboto" rel="stylesheet">
-<link href="{% static 'css/style.css' %}" rel="stylesheet">
-
-<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-
-</head>
-
-<body>
-{% include 'webcore/_shared/navbar.html' %}
-
-<section id="notices">
-<div class="row">
-	<div class="container text-center">
-		{% for msg in messages %}
-			
-	<div class="alert 
-	{% if msg.tags == 'error' %} alert-danger {% elif msg.tags == 'debug' %} alert-warning 
-	{% else %}  alert-{{msg.tags}} {% endif %} alert-dismissible fade in" role="alert">
-      <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>
-     <strong> {% if msg.tags == 'info' %} Please Note!
-	{% elif msg.tags == 'success' %} Great!
-	{% elif msg.tags == 'error' %} Oops!
-	{% elif msg.tags == 'debug' %} Aw!
-	{% endif %}</strong> {{msg}}
-    </div>
-		{% empty %}
-
-		{% endfor %}
-	</div>
-</div>
-</section>
-
+{% block title %}Dashboard - Workflow{% endblock %}
 
 {% block content %}
+{% if user.is_authenticated %}
+<div class="container mt-4">
+    <div class="row mb-4">
+        <div class="col-md-8">
+            <h1>Welcome, {{ user.first_name|default:user.username }}</h1>
+            <p class="lead">Here's an overview of your projects and tasks.</p>
+        </div>
+        <div class="col-md-4 text-right">
+            <a href="{% url 'projectflow:project-create' %}" class="btn btn-primary">New Project</a>
+            <a href="{% url 'projectflow:task-create' %}" class="btn btn-outline-primary">New Task</a>
+        </div>
+    </div>
 
+    <div class="row">
+        <div class="col-md-4 mb-4">
+            <div class="card bg-primary text-white">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div>
+                            <h5 class="card-title">Projects</h5>
+                            <h2>{{ projects.count }}</h2>
+                        </div>
+                        <i class="fas fa-project-diagram fa-3x"></i>
+                    </div>
+                </div>
+                <div class="card-footer bg-transparent border-top-0">
+                    <a href="{% url 'projectflow:project-list' %}" class="text-white">View all projects <i class="fas fa-arrow-right ml-1"></i></a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4 mb-4">
+            <div class="card bg-success text-white">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div>
+                            <h5 class="card-title">Tasks</h5>
+                            <h2>{{ tasks.count }}</h2>
+                        </div>
+                        <i class="fas fa-tasks fa-3x"></i>
+                    </div>
+                </div>
+                <div class="card-footer bg-transparent border-top-0">
+                    <a href="{% url 'projectflow:task-list' %}" class="text-white">View all tasks <i class="fas fa-arrow-right ml-1"></i></a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4 mb-4">
+            <div class="card bg-info text-white">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div>
+                            <h5 class="card-title">Teams</h5>
+                            <h2>{{ teams.count }}</h2>
+                        </div>
+                        <i class="fas fa-users fa-3x"></i>
+                    </div>
+                </div>
+                <div class="card-footer bg-transparent border-top-0">
+                    <a href="#" class="text-white">View all teams <i class="fas fa-arrow-right ml-1"></i></a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-6 mb-4">
+            <div class="card">
+                <div class="card-header d-flex justify-content-between align-items-center">
+                    <h5>Recent Projects</h5>
+                    <a href="{% url 'projectflow:project-list' %}" class="btn btn-sm btn-outline-primary">View All</a>
+                </div>
+                <div class="card-body">
+                    {% if projects %}
+                        <div class="list-group">
+                            {% for project in projects %}
+                                <a href="{% url 'projectflow:project-detail' project.slug %}" class="list-group-item list-group-item-action">
+                                    <div class="d-flex w-100 justify-content-between">
+                                        <h5 class="mb-1">{{ project.name }}</h5>
+                                        <span class="badge badge-{% if project.status == 'Todo' %}secondary{% elif project.status == 'Doing' %}primary{% else %}success{% endif %}">
+                                            {{ project.status }}
+                                        </span>
+                                    </div>
+                                    <p class="mb-1">{{ project.description }}</p>
+                                    <small class="text-muted">Updated: {{ project.updated_at|date:"M d, Y" }}</small>
+                                </a>
+                            {% endfor %}
+                        </div>
+                    {% else %}
+                        <div class="alert alert-info">
+                            No projects found. Create your first project to get started!
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6 mb-4">
+            <div class="card">
+                <div class="card-header d-flex justify-content-between align-items-center">
+                    <h5>My Tasks</h5>
+                    <a href="{% url 'projectflow:task-list' %}" class="btn btn-sm btn-outline-primary">View All</a>
+                </div>
+                <div class="card-body">
+                    {% if tasks %}
+                        <div class="list-group">
+                            {% for task in tasks %}
+                                <a href="{% url 'projectflow:task-detail' task.id %}" class="list-group-item list-group-item-action">
+                                    <div class="d-flex w-100 justify-content-between">
+                                        <h5 class="mb-1">{{ task.name }}</h5>
+                                        <span class="badge badge-{% if task.status == 'Todo' %}secondary{% elif task.status == 'Doing' %}primary{% else %}success{% endif %}">
+                                            {{ task.status }}
+                                        </span>
+                                    </div>
+                                    <p class="mb-1">{{ task.description }}</p>
+                                    <small class="text-muted">Project: {{ task.project.name }}</small>
+                                </a>
+                            {% endfor %}
+                        </div>
+                    {% else %}
+                        <div class="alert alert-info">
+                            No tasks assigned to you. Create your first task to get started!
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% else %}
+<div class="jumbotron jumbotron-fluid bg-primary text-white">
+    <div class="container">
+        <h1 class="display-4">Welcome to Workflow</h1>
+        <p class="lead">A comprehensive project management solution for teams of all sizes.</p>
+        <hr class="my-4">
+        <p>Manage projects, tasks, and teams all in one place.</p>
+        <a class="btn btn-light btn-lg" href="{% url 'accounts:login' %}" role="button">Login</a>
+        <a class="btn btn-outline-light btn-lg" href="{% url 'accounts:invite_code' %}" role="button">Register</a>
+    </div>
+</div>
+
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-md-4">
+            <div class="card mb-4">
+                <div class="card-body text-center">
+                    <i class="fas fa-project-diagram fa-3x mb-3 text-primary"></i>
+                    <h5 class="card-title">Project Management</h5>
+                    <p class="card-text">Create and manage projects with ease. Track progress and set milestones.</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card mb-4">
+                <div class="card-body text-center">
+                    <i class="fas fa-tasks fa-3x mb-3 text-primary"></i>
+                    <h5 class="card-title">Task Tracking</h5>
+                    <p class="card-text">Organize tasks, assign team members, and monitor progress.</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card mb-4">
+                <div class="card-body text-center">
+                    <i class="fas fa-users fa-3x mb-3 text-primary"></i>
+                    <h5 class="card-title">Team Collaboration</h5>
+                    <p class="card-text">Work together seamlessly with your team members.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endif %}
 {% endblock %}
-
-
-{% include 'webcore/_shared/footer.html' %}
-{% include 'webcore/_shared/modal.html' %}
-{% url 'webcore:home-page' as homepage_url %}
-<script src="{% static 'js/scripts.js' %}"></script>
-
-</body>
-</html>
