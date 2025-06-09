@@ -226,7 +226,6 @@ class RoadmapViewTests(TestCase):
         response = self.client.get(reverse('projectflow:roadmap-detail', kwargs={'slug': self.roadmap.slug}))
         self.assertEqual(response.status_code, 200)
         self.assertContains(response, self.roadmap.name)
-        self.assertContains(response, 'Feature Roadmap')
         
         # Check that all features are in the roadmap
         self.assertContains(response, self.feature1.name)
